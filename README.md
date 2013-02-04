@@ -1,0 +1,4 @@
+SouthCMS
+========
+
+CMS student project
