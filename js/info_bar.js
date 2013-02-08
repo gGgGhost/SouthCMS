@@ -19,7 +19,7 @@ function writeInfoBar(msg, type) {
 	var barString = '<div id="info_image_wrap"><img src="images/icons/48x48/info.png" class="icon-medium" />';
 
 	if(type === 'positive'){
-		barString += '<img src="images/icons/48x48/like.png" class="icon-medium" />';
+		barString += '<img src="images/icons/48x48/checkmark.png" class="icon-medium" />';
 		bar.className += 'positive';
 	}
 	else if(type === 'negative'){
