@@ -1,6 +1,6 @@
 div#phpstuff{
-	border-top: 5px solid black;
-	border-bottom: 5px solid black;
+	border-top: 5px solid #232E33;
+	border-bottom: 5px solid #232E33;
 	background-color: #5DC2F4;
 	width: 100%;
 	display: block;
@@ -8,6 +8,10 @@ div#phpstuff{
 }
 div#phpstuff p{
 	font-weight: bold;
+}
+div#phpstuff p.bugger{
+	font-weight: normal;
+	font-style: italic;
 }
 body{
 	margin: 0;

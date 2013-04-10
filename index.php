@@ -2,16 +2,18 @@
 <html>
 <head>
 	<title>
-		Manage DB - SouthCMS E-commerce Content Management System
+		SouthCMS E-commerce
 	</title>
 	<link href="style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-<?php
-require_once 'login.php';
-require_once 'util.php';
-$db_link = getConnected($db_login);
-?>
+	<div id="phpstuff">
+		<?php
+		require_once 'login.php';
+		require_once 'util.php';
+		getConnected($db_login);
+		?>
+	</div>
 
 	<figure class="big_button option" id="add_product">
 		<img src="images/icons/128x128/plus.png" class="icon-biggest" />
