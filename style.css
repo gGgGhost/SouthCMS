@@ -1,4 +1,14 @@
-
+div#phpstuff{
+	border-top: 5px solid black;
+	border-bottom: 5px solid black;
+	background-color: #5DC2F4;
+	width: 100%;
+	display: block;
+	padding: 15px;
+}
+div#phpstuff p{
+	font-weight: bold;
+}
 body{
 	margin: 0;
 	height: 100%;
@@ -119,9 +129,6 @@ img.icon-big{
 	height: 200px;
 	min-height: 200px;
 	padding: 10px;
-	/*border-left: dashed 2px #232E33;
-	border-right: dashed 2px #232E33;
-	border-bottom: dashed 2px #232E33;*/
 	padding-bottom: 30px;
 	margin: 8px;
 	background-color: #FFFFFF;
