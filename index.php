@@ -15,6 +15,8 @@
 		?>
 	</div>
 
+<div class="main_section">
+
 	<figure class="big_button option" id="add_product">
 		<img src="images/icons/128x128/plus.png" class="icon-biggest" />
 		<figcaption>
@@ -38,6 +40,55 @@
 			<p>View new, current, and old customer orders</p>
 		</figcaption>
 	</figure>
+
+	
+		<form>
+			<p>
+				<label for="name">Name/Short Title of this product</label>
+				<p>
+					<input type="text" name="name" placeholder="name">
+					</input>
+				</p>
+			</p>
+
+			<p>
+				<label for="description">Product Description</label>
+				<p>
+					<input type="text" name="description" placeholder="description">
+					</input>
+				</p>
+			</p>
+			<p>
+				<label for="cost">How much does this product cost you per unit?</label>
+				<p>
+					<input type="text" name="cost" placeholder="cost">
+					</input>
+				</p>
+			</p>
+			<p>
+				<label for="price">How much will you sell your product for per unit?</label>
+				<p>	
+					<input type="text" name="price" placeholder="price">
+					</input>
+				</p>
+			</p>
+			<p>
+				<label for="quantity">How many of this item do you initially have in stock?</label>
+				<p>
+					<input type="text" name="quantity" placeholder="quantity">
+					</input>
+				</p>
+			</p>
+			<p>
+				<label for="code">What code uniquely identifies this this product?</label>
+				<p>
+					<input type="text" name="code" placeholder="code">
+					</input>
+				</p>
+			</p>
+		</form>
+
+</div>
 
 </body>
 
