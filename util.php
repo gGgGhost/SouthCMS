@@ -1,11 +1,12 @@
 <?php
 
-function getConnected($myLogin){
+function getConnected($myLogin, $myVars){
 
 	$db_host = $myLogin['host'];
 	$db_user = $myLogin['user'];
 	$db_pass = $myLogin['pass'];
 	$db_name = $myLogin['DB'];
+	$db_table = $myVars['table'];
 
 	try {
 		if (!$db_link = mysqli_connect($db_host, $db_user, $db_pass)){
@@ -28,20 +29,20 @@ function getConnected($myLogin){
 		}
 	} catch (Exception $e){
 			bugger($e->getMessage());
-			createDatabase($db_link, $db_name, $db_user, $db_host, $db_pass);
+			createDatabase($db_link, $db_name, $db_user, $db_host, $db_pass, $db_table);
 	} 
 		
 	return $db_link;
 }
 
-function createDatabase($link, $name, $user, $host, $pass){
+function createDatabase($link, $name, $user, $host, $pass, $table){
 
 		$query[] = "CREATE DATABASE $name;";
 		$query[] = "GRANT SELECT, INSERT, UPDATE ON $name.* " .
 					"TO '$user'@'$host' IDENTIFIED BY '$pass';";
 		$query[] = "USE $name;";
-		$query[] = "CREATE TABLE test_table (name VARCHAR(25), price FLOAT, " . 
-					"description CHAR(13), stock SMALLINT, code MEDIUMINT);";
+		$query[] = "CREATE TABLE $table (name VARCHAR(25), description CHAR(13), " . 
+					"cost FLOAT, price FLOAT, stock MEDIUMINT, code VARCHAR(25));";
 
 		foreach ($query as $q) {
 			if($q == "USE $name;"){
