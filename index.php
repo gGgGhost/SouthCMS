@@ -10,8 +10,9 @@
 	<div id="phpstuff">
 		<?php
 		require_once 'login.php';
+		require_once 'vars.php';
 		require_once 'util.php';
-		getConnected($db_login);
+		getConnected($db_login, $db_vars);
 		?>
 	</div>
 
@@ -42,7 +43,7 @@
 	</figure>
 
 	
-		<form>
+		<form name="add_product" class="empty">
 			<p>
 				<label for="name">Name/Short Title of this product</label>
 				<p>
@@ -86,6 +87,9 @@
 					</input>
 				</p>
 			</p>
+
+			<input type="submit" value="Submit New Product" formaction='/add' formmethod="POST" />
+			<input type="reset" value="Reset Form" />
 		</form>
 
 </div>
