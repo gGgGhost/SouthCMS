@@ -5,6 +5,7 @@
 		SouthCMS E-commerce
 	</title>
 	<link href="style.css" type="text/css" rel="stylesheet" />
+
 </head>
 <body>
 	<div id="phpstuff">
@@ -14,6 +15,7 @@
 		require_once 'util.php';
 		getConnected($db_login, $db_vars);
 		?>
+		<h1>SouthCMS</h1>
 	</div>
 
 <div class="main_section">
@@ -43,7 +45,7 @@
 	</figure>
 
 	
-		<form name="add_product" class="empty">
+		<form name="add_product" id="product_form" class="empty">
 			<p>
 				<label for="name">Name/Short Title of this product</label>
 				<p>
@@ -55,8 +57,7 @@
 			<p>
 				<label for="description">Product Description</label>
 				<p>
-					<input type="text" name="description" placeholder="description">
-					</input>
+					<textarea name="description">Description of product</textarea>
 				</p>
 			</p>
 			<p>
@@ -88,10 +89,10 @@
 				</p>
 			</p>
 
-			<input type="submit" value="Submit New Product" formaction='/add' formmethod="POST" />
+			<input type="submit" value="Submit New Product" formaction='products/' formmethod="POST" />
 			<input type="reset" value="Reset Form" />
 		</form>
-
+		<script src="js/db_functions.js"></script>
 </div>
 
 </body>
