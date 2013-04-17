@@ -1,4 +1,12 @@
 <?php
+
+echo <<<END
+	<!DOCTYPE html>
+	<html>
+	<body>
+	<div id="phpstuff">
+END;
+
 		require_once '../login.php';
 		require_once '../vars.php';
 		require_once '../util.php';
@@ -8,27 +16,62 @@
 
 		$method = $_SERVER['REQUEST_METHOD'];
 
-		switch($method){
-			case 'GET': getProduct();
-			case 'POST': addProduct();
+		switch ($method)
+		{
+			case 'GET': 
+				getProduct($db_link, $table_name);
+				break;
+			case 'POST': 
+				addProduct($db_link, $table_name);
+				break;
 		}
 
-		function getProduct($link){
+		function getProduct($link, $table){
 			if (isset($_GET['id']))
 			{
-				$id = retrieveFromGET('id', $db_link)
+				$id = retrieveFromGET('id', $link);
+				$query = "SELECT * FROM $table WHERE id = '$id'";
 
-			}
+				try 
+				{
+					if (!$result = mysqli_query($link, $query))
+					{
+						throw new Exception("<p class='bugger'>Could not perform query.</p>" .
+							"<p class='bugger'>" . mysqli_error($link) . "</p>");
+					}
+					else
+					{
+						bugger("<p class='bugger'>Query successful!</p>");
+						
+						try
+						{
+							if (!$row = mysqli_fetch_row($result))
+							{
+								throw new Exception("<p class='bugger'>Could not retrieve row.</p>" .
+								"<p class='bugger'>" . mysqli_error($link) . "</p>");
+							}
+							else
+							{
+								bugger("<p class='bugger'>Row retrieved!</p>");
+								// Send $row to page
+							}				
+						} catch (Exception $e){
+							bugger($e->getMessage());
+						}
+					}
 
-			function retrieveFromGET($var, $link) 
-			{
-				return mysqli_escape_string($link, $_GET[$var]);
+				} catch (Exception $e){
+						bugger($e->getMessage());
+				}
+
+
 			}
 
 		}
 
 
-		function addProduct($link){
+		function addProduct($link, $table){
+
 
 			if (isset($_POST['name']) &&
 				isset($_POST['description']) &&
@@ -37,25 +80,47 @@
 				isset($_POST['quantity']) &&
 				isset($_POST['code']))
 			{
-				$name = retrieveFromPOST('name', $db_link);
-				$description = retrieveFromPOST('description', $db_link);
-				$cost = retrieveFromPOST('cost', $db_link);
-				$price = retrieveFromPOST('price', $db_link);
-				$quantity = retrieveFromPOST('quantity', $db_link);
-				$code = retrieveFromPOST('code', $db_link);
+				$name = retrieveFromPOST('name', $link);
+				$description = retrieveFromPOST('description', $link);
+				$cost = retrieveFromPOST('cost', $link);
+				$price = retrieveFromPOST('price', $link);
+				$quantity = retrieveFromPOST('quantity', $link);
+				$code = retrieveFromPOST('code', $link);
 
-				$query = "INSERT INTO $table_name VALUES " .
+				$query = "INSERT INTO $table (name, description, cost, " .
+						"price, stock, code) VALUES " .
 						"('$name', '$description', '$cost', " .
-							"'$price', '$quantity', '$code')";
+						"'$price', '$quantity', '$code')";
 
-				$results[] = mysqli_query($db_link, $query);
-
-			}
-
-			function retrieveFromPOST($var, $link) 
-			{
-				return mysqli_escape_string($link, $_POST[$var]);
+				try 
+				{
+					if(!$results[] = mysqli_query($link, $query)){
+						throw new Exception("<p class='bugger'>Query failed: $query</p>" . 
+							"<p class='bugger'>" . mysqli_error($link) . "</p>");
+					}
+					else{
+						bugger("New Product Added!");
+					}
+				} catch (Exception $e)
+				{
+					bugger($e->getMessage());
+				}
 			}
 
 		}
+
+		function retrieveFromPOST($var, $link) 
+		{
+			return mysqli_escape_string($link, $_POST[$var]);
+		}
+
+		function retrieveFromGET($var, $link) 
+		{
+			return mysqli_escape_string($link, $_GET[$var]);
+		}
+echo <<<END
+	</div>
+	</body>
+	</html>
+END;
 ?>

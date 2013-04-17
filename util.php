@@ -37,12 +37,13 @@ function getConnected($myLogin, $myVars){
 
 function createDatabase($link, $name, $user, $host, $pass, $table){
 
-		$query[] = "CREATE DATABASE $name;";
+		$query[] = "CREATE DATABASE $name";
 		$query[] = "GRANT SELECT, INSERT, UPDATE ON $name.* " .
-					"TO '$user'@'$host' IDENTIFIED BY '$pass';";
-		$query[] = "USE $name;";
+					"TO '$user'@'$host' IDENTIFIED BY '$pass'";
+		$query[] = "USE $name";
 		$query[] = "CREATE TABLE $table (name VARCHAR(25), description VARCHAR(140), " . 
-					"cost FLOAT, price FLOAT, stock MEDIUMINT, code VARCHAR(25));";
+					"cost FLOAT, price FLOAT, stock MEDIUMINT, code VARCHAR(25), " .
+					"id INT UNSIGNED NOT NULL AUTO_INCREMENT KEY)";
 
 		foreach ($query as $q) {
 			if($q == "USE $name;"){
@@ -50,8 +51,7 @@ function createDatabase($link, $name, $user, $host, $pass, $table){
 					or die("Unable to select database: " . mysqli_error($link));
 			}
 			else{
-				$results[] = mysqli_query($link, $q) 
-					or die("Failed on query: $q. Because: " . mysqli_error($link));
+				$results[] = queryDatabase($link, $q);
 			}
 			
 		}
@@ -63,8 +63,11 @@ function createDatabase($link, $name, $user, $host, $pass, $table){
 			or die('Something went wrong closing the MySQL connection.');
 }
 
-function selectDatabase($link, $name){
-
+function queryDatabase($link, $query){
+	$result = mysqli_query($link, $query)
+				or die("<p>Failed on query: $query.</p><p>Because: " .
+					mysqli_error($link) . ".</p>");
+	return $result;
 }
 
 function bugger($msg){
