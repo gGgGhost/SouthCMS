@@ -1,10 +1,18 @@
+html{
+	color: #232E33;
+}
 div#phpstuff{
-	border-top: 5px solid #232E33;
 	border-bottom: 5px solid #232E33;
 	background-color: #5DC2F4;
 	width: 100%;
 	display: block;
 	padding: 15px;
+}
+div#phpstuff h1{
+	padding-left: 176px;
+	padding-bottom: none;
+	margin: none;
+	display: inline;
 }
 div#phpstuff p{
 	font-weight: bold;
@@ -17,7 +25,6 @@ body{
 	margin: 0;
 	height: 100%;
 	font-family: 'Calibri';
-	color: #232E33;
 }
 h1.big_button-caption{
 	font-size: 1em;
@@ -26,7 +33,6 @@ h1.big_button-caption{
 	margin: 0;
 }
 a.button{
-	color: #232E33;
 	margin: 0;
 }
 a.current{
