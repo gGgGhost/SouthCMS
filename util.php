@@ -41,7 +41,7 @@ function createDatabase($link, $name, $user, $host, $pass, $table){
 		$query[] = "GRANT SELECT, INSERT, UPDATE ON $name.* " .
 					"TO '$user'@'$host' IDENTIFIED BY '$pass';";
 		$query[] = "USE $name;";
-		$query[] = "CREATE TABLE $table (name VARCHAR(25), description CHAR(13), " . 
+		$query[] = "CREATE TABLE $table (name VARCHAR(25), description VARCHAR(140), " . 
 					"cost FLOAT, price FLOAT, stock MEDIUMINT, code VARCHAR(25));";
 
 		foreach ($query as $q) {
