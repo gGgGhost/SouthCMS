@@ -13,12 +13,22 @@
 			case 'POST': addProduct();
 		}
 
-		function getProduct(){
+		function getProduct($link){
+			if (isset($_GET['id']))
+			{
+				$id = retrieveFromGET('id', $db_link)
+
+			}
+
+			function retrieveFromGET($var, $link) 
+			{
+				return mysqli_escape_string($link, $_GET[$var]);
+			}
 
 		}
 
 
-		function addProduct(){
+		function addProduct($link){
 
 			if (isset($_POST['name']) &&
 				isset($_POST['description']) &&
@@ -27,12 +37,12 @@
 				isset($_POST['quantity']) &&
 				isset($_POST['code']))
 			{
-				$name = getFromPOST('name', $db_link);
-				$description = getFromPOST('description', $db_link);
-				$cost = getFromPOST('cost', $db_link);
-				$price = getFromPOST('price', $db_link);
-				$quantity = getFromPOST('quantity', $db_link);
-				$code = getFromPOST('code', $db_link);
+				$name = retrieveFromPOST('name', $db_link);
+				$description = retrieveFromPOST('description', $db_link);
+				$cost = retrieveFromPOST('cost', $db_link);
+				$price = retrieveFromPOST('price', $db_link);
+				$quantity = retrieveFromPOST('quantity', $db_link);
+				$code = retrieveFromPOST('code', $db_link);
 
 				$query = "INSERT INTO $table_name VALUES " .
 						"('$name', '$description', '$cost', " .
@@ -42,7 +52,7 @@
 
 			}
 
-			function getFromPOST($var, $link) 
+			function retrieveFromPOST($var, $link) 
 			{
 				return mysqli_escape_string($link, $_POST[$var]);
 			}
