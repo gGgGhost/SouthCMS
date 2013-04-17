@@ -1,18 +1,26 @@
+var addProductForm = document.getElementById("product_form");
+var addProductButton = document.getElementById("add_product");
 
-function myEvents(e) {
+addProductButton.addEventListener("click", myButtons, false);
+
+console.log("using js");
+
+function myButtons(e) {
 
 	// Catch clicks on img inside button
 	var thisElement = e.target;
+	console.log("clicked");
 
 	if (thisElement.tagName === 'IMG') {
 		thisElement = e.target.parentElement;
+		console.log("in image");
+		console.log(thisElement.id);
 	};
 
 	if(thisElement.id === "add_product"){
-		var option_path = "/add";
-	}
-	else if(thisElement.id === "destroy_database"){
-		var option_path = "destroy_database.php";
+		console.log("product button");
+		addProductForm.className = "";
+		console.log("class: " + addProductForm.className);
 	}
 
 	// Process request
@@ -39,5 +47,4 @@ function XHRquest(requestType, requestPath){
 	xhr.send(null);
 }
 
-var addProductButton = document.getElementById("add_product");
-addProductButton.addEventListener("click", myEvents, false);
+
