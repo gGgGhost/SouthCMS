@@ -1,3 +1,3 @@
 <?php // vars.php
-$db_vars['table'] = 'main';
+$db_vars['table'] = 'products';
 ?>

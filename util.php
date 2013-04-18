@@ -42,7 +42,7 @@ function createDatabase($link, $name, $user, $host, $pass, $table){
 					"TO '$user'@'$host' IDENTIFIED BY '$pass'";
 		$query[] = "USE $name";
 		$query[] = "CREATE TABLE $table (name VARCHAR(25), description VARCHAR(140), " . 
-					"cost FLOAT, price FLOAT, stock MEDIUMINT, code VARCHAR(25), " .
+					"cost DEC(4,2), price DEC(4,2), stock MEDIUMINT, code VARCHAR(25), " .
 					"id INT UNSIGNED NOT NULL AUTO_INCREMENT KEY)";
 
 		foreach ($query as $q) {
