@@ -57,7 +57,7 @@
 			<p>
 				<label for="description">Product Description</label>
 				<p>
-					<textarea name="description">Description of product</textarea>
+					<textarea name="description" placeholder="description"></textarea>
 				</p>
 			</p>
 			<p>
