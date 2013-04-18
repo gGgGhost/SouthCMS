@@ -1,0 +1,33 @@
+html {
+	color: #232E33;
+}
+header {
+	border-bottom: 5px solid #232E33;
+	background-color: #5DC2F4;
+	width: 100%;
+	display: block;
+	padding: 15px;
+}
+header h1 {
+	padding-left: 176px;
+	padding-bottom: none;
+	margin: none;
+	display: inline;
+}
+body {
+	margin: 0;
+	height: 100%;
+	font-family: 'Calibri';
+}
+.main_section {
+	margin: 0;
+	padding-left: 176px;
+	padding-top: 10px;
+	padding-bottom: 38px;
+	height: 100%;
+	width: 850px;
+	z-index: 2;
+}
+input[type='search'] {
+	width: 400px;
+}
