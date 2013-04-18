@@ -1,6 +1,17 @@
 html{
 	color: #232E33;
 }
+textarea{
+	border-style: inset;
+	border-width: 2px;
+	resize: none;
+	font-size: 0.9em;
+	width: 500px;
+	height: 80px;
+}
+input[type='text']{
+	width: 500px;
+}
 div#phpstuff{
 	border-bottom: 5px solid #232E33;
 	background-color: #5DC2F4;
