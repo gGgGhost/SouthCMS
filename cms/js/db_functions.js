@@ -2,7 +2,6 @@ var addProductForm = document.getElementById("product_form");
 var addProductButton = document.getElementById("add_product");
 var responseArea = document.getElementById('phpstuff');
 
-var p_name = document.getElementById('name');
 
 addProductButton.addEventListener("click", myButtons, false);
 addProductForm.addEventListener("submit", submitForm, false);
@@ -36,11 +35,9 @@ function captureForm(){
 	looper:
 	for (var i = 0; inputs.length; i++) {
 		var input = inputs[i];
-		if (input.type == 'submit'){
+		if (input.type == 'reset'){
 			break looper;
 		}
-		console.log(input.type);
-		console.log(input.value);
 		if (formString !== '') {
 			formString += '&';
 		}
@@ -59,6 +56,7 @@ function ajaxRequest(requestType, requestPath, requestString){
 
 	var xhr = new XMLHttpRequest();
 	xhr.open(requestType, requestPath);
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xhr.onreadystatechange = function(){
 		if (xhr.readyState === 4 && xhr.status === 200){
 			var type = xhr.getResponseHeader("Content-Type");
@@ -73,10 +71,8 @@ function ajaxRequest(requestType, requestPath, requestString){
 	}
 	if (requestString != ''){
 		xhr.send(requestString);
-		console.log(requestString);
 	}
 	else{
-		console.log('else');
 		xhr.send(null);
 	}
 	

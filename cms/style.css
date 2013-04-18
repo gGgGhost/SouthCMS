@@ -12,14 +12,14 @@ textarea{
 input[type='text']{
 	width: 500px;
 }
-div#phpstuff{
+header{
 	border-bottom: 5px solid #232E33;
 	background-color: #5DC2F4;
 	width: 100%;
 	display: block;
 	padding: 15px;
 }
-div#phpstuff h1{
+header h1{
 	padding-left: 176px;
 	padding-bottom: none;
 	margin: none;
