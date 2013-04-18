@@ -1,29 +1,40 @@
+var addProductForm = document.getElementById("product_form");
+var addProductButton = document.getElementById("add_product");
 
-function alterDB(e) {
+addProductButton.addEventListener("click", myButtons, false);
+
+console.log("using js");
+
+function myButtons(e) {
 
 	// Catch clicks on img inside button
 	var thisElement = e.target;
+	console.log("clicked");
 
 	if (thisElement.tagName === 'IMG') {
 		thisElement = e.target.parentElement;
+		console.log("in image");
+		console.log(thisElement.id);
 	};
 
-	if(thisElement.id === "create_database"){
-		var option_path = "create_database.php";
+	if(thisElement.id === "add_product"){
+		console.log("product button");
+		addProductForm.className = "";
+		console.log("class: " + addProductForm.className);
 	}
-	else if(thisElement.id === "destroy_database"){
-		var option_path = "destroy_database.php";
-	}
-
-	//Create placeholder bar
-	writeInfoBar('Connecting to MySQL...', 'neutral');
 
 	// Process request
-	var request = new XMLHttpRequest();
-	request.open("GET", option_path);
-	request.onreadystatechange = function(){
-		if (request.readyState === 4 && request.status === 200){
-			var type = request.getResponseHeader("Content-Type");
+	
+
+}
+
+function XHRquest(requestType, requestPath){
+
+	var xhr = new XMLHttpRequest();
+	xhr.open(requestType, requestPath);
+	xhr.onreadystatechange = function(){
+		if (xhr.readyState === 4 && request.status === 200){
+			var type = xhr.getResponseHeader("Content-Type");
 			if (type.match(/^text/)){
 				writeInfoBar(request.responseText, 'positive');
 			}
@@ -33,13 +44,7 @@ function alterDB(e) {
 
 		}
 	}
-	request.send(null);
-
+	xhr.send(null);
 }
 
-var destroyButton = document.getElementById("destroy_database");
-destroyButton.addEventListener("click", alterDB, false);
 
-
-var createButton = document.getElementById("create_database");
-createButton.addEventListener("click", alterDB, false);
