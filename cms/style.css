@@ -39,13 +39,19 @@ h1.big_button-caption{
 	text-transform: uppercase;
 	margin: 0;
 }
+h3{
+	color: lightgrey;
+	margin: 0;
+	font-style: italic;
+
+}
 a.button{
 	margin: 0;
 }
 a.current{
 	color: #FFFFFF;
 }
-.main_section{
+#main_section{
 	margin: 0;
 	padding-left: 10%;
 	padding-top: 10px;
@@ -121,3 +127,4 @@ footer{
 	color: #5DC2F4;
 	height: 70px;
 }
+

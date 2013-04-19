@@ -13,7 +13,7 @@
 	<h1>SouthCMS</h1>
 </header>
 
-<div class="main_section">
+<div id="main_section">
 
 	<figure class="big_button option" id="add_product">
 		<img src="images/icons/128x128/plus.png" class="icon-biggest" />
@@ -22,7 +22,7 @@
 			<p>Add a new product to the database</p>
 		</figcaption>
 	</figure>
-
+	
 	<figure class="big_button option">
 		<img src="images/icons/128x128/chart.png" />
 		<figcaption>
@@ -81,7 +81,7 @@
 			</p>
 		</p>
 		<p>
-			<label for="code">What code uniquely identifies this this product?</label>
+			<label for="code">Is there an associated product code?</label>
 			<p>
 				<input type="text" name="code" placeholder="code">
 				</input>
