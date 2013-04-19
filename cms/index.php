@@ -94,6 +94,10 @@
 	<script src="js/db_functions.js"></script>
 </div>
 
+<footer>
+
+</footer>
+
 </body>
 
 </html>

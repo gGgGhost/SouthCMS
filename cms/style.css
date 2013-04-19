@@ -47,12 +47,9 @@ a.current{
 }
 .main_section{
 	margin: 0;
-	padding-left: 176px;
+	padding-left: 10%;
 	padding-top: 10px;
-	padding-bottom: 38px;
-	height: 100%;
-	width: 850px;
-	z-index: 2;
+	padding-bottom: 15px;
 }
 img{
 	margin: 0;
@@ -103,4 +100,24 @@ img.icon-big{
 }
 .empty{
 	display: none;
+}
+.addition{
+	width: 55%;
+}
+.addition p.top{
+	background-color: #232E33;
+	color: #5DC2F4;
+}
+.addition p.top:hover{
+	color: white;
+}
+.addition a{
+	text-decoration: none;
+	color: #5DC2F4;
+}
+footer{
+	background-color: #232E33;
+	border-top: 3px solid #5DC2F4;
+	color: #5DC2F4;
+	height: 70px;
 }
