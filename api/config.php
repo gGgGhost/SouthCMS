@@ -1,6 +1,6 @@
-<?php // login.php
-$db_login['host'] = 'localhost'; 
-$db_login['DB'] = 'southcms';
-$db_login['user'] = 'root';
-$db_login['pass'] = '';
+<?php // config.php
+$DB_LOGIN['host'] = 'localhost'; 
+$DB_LOGIN['DB'] = 'southcms';
+$DB_LOGIN['user'] = 'root';
+$DB_LOGIN['pass'] = '';
 ?>

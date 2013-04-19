@@ -1,12 +1,11 @@
 <?php
 
-
-function getConnected($mysqlDetails) {
-
-	$db_host = $mysqlDetails['host'];
-	$db_user = $mysqlDetails['user'];
-	$db_pass = $mysqlDetails['pass'];
-	$db_name = $mysqlDetails['DB'];
+function getConnected() {
+	global $DB_LOGIN;
+	$db_host = $DB_LOGIN['host'];
+	$db_user = $DB_LOGIN['user'];
+	$db_pass = $DB_LOGIN['pass'];
+	$db_name = $DB_LOGIN['DB'];
 
 	try {
 		if (!$db_link = mysqli_connect($db_host, $db_user, $db_pass)) {
