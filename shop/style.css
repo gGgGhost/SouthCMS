@@ -57,3 +57,9 @@ h3{
 	font-weight: bold;
 	font-size: 1.1em;
 }
+header a{
+	text-decoration: none;
+	color: #232E33;
+}
+header a:hover{
+	color: white;

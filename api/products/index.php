@@ -200,7 +200,7 @@ echo <<<END
 </head>
 <body>
 <header>
-	<h1>very basic shop</h1>
+	<h1><a href="../">very simple shop</a></h1>
 </header>
 <div id="main_section">
 <form id="search_bar">
