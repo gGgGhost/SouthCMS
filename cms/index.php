@@ -46,45 +46,39 @@
 	
 	<form name="add_product" id="product_form" class="empty">
 		<p>
-			<label for="name">Name/Short Title of this product</label>
+			<label for="name"><h3>Name/Short Title of this product</h3></label>
 			<p>
-				<input type="text" name="name" placeholder="name">
-				</input>
+				<input type="text" name="name" placeholder="40 character max" maxlength="40" />
 			</p>
 		</p>
 
 		<p>
-			<label for="description">Product Description</label>
+			<label for="description"><h3>Product Description</h3></label>
 			<p>
-				<textarea name="description" placeholder="description"></textarea>
+				<textarea name="description" placeholder="140 character max" maxlength="140"></textarea>
 			</p>
 		</p>
 		<p>
-			<label for="cost">How much does this product cost you per unit?</label>
+			<label for="cost"><h3>How much does this product cost you per unit?</h3></label>
 			<p>
-				<input type="text" name="cost" placeholder="cost">
-				</input>
-			</p>
+				<input type="text" name="cost" placeholder="&pound;" maxlength="6" />
 		</p>
 		<p>
-			<label for="price">How much will you sell your product for per unit?</label>
+			<label for="price"><h3>How much will you sell your product for per unit?</h3></label>
 			<p>	
-				<input type="text" name="price" placeholder="price">
-				</input>
+				<input type="text" name="price" placeholder="&pound;" maxlength="6" />
 			</p>
 		</p>
 		<p>
-			<label for="quantity">How many of this item do you initially have in stock?</label>
+			<label for="quantity"><h3>How many of this item do you initially have in stock?</h3></label>
 			<p>
-				<input type="text" name="quantity" placeholder="quantity">
-				</input>
+				<input type="text" name="quantity" placeholder="quantity in stock" maxlength="6" />
 			</p>
 		</p>
 		<p>
-			<label for="code">Is there an associated product code?</label>
+			<label for="code"><h3>Is there an associated product code?</h3></label>
 			<p>
-				<input type="text" name="code" placeholder="code">
-				</input>
+				<input type="text" name="code" placeholder="20 character max"  maxlength="20" />
 			</p>
 		</p>
 
