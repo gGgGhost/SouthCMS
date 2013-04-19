@@ -25,32 +25,13 @@ mysqli_close($db_link)
 
 function getProduct($id, $db_link, $format = 'array') {
 
-	$query = "SELECT * FROM products WHERE id = '$id'";
+$query = "SELECT * FROM products WHERE id = '$id'";
 
-	try  {
-		if (!$result = mysqli_query($db_link, $query)) {	
-			$error = mysqli_error($db_link);
-			throw new Exception("<p>Could not submit query.</p>" .
-				"<p>\"$error\"</p>");
-		} else {
-			
-			try {
-				if (!$row = mysqli_fetch_assoc($result)) {
-					$error = mysqli_error($db_link);
-					throw new Exception("<p>Could not retrieve row.</p>" .
-					"<p>$error</p>");
-				} else {
-					return $row;
-				}			
-			} catch (Exception $e) {
-				bugger($e->getMessage());
-			}
-		}
+$result = queryDatabase($query, $db_link);	
 
-	} catch (Exception $e) {
-			bugger($e->getMessage());
-	}
+$product = retrieveUsingResult($result, $db_link);
 
+return $product;
 
 }
 
@@ -58,31 +39,32 @@ function getProduct($id, $db_link, $format = 'array') {
 function addProduct($link){
 
 
-	if (isset($_POST['name']) &&
-		isset($_POST['description']) &&
-		isset($_POST['cost']) &&
-		isset($_POST['price']) &&
-		isset($_POST['quantity']) &&
-		isset($_POST['code'])) {
+if (isset($_POST['name']) &&
+	isset($_POST['description']) &&
+	isset($_POST['cost']) &&
+	isset($_POST['price']) &&
+	isset($_POST['quantity']) &&
+	isset($_POST['code'])) {
 
-		$name = retrieveFromPOST('name', $link);
-		$description = retrieveFromPOST('description', $link);
-		$cost = retrieveFromPOST('cost', $link);
-		$price = retrieveFromPOST('price', $link);
-		$quantity = retrieveFromPOST('quantity', $link);
-		$code = retrieveFromPOST('code', $link);
+	$name = retrieveFromPOST('name', $link);
+	$description = retrieveFromPOST('description', $link);
+	$cost = retrieveFromPOST('cost', $link);
+	$price = retrieveFromPOST('price', $link);
+	$quantity = retrieveFromPOST('quantity', $link);
+	$code = retrieveFromPOST('code', $link);
 
-		$query = "INSERT INTO products (name, description, cost, " .
-				"price, stock, code) VALUES " .
-				"('$name', '$description', '$cost', " .
-				"'$price', '$quantity', '$code')";
+	$query = "INSERT INTO products (name, description, cost, " .
+			"price, stock, code) VALUES " .
+			"('$name', '$description', '$cost', " .
+			"'$price', '$quantity', '$code')";
 
-		if ($results[] = queryDatabase($link, $query)) {
-			$initialValue = $cost * $quantity;
-			$salesValue = $price * $quantity;
-			$difference = $salesValue - $initialValue;
-			$dpi = $price - $cost; // Difference Per Item
-			$id = countProducts($link);
+	if ($results[] = queryDatabase($query, $link)) {
+		$initialValue = $cost * $quantity;
+		$salesValue = $price * $quantity;
+		$difference = $salesValue - $initialValue;
+		$dpi = $price - $cost; // Difference Per Item
+		$id = countProducts($link);
+
 echo <<<END
 <div class='addition'>
 <a href="products/?id=$id"><p class="top">Product Added: "$name" x$quantity</p></a>
@@ -94,57 +76,166 @@ echo <<<END
 </div>
 END;
 
-		}
-	} else {
-		echo("Variables not set correctly");
 	}
+} else {
+	echo("Variables not set correctly");
+}
 
 }
 
 function retrieveFromPOST($var, $link) {
-	return mysqli_escape_string($link, $_POST[$var]);
+return mysqli_escape_string($link, $_POST[$var]);
 }
 
 function retrieveFromGET($var, $link) {
-	return mysqli_escape_string($link, $_GET[$var]);
+return mysqli_escape_string($link, $_GET[$var]);
 }
 
 function countProducts($db_link) {
-	$query = "SELECT COUNT(*) FROM products";
-	$result = queryDatabase($db_link, $query);
-	$row = mysqli_fetch_row($result);
-	return $row[0];
+$query = "SELECT COUNT(*) FROM products";
+$result = queryDatabase($query, $db_link);
+$row = mysqli_fetch_row($result);
+return $row[0];
 }
 
-function displayProductList($limit, $totalProducts, $db_link) {
-	$thisProduct;
-	$productId = $totalProducts;
+function printProductList($limit, $db_link) {
 
-	for ($i = 0; $i < $limit; $i++) {
-		$thisProduct = getProduct($productId, $db_link);
-		$name = $thisProduct['name'];
-		$price = $thisProduct['price'];
-		$stock = $thisProduct['stock'];
-		switch ($stock) {
-			case 0:
-				$stockMessage = "Out of Stock";
-				break;
-			default:
-				$stockMessage = "$stock in Stock";
-		}
+	$ids = retrieveLatestIds($limit, $db_link);
+	$lastProduct = $ids[$limit -1];
+
+
+for ($i = 0; $i < $limit; $i++) {
+	$productId = $ids[$i];
+	$thisProduct = getProduct($productId, $db_link);
+	$name = $thisProduct['name'];
+	$price = $thisProduct['price'];
+	$stock = $thisProduct['stock'];
+	
+	$stockMessage = isThereEnoughStock($stock);
 
 echo <<<END
 <div class="product">
 <h2><a href="products/?id=$productId">$name</a></h2>
-<p>$stockMessage</p>
-<p>&pound;$price</p>
+<p class="stock_level">$stockMessage</p>
+<p class="price">&pound;$price</p>
 </div>
 
 END;
-
-		$productId--;
-		if ($productId == 0) { break; }
+		if ($productId == $lastProduct) { break; }
 	}
+}
+
+function retrieveLatestIds ($limit, $db_link) {
+$query = "SELECT id FROM products ORDER BY id DESC LIMIT $limit";
+$result = queryDatabase($query, $db_link);
+$stopHere = mysqli_num_rows($result);
+
+for ($i = 0; $i < $stopHere; $i++) {
+	$row = retrieveUsingResult($result, $db_link);
+	$ids[] = $row['id'];
+}
+return $ids;
+}
+
+function printProductPageEditable ($product) {
+$name = $product['name'];
+$cost = $product['cost'];
+$price = $product['price'];
+$stock = $product['stock'];
+$code = $product['code'];
+$id = $product['id'];
+$description = $product['description'];
+
+// Top of page
+echo <<<END
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SouthCMS E-commerce</title>
+	<link href="../style.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<header>
+	<h1>SouthCMS</h1>
+</header>
+<div id="main_section">
+END;
+// Print product
+echo <<<END
+<div id="product_area">
+<h2 id="product_name">$name</h2>
+<p id="product_description"><h3>description</h3>$description</p>
+<p id="product_cost"><h3>cost (per unit)</h3>&pound;$cost</p>
+<p id="product_price"><h3>price (per unit)</h3>&pound;$price</p>
+<p id="product_id"><h3>id</h3>$id</p>
+<p id="product_code"><h3>code</h3>$code</p>
+<p id="product_stock"><h3>current stock</h3>$stock</p>
+<button id="edit">Edit product</button>
+</div>
+END;
+// Close tags
+echo <<<END
+</div>
+</body>
+</html>
+END;
+}
+
+function printProductPagePurchasable ($product) {
+
+$name = $product['name'];
+$price = $product['price'];
+$stock = $product['stock'];
+$description = $product['description'];
+
+$stockMessage = isThereEnoughStock($stock);
+
+// Top of page
+echo <<<END
+<!DOCTYPE html>
+<html>
+<head>
+	<title>shop</title>
+	<link href="../style.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<header>
+	<h1>very basic shop</h1>
+</header>
+<div id="main_section">
+<form id="search_bar">
+	<label for="search_box">Search:</label>
+	<input type="search" name="search_box" /><input type="submit" value="Go" />
+</form>
+END;
+// Print product
+echo <<<END
+<div id="product_area">
+<h2 id="product_name">$name</h2>
+<p id="product_description"><h3>description</h3>$description</p>
+<p id="product_price">&pound;$price</p>
+<p id="product_stock">$stockMessage</p>
+<button id="buy">Add to Basket</button>
+</div>
+END;
+// Close tags
+echo <<<END
+</div>
+</body>
+</html>
+END;
+
+}
+
+function isThereEnoughStock($stock) {
+switch ($stock) {
+		case 0:
+			$stockMessage = "Out of Stock";
+			break;
+		default:
+			$stockMessage = "$stock in stock";
+}
+return $stockMessage;
 }
 
 ?>

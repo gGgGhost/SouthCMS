@@ -43,7 +43,7 @@ function createDatabase($link, $name, $user, $host, $pass) {
 				mysqli_select_db($link, $name) 
 					or die("Unable to select database: " . mysqli_error($link));
 			} else {
-				$results[] = queryDatabase($link, $q);
+				$results[] = queryDatabase($q, $link);
 			}
 			
 		}
@@ -51,7 +51,7 @@ function createDatabase($link, $name, $user, $host, $pass) {
 
 }
 
-function queryDatabase($link, $query) {
+function queryDatabase($query, $link) {
 	try {
 		if(!$result = mysqli_query($link, $query)) {
 			$error = mysqli_error($link);
@@ -62,6 +62,20 @@ function queryDatabase($link, $query) {
 			echo ($e->getMessage());
 	}
 	return $result;
+}
+
+function retrieveUsingResult ($result, $link, $format = "array") {
+	try {
+			if (!$row = mysqli_fetch_assoc($result)) {
+				$error = mysqli_error($link);
+				throw new Exception("<p>Could not retrieve row.</p>" .
+				"<p>$error</p>");
+			} else {
+				return $row;
+			}			
+		} catch (Exception $e) {
+			bugger($e->getMessage());
+		}
 }
 
 function bugger($msg) {
