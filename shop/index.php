@@ -12,17 +12,17 @@ echo <<<END
 <!DOCTYPE html>
 <html>
 <head>
-<title>shop</title>
-<link href="style.css" type="text/css" rel="stylesheet" />
+	<title>shop</title>
+	<link href="style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
 <header>
-<h1>very basic shop</h1>
+	<h1>very simple shop</h1>
 </header>
-<div class="main_section">
+<div id="main_section">
 <form id="search_bar">
-<label for="search_box">Search:</label>
-<input type="search" name="search_box" /><input type="submit" value="Go" />
+	<label for="search_box">Search:</label>
+	<input type="search" name="search_box" /><input type="submit" value="Go" />
 </form>
 <h1>Latest Products</h1>
 <div id="product_list">
@@ -33,7 +33,7 @@ switch ($totalProducts) {
 		echo ("<h2>There are no products in the store yet to display.</h2>");
 		break;
 	default: 
-		displayProductList($numberToDisplay, $totalProducts, $db_link);
+		printProductList($numberToDisplay, $db_link);
 		break;
 }
 
