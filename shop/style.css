@@ -9,7 +9,7 @@ header {
 	padding: 15px;
 }
 header h1 {
-	padding-left: 176px;
+	padding-left: 10%;
 	padding-bottom: none;
 	margin: none;
 	display: inline;
@@ -21,13 +21,22 @@ body {
 }
 .main_section {
 	margin: 0;
-	padding-left: 176px;
+	padding-left: 10%;
 	padding-top: 10px;
-	padding-bottom: 38px;
-	height: 100%;
-	width: 850px;
-	z-index: 2;
 }
 input[type='search'] {
 	width: 400px;
+}
+.product a {
+	text-decoration: none;
+	color: #5DC2F4;
+}
+.product a:hover {
+	color: white;
+}
+.product{
+	background-color: #232E33;
+	color: white;
+	width:90%;
+	padding-left: 8px;
 }

@@ -1,4 +1,13 @@
 <?php
+
+$directory = __DIR__;
+require_once "$directory/../api/products/index.php";
+
+$db_link = getConnected();
+
+$totalProducts = countProducts($db_link);
+$numberToDisplay = 5;
+
 echo <<<END
 <!DOCTYPE html>
 <html>
@@ -15,20 +24,26 @@ echo <<<END
 <label for="search_box">Search:</label>
 <input type="search" name="search_box" /><input type="submit" value="Go" />
 </form>
+<h1>Latest Products</h1>
+<div id="product_list">
 END;
-$directory = __DIR__;
-require_once "$directory/../api/products/index.php";
 
-countProducts($db_login);
-function displayProductList($limit, $offset, $totalProducts) {
-	
+switch ($totalProducts) {
+	case 0:
+		echo ("<h2>There are no products in the store yet to display.</h2>");
+		break;
+	default: 
+		displayProductList($numberToDisplay, $totalProducts, $db_link);
+		break;
 }
 
-
 echo <<<END
+</div>
 </div>
 </body>
 </html>
 END;
+
+mysqli_close($db_link);
 
 ?>
