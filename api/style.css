@@ -1,45 +1,36 @@
-html {
+html{
 	color: #232E33;
 }
-header {
+header{
 	border-bottom: 5px solid #232E33;
 	background-color: #5DC2F4;
 	width: 100%;
 	display: block;
 	padding: 15px;
 }
-header h1 {
+header h1{
 	padding-left: 10%;
 	padding-bottom: none;
 	margin: none;
 	display: inline;
 }
-body {
+header a{
+	text-decoration: none;
+	color: #232E33;
+}
+header a:hover{
+	color: white;
+}
+body{
 	margin: 0;
 	height: 100%;
 	font-family: 'Calibri';
 }
-#main_section {
+#main_section{
 	margin: 0;
 	padding-left: 10%;
 	padding-top: 10px;
 	padding-bottom: 15px;
-}
-input[type='search'] {
-	width: 400px;
-}
-.product a {
-	text-decoration: none;
-	color: #5DC2F4;
-}
-.product a:hover {
-	color: white;
-}
-.product{
-	background-color: #232E33;
-	color: white;
-	width:90%;
-	padding-left: 8px;
 }
 h2{
 	font-size: 2em;
@@ -50,23 +41,11 @@ h3{
 	font-style: italic;
 
 }
-#product_price{
-	font-weight: bold;
+input[type='search'] {
+	width: 400px;
 }
-.stock_level{
-	font-style: italic;
-	color: lightgrey;
-}
-.price{
-	font-weight: bold;
-	font-size: 1.1em;
-}
-header a{
-	text-decoration: none;
-	color: #232E33;
-}
-header a:hover{
-	color: white;
+.empty{
+	display: none;
 }
 footer{
 	background-color: #232E33;
@@ -74,3 +53,4 @@ footer{
 	color: #5DC2F4;
 	height: 70px;
 }
+

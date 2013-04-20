@@ -6,7 +6,9 @@ require_once "$directory/../api/products/index.php";
 $db_link = getConnected();
 
 $totalProducts = countProducts($db_link);
-$numberToDisplay = 5;
+$numberToDisplay = 6;
+
+if ($numberToDisplay > $totalProducts) { $numberToDisplay = $totalProducts; }
 
 echo <<<END
 <!DOCTYPE html>
@@ -40,6 +42,8 @@ switch ($totalProducts) {
 echo <<<END
 </div>
 </div>
+<footer>
+</footer>
 </body>
 </html>
 END;

@@ -27,21 +27,23 @@ function getConnected() {
 	return $db_link;
 }
 
-function createDatabase($link, $name, $user, $host, $pass) {
+function createDatabase($db_link, $name, $user, $host, $pass) {
 
 		$query[] = "CREATE DATABASE $name";
 		$query[] = "GRANT SELECT, INSERT, UPDATE ON $name.* " .
 					"TO '$user'@'$host' IDENTIFIED BY '$pass'";
 		$query[] = "USE $name";
 		$query[] = "CREATE TABLE products (name VARCHAR(40), description VARCHAR(140), " . 
-					"cost DEC(6,2), price DEC(6,2), stock MEDIUMINT, code VARCHAR(20), " .
-					"id INT UNSIGNED NOT NULL AUTO_INCREMENT, FULLTEXT(name), " .
+					"cost DEC(6,2), price DEC(6,2), stock MEDIUMINT, code VARCHAR(20)," .
+					"prodnum INT UNSIGNED NOT NULL AUTO_INCREMENT, FULLTEXT(name), " .
 					" INDEX(code), INDEX(id), PRIMARY KEY(id)) ENGINE MyISAM";
-
+		$query[] = "CREATE TABLE categories (name VARCHAR(15), catnum INT UNSIGNED" .
+					" NOT NULL AUTO_INCREMENT) INDEX catnum";
+		
 		foreach ($query as $q) {
 			if($q == "USE $name;") {
-				mysqli_select_db($link, $name) 
-					or die("Unable to select database: " . mysqli_error($link));
+				mysqli_select_db($db_link, $name) 
+					or die("Unable to select database: " . mysqli_error($db_link));
 			} else {
 				$results[] = queryDatabase($q, $link);
 			}
@@ -51,10 +53,10 @@ function createDatabase($link, $name, $user, $host, $pass) {
 
 }
 
-function queryDatabase($query, $link) {
+function queryDatabase($query, $db_link) {
 	try {
-		if(!$result = mysqli_query($link, $query)) {
-			$error = mysqli_error($link);
+		if(!$result = mysqli_query($db_link, $query)) {
+			$error = mysqli_error($db_link);
 			throw new Exception("<p>Failed on query: $query</p>" .
 				"<p>Because: $error</p>");
 		} 
@@ -64,10 +66,10 @@ function queryDatabase($query, $link) {
 	return $result;
 }
 
-function retrieveUsingResult ($result, $link, $format = "array") {
+function retrieveUsingResult ($result, $db_link, $format = "array") {
 	try {
 			if (!$row = mysqli_fetch_assoc($result)) {
-				$error = mysqli_error($link);
+				$error = mysqli_error($db_link);
 				throw new Exception("<p>Could not retrieve row.</p>" .
 				"<p>$error</p>");
 			} else {
@@ -76,6 +78,18 @@ function retrieveUsingResult ($result, $link, $format = "array") {
 		} catch (Exception $e) {
 			bugger($e->getMessage());
 		}
+}
+
+function retrieveLatestIds ($limit, $db_link) {
+	$query = "SELECT id FROM products ORDER BY id DESC LIMIT $limit";
+	$result = queryDatabase($query, $db_link);
+	$stopHere = mysqli_num_rows($result);
+
+	for ($i = 0; $i < $stopHere; $i++) {
+		$row = retrieveUsingResult($result, $db_link);
+		$ids[] = $row['id'];
+	}
+	return $ids;
 }
 
 function bugger($msg) {
