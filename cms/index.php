@@ -4,8 +4,8 @@
 	<title>
 		SouthCMS E-commerce
 	</title>
+	<link href="../api/style.css" type="text/css" rel="stylesheet" />
 	<link href="style.css" type="text/css" rel="stylesheet" />
-
 </head>
 <body>
 
@@ -79,6 +79,12 @@
 			<label for="code"><h3>Is there an associated product code?</h3></label>
 			<p>
 				<input type="text" name="code" placeholder="20 character max"  maxlength="20" />
+			</p>
+		</p>
+		<p>
+			<label for="file_upload"><h3>Upload an image?</h3></label>
+			<p>
+				<input type="file" id="file_upload" name="file_upload" />
 			</p>
 		</p>
 
