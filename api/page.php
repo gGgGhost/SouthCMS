@@ -98,7 +98,12 @@ function prepareShopFront($numberToDisplay, $db_link){
 	// associated to keywords 'start', 'content', and 'end'
 	return $page;
 }
-
+// To do
+/*
+function prepareCMS(){}
+function prepareInputForm(){}
+function prepareFormSegment(){}
+*/
 function thisProductLine ($section, $product) {
 
 	$name = $section['name'];
@@ -129,8 +134,8 @@ function thisProductLine ($section, $product) {
 
 function prepareProductList($limit, $db_link) {
 
-	$ids = retrieveLatestIds($limit, $db_link);
-	$lastProduct = $ids[$limit -1];
+	$prodnums = retrieveLatestProdNums($limit, $db_link);
+	$lastProduct = $prodnums[$limit -1];
 	$list = "";
 
 	$section['name'] = "stock";
@@ -145,13 +150,13 @@ function prepareProductList($limit, $db_link) {
 		
 
 	for ($i = 0; $i < $limit; $i++) {
-		$productId = $ids[$i];
-		$product = getProduct($productId, $db_link);
+		$productNum = $prodnums[$i];
+		$product = getProduct($productNum, $db_link);
 		$name = $product['name'];
 
 		$list = $list .
 			"<div class='product'>
-			<h2><a href='products/?id=$productId'>$name</a></h2>";
+			<h2><a href='products/?prodnum=$productNum'>$name</a></h2>";
 
 		// Add a line for each section of requested detail relating to this product 
 		for ($c = 0; $c < $numberOfSections; $c++) {
@@ -162,7 +167,7 @@ function prepareProductList($limit, $db_link) {
 		$list = 
 			$list . "</div>";
 
-		if ($productId == $lastProduct) { break; }
+		if ($productNum == $lastProduct) { break; }
 	}
 
 	return $list;
@@ -198,6 +203,15 @@ function preparePageStart($title, $header, $styles, $includeSearch){
 	}
 
 	return $top;
+}
+
+function prepareOptionList($values, $quantity) {
+	$list = "";
+	for ($i = 0; $i < $quantity; $i++) {
+		$name = $values[$i];
+		$list = $list . "<option value='$name'>$name</option>";
+	}
+	return $list;
 }
 
 function preparePageEnd() {

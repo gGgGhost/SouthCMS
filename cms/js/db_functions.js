@@ -1,6 +1,6 @@
 var addProductForm = document.getElementById("product_form");
 var addProductButton = document.getElementById("add_product");
-var responseArea = document.getElementById('phpstuff');
+var responseArea = document.getElementById('response_area');
 
 
 addProductButton.addEventListener("click", myButtons, false);
@@ -16,7 +16,12 @@ function myButtons(e) {
 	};
 
 	if(thisElement.id === "add_product"){
-		addProductForm.className = "";
+		if (addProductForm.className == "empty") {
+			addProductForm.classList.remove("empty");
+		} else {
+			addProductForm.classList.add("empty");
+		}
+		
 	}
 }
 
@@ -31,7 +36,13 @@ function submitForm(e){
 function captureForm(){
 	var inputs = document.getElementsByTagName('input');
 	var textArea = document.getElementsByTagName('textarea')[0];
+
+	var categorySelector = document.getElementById('category');
+	var categoryOptions = categorySelector.options;
+	var selectedCategory = categoryOptions[categorySelector.selectedIndex];
+
 	var formString = '';
+
 	looper:
 	for (var i = 0; inputs.length; i++) {
 		var input = inputs[i];
@@ -45,6 +56,8 @@ function captureForm(){
 	}
 
 	formString += '&' + textArea.name + '=' + textArea.value;
+
+	formString += '&category=' + selectedCategory;
 	return formString;
 }
 

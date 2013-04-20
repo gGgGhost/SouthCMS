@@ -1,3 +1,17 @@
+<?php
+// Link into the api
+require_once "../api/categories/index.php";
+require_once "../api/products/index.php";
+require_once "../api/page.php";
+$db_link = getConnected();
+
+$numberOfCategories = countCategories($db_link);
+if ($numberOfCategories > 0) {
+	$categoryNames = getListOfCategoryNames($db_link);
+	$optionList = prepareOptionList($categoryNames, $numberOfCategories); 
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,8 +53,7 @@
 		</figcaption>
 	</figure>
 
-	<div id="phpstuff">
-		<?php require_once 'setup.php';?>
+	<div id="response_area">
 	</div>
 
 	
@@ -56,6 +69,20 @@
 			<label for="description"><h3>Product Description</h3></label>
 			<p>
 				<textarea name="description" placeholder="140 character max" maxlength="140"></textarea>
+			</p>
+		</p>
+		<p>
+			<label for="category"><h3>Product Category</h3></label>
+			<p>
+				<select name="category" id="category">
+					<option value="NEW">NEW</option>
+					<?php
+					if ($optionList) {
+						echo($optionList);
+					}
+					?>
+				</select>
+				<input type="text" id="new_category" placeholder="new category name" maxlength="15" />
 			</p>
 		</p>
 		<p>

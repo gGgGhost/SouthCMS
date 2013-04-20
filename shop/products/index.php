@@ -8,8 +8,8 @@ require_once "$directory/../../api/page.php";
 $db_link = getConnected();
 
 // Get the desired product, based on GET parameter
-$id = $_GET['id'];
-$product = getProduct($id, $db_link);
+$id = $_GET['prodnum'];
+$product = getProduct($prodnum, $db_link);
 
 // Get page string for this product, formatted for the shop
 $page = prepareProductPage('shop', $product);

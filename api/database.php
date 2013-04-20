@@ -36,16 +36,18 @@ function createDatabase($db_link, $name, $user, $host, $pass) {
 		$query[] = "CREATE TABLE products (name VARCHAR(40), description VARCHAR(140), " . 
 					"cost DEC(6,2), price DEC(6,2), stock MEDIUMINT, code VARCHAR(20)," .
 					"prodnum INT UNSIGNED NOT NULL AUTO_INCREMENT, FULLTEXT(name), " .
-					" INDEX(code), INDEX(id), PRIMARY KEY(id)) ENGINE MyISAM";
+					"catnum INT UNSIGNED NOT NULL, INDEX(code), PRIMARY KEY(prodnum)) " .
+					"ENGINE MyISAM";
 		$query[] = "CREATE TABLE categories (name VARCHAR(15), catnum INT UNSIGNED" .
-					" NOT NULL AUTO_INCREMENT) INDEX catnum";
+					" NOT NULL AUTO_INCREMENT, PRIMARY KEY(catnum))";
+		$query[] = "ALTER TABLE products ADD FOREIGN KEY(catnum) REFERENCES categories";
 		
 		foreach ($query as $q) {
 			if($q == "USE $name;") {
 				mysqli_select_db($db_link, $name) 
 					or die("Unable to select database: " . mysqli_error($db_link));
 			} else {
-				$results[] = queryDatabase($q, $link);
+				$results[] = queryDatabase($q, $db_link);
 			}
 			
 		}
@@ -80,16 +82,16 @@ function retrieveUsingResult ($result, $db_link, $format = "array") {
 		}
 }
 
-function retrieveLatestIds ($limit, $db_link) {
-	$query = "SELECT id FROM products ORDER BY id DESC LIMIT $limit";
+function retrieveLatestProdNums ($limit, $db_link) {
+	$query = "SELECT prodnum FROM products ORDER BY prodnum DESC LIMIT $limit";
 	$result = queryDatabase($query, $db_link);
 	$stopHere = mysqli_num_rows($result);
 
 	for ($i = 0; $i < $stopHere; $i++) {
 		$row = retrieveUsingResult($result, $db_link);
-		$ids[] = $row['id'];
+		$prodnums[] = $row['prodnum'];
 	}
-	return $ids;
+	return $prodnums;
 }
 
 function bugger($msg) {

@@ -9,6 +9,9 @@ textarea{
 input[type='text']{
 	width: 500px;
 }
+input[type='text']#new_category{
+	width: 250px;
+}
 div#phpstuff p{
 	font-weight: bold;
 }
