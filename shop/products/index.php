@@ -2,6 +2,7 @@
 // Link into the api
 $directory = __DIR__;
 require_once "$directory/../../api/products/index.php";
+require_once "$directory/../../api/page.php";
 
 // Hook up to database
 $db_link = getConnected();
@@ -10,8 +11,13 @@ $db_link = getConnected();
 $id = $_GET['id'];
 $product = getProduct($id, $db_link);
 
-// Display product details
-printProductPagePurchasable($product);
+// Get page string for this product, formatted for the shop
+$page = prepareProductPage('shop', $product);
+
+// Output each page section in turn
+echo($page['start']);
+echo($page['content']);
+echo($page['end']);
 
 // End connection
 mysqli_close($db_link);

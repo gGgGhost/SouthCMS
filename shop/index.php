@@ -1,53 +1,27 @@
 <?php
+// Link into the api
+require_once "../api/products/index.php";
+require_once "../api/page.php";
 
-$directory = __DIR__;
-require_once "$directory/../api/products/index.php";
-
+// Hook up to database
 $db_link = getConnected();
 
+// Get the numbers
 $totalProducts = countProducts($db_link);
 $numberToDisplay = 6;
 
+// Reduce number if not enough products in DB to meet the desired amount
 if ($numberToDisplay > $totalProducts) { $numberToDisplay = $totalProducts; }
 
-echo <<<END
-<!DOCTYPE html>
-<html>
-<head>
-	<title>shop</title>
-	<link href="style.css" type="text/css" rel="stylesheet" />
-</head>
-<body>
-<header>
-	<h1><a href="">very simple shop</a></h1>
-</header>
-<div id="main_section">
-<form id="search_bar">
-	<label for="search_box">Search:</label>
-	<input type="search" name="search_box" /><input type="submit" value="Go" />
-</form>
-<h1>Latest Products</h1>
-<div id="product_list">
-END;
+// Get page string for this product, formatted for the shop
+$page = prepareShopFront($numberToDisplay, $db_link);
 
-switch ($totalProducts) {
-	case 0:
-		echo ("<h2>There are no products in the store yet to display.</h2>");
-		break;
-	default: 
-		printProductList($numberToDisplay, $db_link);
-		break;
-}
+// Output each page section in turn
+echo($page['start']);
+echo($page['content']);
+echo($page['end']);
 
-echo <<<END
-</div>
-</div>
-<footer>
-</footer>
-</body>
-</html>
-END;
-
+// End connection
 mysqli_close($db_link);
 
 ?>
