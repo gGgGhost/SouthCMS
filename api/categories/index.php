@@ -27,43 +27,33 @@ mysqli_close($db_link)
 
 function getListOfCategoryNames($db_link, $format = 'array') {
 
-	$query = "SELECT * FROM categories ORDER BY name";
+	$query = "SELECT * FROM categories ORDER BY catname";
 	$result = queryDatabase($query, $db_link);
 
 	$stopHere = mysqli_num_rows($result);
 
 	for ($i = 0; $i < $stopHere; $i++) {
 		$row = retrieveUsingResult($result, $db_link);
-		$names[] = $row['name'];
+		$names[] = $row['catname'];
 	}
 	return $names;
-}
-function getCategoryNumber($name, $db_link) {
-	$query = "SELECT catnum FROM categories WHERE name = '$name'";
-	$result = queryDatabase($query, $db_link);
-	$row = retrieveUsingResult($result, $db_link);
-
-	$catnum = $row['catnum'];
-
-	return $catnum;
-
 }
 
 function addCategory($db_link){
 
 
-if (isset($_POST['name'])) {
+if (isset($_POST['catname'])) {
 
-	$name = retrieveVarFromPOST('name', $db_link);
+	$name = retrieveVarFromPOST('catname', $db_link);
 	
-	$query = "INSERT INTO categories (name) VALUES " .
+	$query = "INSERT INTO categories (catname) VALUES " .
 			"('$name')";
 
 	if ($results[] = queryDatabase($query, $db_link)) {
 		
 echo <<<END
 <div class='addition'>
-<a href="categories/?name=$name"><p class="top">Category Added: "$name"</p></a>
+<a href="categories/?catname=$name"><p class="top">Category Added: "$name"</p></a>
 </div>
 END;
 

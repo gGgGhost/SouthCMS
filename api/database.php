@@ -38,9 +38,10 @@ function createDatabase($db_link, $name, $user, $host, $pass) {
 					"prodnum INT UNSIGNED NOT NULL AUTO_INCREMENT, FULLTEXT(name), " .
 					"catnum INT UNSIGNED NOT NULL, INDEX(code), PRIMARY KEY(prodnum)) " .
 					"ENGINE MyISAM";
-		$query[] = "CREATE TABLE categories (name VARCHAR(15), catnum INT UNSIGNED" .
+		$query[] = "CREATE TABLE categories (catname VARCHAR(15), catnum INT UNSIGNED" .
 					" NOT NULL AUTO_INCREMENT, PRIMARY KEY(catnum))";
 		$query[] = "ALTER TABLE products ADD FOREIGN KEY(catnum) REFERENCES categories";
+		
 		
 		foreach ($query as $q) {
 			if($q == "USE $name;") {

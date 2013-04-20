@@ -30,6 +30,10 @@ function prepareProductPage ($typeOfPage, $product) {
 					$section['showHeading'] = true;
 					$sections[] = $section;
 
+					$section['name'] = "catname";
+					$section['showHeading'] = true;
+					$sections[] = $section;
+
 					$section['name'] = "price";
 					$section['showHeading'] = false;
 					$sections[] = $section;
@@ -76,7 +80,8 @@ function prepareShopFront($numberToDisplay, $db_link){
 	$pageTitle = $pageHeader = "very simple shop";
 	$includeSearch = true;
 
-	$page['start'] = preparePageStart($pageTitle, $pageHeader, $styles, $includeSearch);
+	$page['start'] = preparePageStart($pageTitle, $pageHeader, 
+									  $styles, $includeSearch, $levelsDown);
 
 	$page['content'] = "<div id='product_list'>";
 
@@ -125,6 +130,7 @@ function thisProductLine ($section, $product) {
 
 	$line = "<p id='product_$name'>";
 	if ($showHeading == true) {
+		if ($name =='catname') {$name='category';}
 		$line = $line . "<h3>$name</h3>";
 	}
 	$line = $line . "$datum</p>";
@@ -173,12 +179,23 @@ function prepareProductList($limit, $db_link) {
 	return $list;
 }
 
-function preparePageStart($title, $header, $styles, $includeSearch){
+function preparePageStart($title, $header, $styles, $includeSearch, $levelsDown = 1){
+
+	// Make sure main link points home,
+	// depending on place in structure
+	switch ($levelsDown) {
+		case 0:
+			$homeLink = "";
+			break;
+		default:
+			$homeLink = "..";
+			break;
+	}
 	// Declare doctype
 	// Open html tag
 	// Open body tag
 	// Add relevant title and header,
-	// including styles
+	// including styles and home page link
 	// Open main_section tag
 	$top = 
 		"<!DOCTYPE html>
@@ -189,7 +206,7 @@ function preparePageStart($title, $header, $styles, $includeSearch){
 		</head>
 		<body>
 		<header>
-			<h1><a href='..'>$header</a></h1>
+			<h1><a href='$homeLink'>$header</a></h1>
 		</header>
 		<div id='main_section'>";
 

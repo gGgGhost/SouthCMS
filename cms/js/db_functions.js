@@ -57,7 +57,7 @@ function captureForm(){
 
 	formString += '&' + textArea.name + '=' + textArea.value;
 
-	formString += '&category=' + selectedCategory;
+	formString += '&catname=' + selectedCategory.value;
 	return formString;
 }
 

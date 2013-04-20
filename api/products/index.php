@@ -3,7 +3,6 @@ $directory = __DIR__;
 require_once "$directory/../config.php";
 require_once "$directory/../database.php";
 require_once "$directory/../http.php";
-require_once "$directory/../categories/index.php";
 
 $method  	= 	$_SERVER['REQUEST_METHOD'];
 
@@ -27,7 +26,9 @@ mysqli_close($db_link)
 
 function getProduct($prodnum, $db_link, $format = 'array') {
 
-	$query = "SELECT * FROM products WHERE prodnum = '$prodnum'";
+	$query = "SELECT name, description, catname, cost, price,".  
+			 "stock, code FROM products, categories ".
+			 "WHERE prodnum = '$prodnum'";
 
 	$result = queryDatabase($query, $db_link);	
 
@@ -54,7 +55,7 @@ if (isset($_POST['name']) &&
 	$price = retrieveVarFromPOST('price', $db_link);
 	$quantity = retrieveVarFromPOST('quantity', $db_link);
 	$code = retrieveVarFromPOST('code', $db_link);
-	$category = retrieveVarFromPOST('category', $db_link);
+	$category = retrieveVarFromPOST('catname', $db_link);
 	$catnum = getCategoryNumber($category, $db_link);
 
 	$query = "INSERT INTO products (name, description, cost, " .
