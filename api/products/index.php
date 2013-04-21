@@ -28,7 +28,7 @@ function getProduct($id, $db_link, $format = 'array') {
 
 	$query = "SELECT name, description, catname, cost, price,".  
 			 "stock, code FROM products, categories ".
-			 "WHERE prodnum = '$id'";
+			 "WHERE prodnum = '$id' AND products.catnum = categories.catnum";
 
 	$result = queryDatabase($query, $db_link);	
 
