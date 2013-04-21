@@ -2,7 +2,7 @@
 $directory = __DIR__;
 require_once "$directory/../config.php";
 require_once "$directory/../database.php";
-require_once "$directory/../http.php";
+require_once "$directory/../shared.php";
 
 $method  	= 	$_SERVER['REQUEST_METHOD'];
 

@@ -9,12 +9,19 @@ $db_link = getConnected();
 // Get the desired product, based on GET parameter
 $id = $_GET['id'];
 $product = getProduct($id, $db_link);
+$productName = $product['name'];
 
-// set the properties
-$properties['page_header'] = "very simple shop";
-$properties['button_id'] = "buy";
-$properties['button_value'] = "Add to basket";
-$properties['include_search'] = true;
+// Set parameters
+$levelsDown = 1;
+$pageHeader = "very simple shop";
+$pageTitle = $productName . " - " . $pageHeader;
+$styles = getStyles($levelsDown);
+$includeSearch = false;
+
+$page['start'] = preparePageStart($pageTitle, $pageHeader, $styles, $includeSearch);
+
+$buttonId = "buy";
+$buttonValue = "Add to basket";
 
 // set the sections to be displayed
 $section['name'] = "description";
@@ -30,8 +37,20 @@ $section['name'] = "stock";
 $section['showHeading'] = false;
 $sections[] = $section;
 
-// Get page string for this product
-$page = prepareProductPage($product, $sections, $properties);
+// Open product_area tag, add header with product name/title
+$page['content'] = 
+	"<div id='product_area'>
+	<h2 id='product_name'>$productName</h2>";
+
+// Add a line for each section of requested detail relating to this product 
+$page['content'] = $page['content'] . prepareProductDetails($sections, $product);
+
+// Add button, close product_area tag
+$page['content'] = $page['content'] .
+	"<button id='$buttonId'>$buttonValue</button>
+	</div>";
+
+$page['end'] = preparePageEnd();
 
 // Output each page section in turn
 echo($page['start']);

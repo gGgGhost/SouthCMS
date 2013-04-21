@@ -9,12 +9,20 @@ $db_link = getConnected();
 // Get the desired product, based on GET parameter
 $id = $_GET['id'];
 $product = getProduct($id, $db_link);
+$productName = $product['name'];
 
-// set the properties
-$properties['page_header'] = "SouthCMS";
-$properties['button_id'] = "edit";
-$properties['button_value'] = "Edit this product";
-$properties['include_search'] = false;
+// Set parameters
+$levelsDown = 1;
+$pageHeader = "SouthCMS";
+$pageTitle = $productName . " - " . $pageHeader;
+$styles = getStyles($levelsDown);
+$includeSearch = false;
+
+$page['start'] = preparePageStart($pageTitle, $pageHeader, $styles, $includeSearch);
+
+$buttonId = "edit";
+$buttonValue = "Edit this product";
+
 
 // set the sections to be displayed
 $productByNumber = array_keys($product);
@@ -25,8 +33,20 @@ for ($i = 0; $i < count($product); $i++) {
 	$sections[] = $section;
 }
 
-// Get page string for this product
-$page = prepareProductPage($product, $sections, $properties);
+// Open product_area tag, add header with product name/title
+$page['content'] = 
+	"<div id='product_area'>
+	<h2 id='product_name'>$productName</h2>";
+
+// Add a line for each section of requested detail relating to this product 
+$page['content'] = $page['content'] . prepareProductDetails($sections, $product);
+
+// Add button, close product_area tag
+$page['content'] = $page['content'] .
+	"<button id='$buttonId'>$buttonValue</button>
+	</div>";
+
+$page['end'] = preparePageEnd();
 
 // Output each page section in turn
 echo($page['start']);

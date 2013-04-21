@@ -24,9 +24,7 @@ function prepareProductPage ($product,
 		<h2 id='product_name'>$productName</h2>";
 
 	// Add a line for each section of requested detail relating to this product 
-	for ($i = 0; $i < count($sections); $i++) {
-		$page['content'] = $page['content'] . thisProductLine($sections[$i], $product);
-	}
+	
 
 	// Add button, close product_area tag
 	$page['content'] = $page['content'] .
@@ -47,8 +45,16 @@ function prepareCMS(){}
 function prepareInputForm(){}
 function prepareFormSegment(){}
 */
-function thisProductLine ($section, 
-						  $product) {
+function prepareProductDetails ($sections, $product) {
+	$lines = "";
+	for ($i = 0; $i < count($sections); $i++) {
+		$lines = $lines . getProductSection($sections[$i], $product);
+	}
+	return $lines;
+}
+
+function getProductSection ($section, 
+						    $product) {
 
 	$name = $section['name'];
 	$datum = $product[$name];
@@ -67,21 +73,21 @@ function thisProductLine ($section,
 
 	$datum = $prefix . $datum;
 
-	$line = "<p id='product_$name'>";
+	$section = "<p id='product_$name'>";
 	if ($showHeading == true) {
 		if ($name =='catname') {$name='category';}
-		$line = $line . "<h3>$name</h3>";
+		$section = $section . "<h3>$name</h3>";
 	}
-	$line = $line . "$datum</p>";
+	$section = $section . "$datum</p>";
 
-	return $line;
+	return $section;
 }
 
 function prepareProductList($limit, 
 						   	$db_link) {
 
 	$ids = retrieveLatestIds($limit, $db_link);
-	$lastProduct = $ids[$limit -1];
+	//$lastProduct = $ids[$limit -1];
 	$list = "";
 
 	$section['name'] = "stock";
@@ -113,7 +119,7 @@ function prepareProductList($limit,
 		$list = 
 			$list . "</div>";
 
-		if ($productNum == $lastProduct) { break; }
+		//if ($productNum == $lastProduct) { break; }
 	}
 
 	return $list;
@@ -166,8 +172,8 @@ function preparePageStart($title,
 	return $top;
 }
 
-function prepareOptionList($values, 
-						   $quantity) {
+function prepareCategoryOptionList($values, 
+						   		   $quantity) {
 	$list = "";
 	for ($i = 0; $i < $quantity; $i++) {
 		$name = $values[$i];

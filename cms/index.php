@@ -8,7 +8,7 @@ $db_link = getConnected();
 $numberOfCategories = countCategories($db_link);
 if ($numberOfCategories > 0) {
 	$categoryNames = getListOfCategoryNames($db_link);
-	$optionList = prepareOptionList($categoryNames, $numberOfCategories); 
+	$optionList = prepareCategoryOptionList($categoryNames, $numberOfCategories); 
 }
 
 ?>
