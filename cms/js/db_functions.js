@@ -24,7 +24,11 @@ function myButtons(e) {
 		
 	}
 }
+function getClickables(e){
+	var clickables = document.getElementsByClassName('clickable');
 
+	
+}
 function submitForm(e){
 	if(e.preventDefault()){
 		e.preventDefault();
@@ -62,7 +66,6 @@ function captureForm(){
 	formString += '&' + textArea.name + '=' + textArea.value;
 
 	formString += '&catname=' + newCategory;
-	console.log(formString);
 	return formString;
 }
 

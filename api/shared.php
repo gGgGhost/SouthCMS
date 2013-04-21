@@ -23,7 +23,7 @@ function addCategory($catname, $db_link){
 		
 echo <<<END
 <div class='addition'>
-<a href="categories/?name=$catname"><p class="top">Category Added: "$catname"</p></a>
+<p class="top">Category Added: "<a href="categories/?name=$catname">$catname</a>"</p>
 </div>
 END;
 	}

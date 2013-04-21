@@ -18,7 +18,6 @@ switch ($method) {
 		}
 		break;
 	case 'POST': 
-	echo('gothere');
 		addCategoryFromPOST($db_link);
 		break;
 }

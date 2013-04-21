@@ -47,6 +47,9 @@ input[type='search'] {
 .empty{
 	display: none;
 }
+.extra_details{
+	background-color: lightgrey;
+}
 footer{
 	background-color: #232E33;
 	border-top: 3px solid #5DC2F4;

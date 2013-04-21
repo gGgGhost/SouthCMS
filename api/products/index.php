@@ -50,7 +50,6 @@ if (isset($_POST['name']) &&
 	isset($_POST['code'])) {
 	if (isset($_POST['catname'])) {
 		$catname = retrieveVarFromPOST('catname', $db_link);
-		echo($catname);
 		addCategory($catname, $db_link);
 	}
 
@@ -61,9 +60,7 @@ if (isset($_POST['name']) &&
 	$quantity = retrieveVarFromPOST('quantity', $db_link);
 	$code = retrieveVarFromPOST('code', $db_link);
 	$category = retrieveVarFromPOST('catname', $db_link);
-	echo($category);
 	$catnum = getCategoryNumber($category, $db_link);
-	echo($catnum);
 
 	$query = "INSERT INTO products (name, description, cost, " .
 			"price, stock, code, catnum) VALUES " .
@@ -80,8 +77,8 @@ if (isset($_POST['name']) &&
 
 echo <<<END
 <div class='addition'>
-<a href="products/?id=$id"><p class="top">Product Added: "$name" x$quantity</p></a>
-<div>
+<p class="top">Product Added: "<a href="products/?id=$id">$name</a>" x$quantity</p>
+<div class="extra_details empty">
 <p>Initial cost: £$initialValue (£$cost per item)</p>
 <p>Sales value: £$salesValue (£$price per item)</p>
 <p>Difference: £$difference (£$dpi per item)</p>
