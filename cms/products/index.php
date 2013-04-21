@@ -23,7 +23,6 @@ $page['start'] = preparePageStart($pageTitle, $pageHeader, $styles, $includeSear
 $buttonId = "edit";
 $buttonValue = "Edit this product";
 
-
 // set the sections to be displayed
 $productByNumber = array_keys($product);
 for ($i = 0; $i < count($product); $i++) {

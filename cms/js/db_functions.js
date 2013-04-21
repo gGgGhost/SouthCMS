@@ -79,7 +79,6 @@ function ajaxRequest(requestType, requestPath, requestString){
 			else{
 				displayResponse("Content type of response did not match requested type");
 			}
-
 		}
 	}
 	if (requestString != ''){
