@@ -10,9 +10,9 @@ $db_link = getConnected();
 
 switch ($method) {
 	case 'GET': 
-		if (isset($_GET['prodnum'])) {
-			$prodnum = retrieveVarFromGET('prodnum', $db_link);
-			getProduct($prodnum, $db_link);
+		if (isset($_GET['id'])) {
+			$id = retrieveVarFromGET('id', $db_link);
+			getProduct($id, $db_link);
 		}
 		break;
 	case 'POST': 
@@ -24,11 +24,11 @@ mysqli_close($db_link)
 			or die('Something went wrong closing the MySQL connection.');
 
 
-function getProduct($prodnum, $db_link, $format = 'array') {
+function getProduct($id, $db_link, $format = 'array') {
 
 	$query = "SELECT name, description, catname, cost, price,".  
 			 "stock, code FROM products, categories ".
-			 "WHERE prodnum = '$prodnum'";
+			 "WHERE prodnum = '$id'";
 
 	$result = queryDatabase($query, $db_link);	
 
@@ -68,12 +68,12 @@ if (isset($_POST['name']) &&
 		$salesValue = $price * $quantity;
 		$difference = $salesValue - $initialValue;
 		$dpi = $price - $cost; // Difference Per Item
-		$prodnum = retrieveLatestProdNums(1, $db_link)[0];
+		$id = retrieveLatestIds(1, $db_link)[0];
 
 
 echo <<<END
 <div class='addition'>
-<a href="products/?prodnum=$prodnum"><p class="top">Product Added: "$name" x$quantity</p></a>
+<a href="products/?id=$id"><p class="top">Product Added: "$name" x$quantity</p></a>
 <div>
 <p>Initial cost: £$initialValue (£$cost per item)</p>
 <p>Sales value: £$salesValue (£$price per item)</p>

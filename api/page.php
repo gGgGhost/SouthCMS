@@ -2,52 +2,19 @@
 require_once "config.php";
 require_once "database.php";
 
-function prepareProductPage ($typeOfPage, $product) {
+function prepareProductPage ($product,
+							 $sections,
+							 $properties,
+							 $levelsDown = 1) {
 
-	$levelsDown = 1;
 	$styles = getStyles($levelsDown);
 	$productName = $product['name'];
-
-	switch ($typeOfPage) {
-		case 'cms':
-					$pageHeader = "SouthCMS";
-					$productByNumber = array_keys($product);
-					for ($i = 0; $i < count($product); $i++) {
-						if ($i == 0) {continue;}
-						$section['name'] = $productByNumber[$i];
-						$section['showHeading'] = true;
-						$sections[] = $section;
-					}
-
-					$buttonId = "edit";
-					$buttonValue = "Edit this product";
-					$includeSearch = false;
-					break;
-		case 'shop':
-					$pageHeader = "very simple shop";
-
-					$section['name'] = "description";
-					$section['showHeading'] = true;
-					$sections[] = $section;
-
-					$section['name'] = "catname";
-					$section['showHeading'] = true;
-					$sections[] = $section;
-
-					$section['name'] = "price";
-					$section['showHeading'] = false;
-					$sections[] = $section;
-
-					$section['name'] = "stock";
-					$section['showHeading'] = false;
-					$sections[] = $section;
-
-					$buttonId = "buy";
-					$buttonValue = "Add to basket";
-					$includeSearch = true;
-					break;
-	}
+	$pageHeader = $properties['page_header'];
+	$buttonId = $properties['button_id'];
+	$buttonValue = $properties['button_value'];
+	$includeSearch = $properties['include_search'];
 	$pageTitle = $productName . " - " . $pageHeader;
+
 	// Add the top chunk of the html page
 	$page['start'] = preparePageStart($pageTitle, $pageHeader, $styles, $includeSearch);
 
@@ -73,43 +40,15 @@ function prepareProductPage ($typeOfPage, $product) {
 	return $page;
 }
 
-function prepareShopFront($numberToDisplay, $db_link){
 
-	$levelsDown = 0;
-	$styles = getStyles($levelsDown);
-	$pageTitle = $pageHeader = "very simple shop";
-	$includeSearch = true;
-
-	$page['start'] = preparePageStart($pageTitle, $pageHeader, 
-									  $styles, $includeSearch, $levelsDown);
-
-	$page['content'] = "<div id='product_list'>";
-
-	switch ($numberToDisplay) {
-		case 0:
-			$page['content'] =
-				$page['content'] . 
-				("<h2>There are no products in the store yet to display.</h2>");
-			break;
-		default: 
-			$page['content'] = 
-				$page['content'] . prepareProductList($numberToDisplay, $db_link);
-			break;
-	}
-
-	$page['end'] = "</div>" . preparePageEnd();
-		
-	// Return this page array, containing 3 strings 
-	// associated to keywords 'start', 'content', and 'end'
-	return $page;
-}
 // To do
 /*
 function prepareCMS(){}
 function prepareInputForm(){}
 function prepareFormSegment(){}
 */
-function thisProductLine ($section, $product) {
+function thisProductLine ($section, 
+						  $product) {
 
 	$name = $section['name'];
 	$datum = $product[$name];
@@ -138,10 +77,11 @@ function thisProductLine ($section, $product) {
 	return $line;
 }
 
-function prepareProductList($limit, $db_link) {
+function prepareProductList($limit, 
+						   	$db_link) {
 
-	$prodnums = retrieveLatestProdNums($limit, $db_link);
-	$lastProduct = $prodnums[$limit -1];
+	$ids = retrieveLatestIds($limit, $db_link);
+	$lastProduct = $ids[$limit -1];
 	$list = "";
 
 	$section['name'] = "stock";
@@ -156,13 +96,13 @@ function prepareProductList($limit, $db_link) {
 		
 
 	for ($i = 0; $i < $limit; $i++) {
-		$productNum = $prodnums[$i];
-		$product = getProduct($productNum, $db_link);
+		$id = $ids[$i];
+		$product = getProduct($id, $db_link);
 		$name = $product['name'];
 
 		$list = $list .
 			"<div class='product'>
-			<h2><a href='products/?prodnum=$productNum'>$name</a></h2>";
+			<h2><a href='products/?id=$id'>$name</a></h2>";
 
 		// Add a line for each section of requested detail relating to this product 
 		for ($c = 0; $c < $numberOfSections; $c++) {
@@ -179,7 +119,11 @@ function prepareProductList($limit, $db_link) {
 	return $list;
 }
 
-function preparePageStart($title, $header, $styles, $includeSearch, $levelsDown = 1){
+function preparePageStart($title, 
+						  $header, 
+						  $styles, 
+						  $includeSearch, 
+						  $levelsDown = 1) {
 
 	// Make sure main link points home,
 	// depending on place in structure
@@ -222,7 +166,8 @@ function preparePageStart($title, $header, $styles, $includeSearch, $levelsDown 
 	return $top;
 }
 
-function prepareOptionList($values, $quantity) {
+function prepareOptionList($values, 
+						   $quantity) {
 	$list = "";
 	for ($i = 0; $i < $quantity; $i++) {
 		$name = $values[$i];
