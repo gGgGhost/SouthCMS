@@ -42,7 +42,6 @@ function createDatabase($db_link, $name, $user, $host, $pass) {
 					" NOT NULL AUTO_INCREMENT, PRIMARY KEY(catnum))";
 		$query[] = "ALTER TABLE products ADD FOREIGN KEY(catnum) REFERENCES categories";
 		
-		
 		foreach ($query as $q) {
 			if($q == "USE $name;") {
 				mysqli_select_db($db_link, $name) 

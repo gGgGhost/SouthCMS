@@ -18,7 +18,8 @@ switch ($method) {
 		}
 		break;
 	case 'POST': 
-		addCategory($db_link);
+	echo('gothere');
+		addCategoryFromPOST($db_link);
 		break;
 }
 
@@ -39,11 +40,10 @@ function getListOfCategoryNames($db_link, $format = 'array') {
 	return $names;
 }
 
-function addCategory($db_link){
+function addCategoryFromPOST($db_link){
 
 
 if (isset($_POST['catname'])) {
-
 	$name = retrieveVarFromPOST('catname', $db_link);
 	
 	$query = "INSERT INTO categories (catname) VALUES " .
@@ -53,7 +53,7 @@ if (isset($_POST['catname'])) {
 		
 echo <<<END
 <div class='addition'>
-<a href="categories/?catname=$name"><p class="top">Category Added: "$name"</p></a>
+<a href="categories/?name=$name"><p class="top">Category Added: "$name"</p></a>
 </div>
 END;
 

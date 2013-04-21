@@ -14,4 +14,17 @@ function getCategoryNumber($name, $db_link) {
 	$catnum = $row['catnum'];
 	return $catnum;
 }
-?>
+function addCategory($catname, $db_link){
+
+	$query = "INSERT INTO categories (catname) VALUES " .
+			"('$catname')";
+			
+	if ($results[] = queryDatabase($query, $db_link)) {
+		
+echo <<<END
+<div class='addition'>
+<a href="categories/?name=$catname"><p class="top">Category Added: "$catname"</p></a>
+</div>
+END;
+	}
+} ?>

@@ -48,6 +48,11 @@ if (isset($_POST['name']) &&
 	isset($_POST['price']) &&
 	isset($_POST['quantity']) &&
 	isset($_POST['code'])) {
+	if (isset($_POST['catname'])) {
+		$catname = retrieveVarFromPOST('catname', $db_link);
+		echo($catname);
+		addCategory($catname, $db_link);
+	}
 
 	$name = retrieveVarFromPOST('name', $db_link);
 	$description = retrieveVarFromPOST('description', $db_link);
@@ -56,7 +61,9 @@ if (isset($_POST['name']) &&
 	$quantity = retrieveVarFromPOST('quantity', $db_link);
 	$code = retrieveVarFromPOST('code', $db_link);
 	$category = retrieveVarFromPOST('catname', $db_link);
+	echo($category);
 	$catnum = getCategoryNumber($category, $db_link);
+	echo($catnum);
 
 	$query = "INSERT INTO products (name, description, cost, " .
 			"price, stock, code, catnum) VALUES " .

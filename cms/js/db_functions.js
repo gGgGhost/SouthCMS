@@ -39,7 +39,11 @@ function captureForm(){
 
 	var categorySelector = document.getElementById('category');
 	var categoryOptions = categorySelector.options;
-	var selectedCategory = categoryOptions[categorySelector.selectedIndex];
+	var selectedCategory = categoryOptions[categorySelector.selectedIndex].value;
+
+	if (selectedCategory == "NEW") {
+		var newCategory = document.getElementById('new_category').value;
+	}
 
 	var formString = '';
 
@@ -57,7 +61,8 @@ function captureForm(){
 
 	formString += '&' + textArea.name + '=' + textArea.value;
 
-	formString += '&catname=' + selectedCategory.value;
+	formString += '&catname=' + newCategory;
+	console.log(formString);
 	return formString;
 }
 
@@ -79,7 +84,9 @@ function ajaxRequest(requestType, requestPath, requestString){
 			else{
 				displayResponse("Content type of response did not match requested type");
 			}
+			return "done";
 		}
+
 	}
 	if (requestString != ''){
 		xhr.send(requestString);
@@ -87,6 +94,7 @@ function ajaxRequest(requestType, requestPath, requestString){
 	else{
 		xhr.send(null);
 	}
+
 	
 }
 
