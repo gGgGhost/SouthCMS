@@ -45,10 +45,6 @@ function captureForm(){
 	var categoryOptions = categorySelector.options;
 	var selectedCategory = categoryOptions[categorySelector.selectedIndex].value;
 
-	if (selectedCategory == "NEW") {
-		var newCategory = document.getElementById('new_category').value;
-	}
-
 	var formString = '';
 
 	looper:
@@ -65,7 +61,15 @@ function captureForm(){
 
 	formString += '&' + textArea.name + '=' + textArea.value;
 
-	formString += '&catname=' + newCategory;
+	if (selectedCategory == "NEW") {
+		var newCategory = document.getElementById('new_category').value;
+		formString += '&catname=' + newCategory;
+		var newOption = document.createElement('option');
+		newOption.value = newCategory;
+		newOption.innerHTML = newCategory;
+		categorySelector.add(newOption, null);
+	}
+	
 	return formString;
 }
 
