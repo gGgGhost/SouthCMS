@@ -34,9 +34,3 @@ h2.product_name{
 #product_price{
 	margin-top: 3em;
 }
-.product_catname a{
-	color: white;
-}
-.product_catname a:hover{
-	color: #5DC2F4;
-}
