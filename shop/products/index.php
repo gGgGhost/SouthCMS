@@ -39,7 +39,7 @@ $section['showHeading'] = false;
 $sections[] = $section;
 
 // Open product_area tag, add header with product name/title
-$page['content'] = 
+$page['content'] = "<div id='basket'></div>" . 
 	"<div id='product_area'>
 	<h2 id='product_name'>$productName</h2>";
 
@@ -51,7 +51,8 @@ $page['content'] = $page['content'] .
 	"<button id='$buttonId'>$buttonValue</button>
 	</div>";
 
-$page['end'] = preparePageEnd();
+$page['end'] = "<script src='../js/basket.js'></script>"
+			 . preparePageEnd();
 
 // Output each page section in turn
 echo($page['start']);

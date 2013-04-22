@@ -21,7 +21,8 @@ $includeSearch = true;
 $page['start'] = preparePageStart($pageTitle, $pageHeader, 
 								  $styles, $includeSearch, $levelsDown);
 
-$page['content'] = "<div id='product_list'>";
+$page['content'] = "<div id='basket'></div>" . 
+				   "<div id='product_list'>";
 
 switch ($numberToDisplay) {
 	case 0:
@@ -35,7 +36,9 @@ switch ($numberToDisplay) {
 		break;
 }
 
-$page['end'] = "</div>" . preparePageEnd();
+$page['end'] = "</div>" 
+			 . "<script src='js/basket.js'></script>"
+			 . preparePageEnd();
 		
 // Output each page section in turn
 echo($page['start']);

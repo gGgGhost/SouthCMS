@@ -2,7 +2,6 @@ var addProductForm = document.getElementById("product_form");
 var addProductButton = document.getElementById("add_product");
 var responseArea = document.getElementById('response_area');
 
-
 addProductButton.addEventListener("click", myButtons, false);
 addProductForm.addEventListener("submit", submitForm, false);
 
