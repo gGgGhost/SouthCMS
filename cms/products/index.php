@@ -29,6 +29,9 @@ for ($i = 0; $i < count($product); $i++) {
 	if ($i == 0) {continue;}
 	$section['name'] = $productByNumber[$i];
 	$section['showHeading'] = true;
+	if ($section['name'] == 'price' || $section['name'] == 'cost') {
+		$section['prefix'] = "&pound;";
+	}
 	$sections[] = $section;
 }
 

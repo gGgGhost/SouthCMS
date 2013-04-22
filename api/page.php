@@ -2,13 +2,6 @@
 require_once "config.php";
 require_once "database.php";
 
-// To do
-/*
-function prepareInputForm(){}
-function getFormSegment(){}
-
-*/
-
 function buildBigButton ($button) {
 	$id = $button['id'];
 	$img = $button['img'];
@@ -35,25 +28,20 @@ function prepareProductDetails ($sections,
 }
 
 function getProductSection ($sectionDetails, 
-							$product) {
+							$product, $tag = "id") {
 
 	$name = $sectionDetails['name'];
 	$datum = $product[$name];
 	$showHeading = $sectionDetails['showHeading'];
-
-	if ($name == 'price' || $name == 'cost') {
-		$prefix = "&pound;";
-	} else {
-		$prefix = "";
+	if (isset($sectionDetails['prefix'])) {
+		$prefix = $sectionDetails['prefix'];
+		$datum = $prefix . $datum;
 	}
-
 	if ($name == 'stock') {
 		$datum = isThereEnoughStock($datum);
 	}
 
-	$datum = $prefix . $datum;
-
-	$section = "<p id='product_$name'>";
+	$section = "<p $tag='product_$name'>";
 
 	if ($showHeading == true) {
 		if ($name =='catname') {$name='category';}
@@ -69,8 +57,13 @@ function prepareProductList ($limit,
 							 $db_link) {
 
 	$ids = retrieveLatestIds($limit, $db_link);
-	//$lastProduct = $ids[$limit -1];
 	$list = "";
+	$tag ="class";
+
+	$section['name'] = "catname";
+	$section['showHeading'] = false;
+	$section['prefix'] = " -> ";
+	$sections[] = $section;
 
 	$section['name'] = "stock";
 	$section['showHeading'] = false;
@@ -78,6 +71,7 @@ function prepareProductList ($limit,
 
 	$section['name'] = "price";
 	$section['showHeading'] = false;
+	$section['prefix'] = "&pound;";
 	$sections[] = $section;
 
 	$numberOfSections = count($sections);
@@ -89,18 +83,16 @@ function prepareProductList ($limit,
 
 		$list = $list .
 			"<div class='product'>
-			<h2><a href='products/?id=$id'>$name</a></h2>";
+			<h2 $tag='product_name'><a href='products/?id=$id'>$name</a></h2>";
 
 		// Add a line for each section of requested detail relating to this product 
 		for ($c = 0; $c < $numberOfSections; $c++) {
 			$list = $list . 
-					getProductSection($sections[$c], $product);
+					getProductSection($sections[$c], $product, $tag);
 		}
 		
 		$list = 
 			$list . "</div>";
-
-		//if ($productNum == $lastProduct) { break; }
 	}
 
 	return $list;

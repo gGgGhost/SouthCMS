@@ -22,3 +22,15 @@
 	font-weight: bold;
 	font-size: 1.1em;
 }
+h2.product_name{
+	margin: 0;
+	display: inline;
+	font-size: 2.5em;
+}
+.product_catname{
+	margin: 0;
+	display: inline;
+}
+#product_price{
+	margin-top: 3em;
+}

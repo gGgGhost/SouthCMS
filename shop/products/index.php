@@ -32,6 +32,7 @@ $section['showHeading'] = true;
 $sections[] = $section;
 $section['name'] = "price";
 $section['showHeading'] = false;
+$section['prefix'] = "&pound;";
 $sections[] = $section;
 $section['name'] = "stock";
 $section['showHeading'] = false;
