@@ -30,27 +30,41 @@ function prepareProductDetails ($sections,
 function getProductSection ($sectionDetails, 
 							$product, $tag = "id") {
 
-	$name = $sectionDetails['name'];
-	$datum = $product[$name];
+	$sectionName = $sectionDetails['name'];
+	$datum = $product[$sectionName];
+	$thisSegment = $datum;
 	$showHeading = $sectionDetails['showHeading'];
+
+	if ($sectionName == 'catname') {
+		$thisSegment = wrapWithLink("categories/?name=$datum", $thisSegment);
+	}
+
 	if (isset($sectionDetails['prefix'])) {
 		$prefix = $sectionDetails['prefix'];
-		$datum = $prefix . $datum;
+		$thisSegment = $prefix . $thisSegment;
 	}
-	if ($name == 'stock') {
-		$datum = isThereEnoughStock($datum);
+	
+	if ($sectionName == 'stock') {
+		$thisSegment = isThereEnoughStock($datum);
 	}
 
-	$section = "<p $tag='product_$name'>";
+	$section = "<p $tag='product_$sectionName'>";
 
 	if ($showHeading == true) {
-		if ($name =='catname') {$name='category';}
-		$section = $section . "<h3>$name</h3>";
+		if ($sectionName =='catname') {$sectionName='category';}
+		$section = $section . "<h3>$sectionName</h3>";
 	}
 
-	$section = $section . "$datum</p>";
+	$section = $section . "$thisSegment</p>";
 
 	return $section;
+}
+
+function wrapWithLink ($href, $string) {
+	$wrappedString = "<a href='$href'>"
+					. $string
+					. "</a>";
+	return $wrappedString;
 }
 
 function prepareProductList ($limit, 
@@ -62,7 +76,7 @@ function prepareProductList ($limit,
 
 	$section['name'] = "catname";
 	$section['showHeading'] = false;
-	$section['prefix'] = " -> ";
+	$section['prefix'] = " . ";
 	$sections[] = $section;
 
 	$section['name'] = "stock";
