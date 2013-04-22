@@ -68,6 +68,9 @@ function captureForm(){
 		newOption.value = newCategory;
 		newOption.innerHTML = newCategory;
 		categorySelector.add(newOption, null);
+		formString += '&newcat=' + true;
+	} else {
+		formString += '&catname=' + selectedCategory;
 	}
 	
 	return formString;
