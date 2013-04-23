@@ -93,7 +93,7 @@ function retrieveProductIds ($limit, $db_link, $category = 'all') {
 			  AND catname='$category'";
 	}
 
-	" ORDER BY prodnum DESC LIMIT $limit";
+	$query = $query . " ORDER BY prodnum DESC LIMIT $limit";
 	$result = queryDatabase($query, $db_link);
 	$stopHere = mysqli_num_rows($result);
 
