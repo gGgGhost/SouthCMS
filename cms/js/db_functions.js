@@ -7,13 +7,14 @@ addProductForm.addEventListener("submit", submitForm, false);
 
 function myButtons(e) {
 
-	// Catch clicks on img inside button
+	// Get target of click event
 	var thisElement = e.target;
-
+	// If it's on the image inside the button,
+	// move target to parent element (button itself)
 	if (thisElement.tagName === 'IMG') {
 		thisElement = e.target.parentElement;
 	};
-
+	// If add product button, show/hide add products form
 	if(thisElement.id === "add_product"){
 		if (addProductForm.className == "empty") {
 			addProductForm.classList.remove("empty");
@@ -23,15 +24,15 @@ function myButtons(e) {
 		
 	}
 }
-function getClickables(e){
+/*function getClickables(e){
 	var clickables = document.getElementsByClassName('clickable');
-
-	
-}
+}*/
 function submitForm(e){
+	// Stop form submitting by default form action
 	if(e.preventDefault()){
 		e.preventDefault();
 	}
+	// Submit the add product request using requeststring from captureForm
 	var requestString = captureForm();
 	ajaxRequest('POST', '../api/products/', requestString);
 }
@@ -67,7 +68,7 @@ function captureForm(){
 		newOption.value = newCategory;
 		newOption.innerHTML = newCategory;
 		categorySelector.add(newOption, null);
-		formString += '&newcat=' + true;
+		formString += '&newcat=' + 'true';
 	} else {
 		formString += '&catname=' + selectedCategory;
 	}

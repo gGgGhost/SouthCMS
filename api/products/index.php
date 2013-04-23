@@ -58,11 +58,12 @@ if (isset($_POST['name']) &&
 	$quantity = retrieveVarFromPOST('quantity', $db_link);
 	$code = retrieveVarFromPOST('code', $db_link);
 	$category = retrieveVarFromPOST('catname', $db_link);
-	$catnum = getCategoryNumber($category, $db_link);
 
 	if (isset($_POST['newcat'])) {
 		addCategory($category, $db_link);
 	}
+
+	$catnum = getCategoryNumber($category, $db_link);
 
 	$query = "INSERT INTO products (name, description, cost, " .
 			"price, stock, code, catnum) VALUES " .
@@ -74,7 +75,7 @@ if (isset($_POST['name']) &&
 		$salesValue = $price * $quantity;
 		$difference = $salesValue - $initialValue;
 		$dpi = $price - $cost; // Difference Per Item
-		$id = retrieveProductIds(1, $db_link)[0];
+		$id = retrieveProductIdFromName($name, $db_link);
 
 
 echo <<<END
@@ -100,6 +101,14 @@ function countProducts($db_link) {
 	$result = queryDatabase($query, $db_link);
 	$row = mysqli_fetch_row($result);
 	return $row[0];
+}
+
+function retrieveProductIdFromName($name, $db_link) {
+	$query = "SELECT prodnum FROM products WHERE name='$name'";
+	$result = queryDatabase($query, $db_link);
+	$row = retrieveUsingResult($result, $db_link);
+	$prodnum = $row['prodnum'];
+	return $prodnum;
 }
 
 ?>
