@@ -39,14 +39,16 @@ function getProductSection ($sectionDetails,
 		$thisSegment = wrapWithLink("../categories/?name=$datum", $thisSegment);
 	}
 
+	if ($sectionName == 'stock') {
+		$thisSegment = isThereEnoughStock($datum);
+	}
+
 	if (isset($sectionDetails['prefix'])) {
 		$prefix = $sectionDetails['prefix'];
 		$thisSegment = $prefix . $thisSegment;
 	}
 	
-	if ($sectionName == 'stock') {
-		$thisSegment = isThereEnoughStock($datum);
-	}
+	
 
 	$section = "";
 
