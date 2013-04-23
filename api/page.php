@@ -48,13 +48,13 @@ function getProductSection ($sectionDetails,
 		$thisSegment = isThereEnoughStock($datum);
 	}
 
-	$section = "<p $tag='product_$sectionName'>";
+	$section = "";
 
 	if ($showHeading == true) {
 		if ($sectionName =='catname') {$sectionName='category';}
 		$section = $section . "<h3>$sectionName</h3>";
 	}
-
+	$section = $section . "<p $tag='product_$sectionName'>";
 	$section = $section . "$thisSegment</p>";
 
 	return $section;
