@@ -81,8 +81,4 @@ function countCategories($db_link) {
 	$number = retrieveUsingResult($result, $db_link);
 	
 	return $number['COUNT(*)'];
-}
-
-
-
-?>
+} ?>

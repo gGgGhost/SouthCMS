@@ -36,7 +36,7 @@ function getProductSection ($sectionDetails,
 	$showHeading = $sectionDetails['showHeading'];
 
 	if ($sectionName == 'catname') {
-		$thisSegment = wrapWithLink("categories/?name=$datum", $thisSegment);
+		$thisSegment = wrapWithLink("../categories/?name=$datum", $thisSegment);
 	}
 
 	if (isset($sectionDetails['prefix'])) {
@@ -69,7 +69,7 @@ function wrapWithLink ($href, $string) {
 
 function prepareProductList ($limit, 
 							 $db_link,
-							 $category = 'all') {
+							 $category = 'all', $levelsDown = 0) {
 
 	$ids = retrieveProductIds($limit, $db_link, $category);
 	$list = "";
@@ -91,15 +91,24 @@ function prepareProductList ($limit,
 	$sections[] = $section;
 
 	$numberOfSections = count($sections);
-		
+	
+	switch ($levelsDown) {
+		case 0:
+			$dir = "";
+		default:
+			$dir = "../";
+	}
+
 	for ($i = 0; $i < $limit; $i++) {
 		$id = $ids[$i];
 		$product = getProduct($id, $db_link);
 		$name = $product['name'];
 
+
 		$list = $list .
 			"<div class='product'>
-			<h2 $tag='product_name'><a href='products/?id=$id'>$name</a></h2>";
+			<h2 $tag='product_name'><a href='" . $dir . 
+			"products/?id=$id'>$name</a></h2>";
 
 		// Add a line for each section of requested detail relating to this product 
 		for ($c = 0; $c < $numberOfSections; $c++) {

@@ -82,7 +82,7 @@ function retrieveUsingResult ($result, $db_link, $format = "array") {
 		}
 }
 
-function retrieveProductIds ($limit, $db_link, $category) {
+function retrieveProductIds ($limit, $db_link, $category = 'all') {
 	$query = "SELECT prodnum FROM products";
 
 	switch ($category) {

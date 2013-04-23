@@ -56,4 +56,12 @@ footer{
 	color: #5DC2F4;
 	height: 70px;
 }
-
+#product_area a{
+	text-decoration: none;
+	color: #5DC2F4;
+	background-color: #232E33;
+	font-weight: bold;
+}
+#product_area a:hover{
+	color: white;
+}

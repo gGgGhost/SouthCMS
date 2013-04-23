@@ -74,7 +74,7 @@ if (isset($_POST['name']) &&
 		$salesValue = $price * $quantity;
 		$difference = $salesValue - $initialValue;
 		$dpi = $price - $cost; // Difference Per Item
-		$id = retrieveLatestIds(1, $db_link)[0];
+		$id = retrieveProductIds(1, $db_link)[0];
 
 
 echo <<<END

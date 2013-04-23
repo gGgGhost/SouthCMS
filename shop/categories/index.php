@@ -37,7 +37,7 @@ switch ($numberToDisplay) {
 		break;
 	default: 
 		$page['content'] = 
-			$page['content'] . prepareProductList($numberToDisplay, $db_link, $category);
+			$page['content'] . prepareProductList($numberToDisplay, $db_link, $category, $levelsDown);
 		break;
 }
 
