@@ -63,11 +63,24 @@ END;
 
 }
 
+function countProductsInCategory($category, $db_link) {
+	$query = "SELECT COUNT(*) FROM products, categories
+			  WHERE products.catnum = categories.catnum
+			  AND catname =  '$category'";
+	$result = queryDatabase($query, $db_link);
+
+	$number = retrieveUsingResult($result, $db_link);
+	
+	return $number['COUNT(*)'];
+}
+
 function countCategories($db_link) {
 	$query = "SELECT COUNT(*) FROM categories";
 	$result = queryDatabase($query, $db_link);
-	$row = mysqli_fetch_row($result);
-	return $row[0];
+
+	$number = retrieveUsingResult($result, $db_link);
+	
+	return $number['COUNT(*)'];
 }
 
 

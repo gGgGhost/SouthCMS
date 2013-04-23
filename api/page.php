@@ -68,16 +68,18 @@ function wrapWithLink ($href, $string) {
 }
 
 function prepareProductList ($limit, 
-							 $db_link) {
+							 $db_link,
+							 $category = 'all') {
 
-	$ids = retrieveLatestIds($limit, $db_link);
+	$ids = retrieveProductIds($limit, $db_link, $category);
 	$list = "";
 	$tag ="class";
-
-	$section['name'] = "catname";
-	$section['showHeading'] = false;
-	$section['prefix'] = " . ";
-	$sections[] = $section;
+	if ($category == 'all') {
+		$section['name'] = "catname";
+		$section['showHeading'] = false;
+		$section['prefix'] = " . ";
+		$sections[] = $section;
+	}
 
 	$section['name'] = "stock";
 	$section['showHeading'] = false;

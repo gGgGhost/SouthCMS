@@ -82,8 +82,18 @@ function retrieveUsingResult ($result, $db_link, $format = "array") {
 		}
 }
 
-function retrieveLatestIds ($limit, $db_link) {
-	$query = "SELECT prodnum FROM products ORDER BY prodnum DESC LIMIT $limit";
+function retrieveProductIds ($limit, $db_link, $category) {
+	$query = "SELECT prodnum FROM products";
+
+	switch ($category) {
+		case 'all':
+			break;
+		default:
+			$query = $query . ", categories WHERE products.catnum = categories.catnum
+			  AND catname='$category'";
+	}
+
+	" ORDER BY prodnum DESC LIMIT $limit";
 	$result = queryDatabase($query, $db_link);
 	$stopHere = mysqli_num_rows($result);
 
