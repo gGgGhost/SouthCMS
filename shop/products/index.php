@@ -39,6 +39,7 @@ $section['prefix'] = "&pound;";
 $sections[] = $section;
 $section['name'] = "stock";
 $section['showHeading'] = false;
+$section['prefix'] = "";
 $sections[] = $section;
 
 // Open product_area tag, add header with product name/title
