@@ -18,11 +18,12 @@ $styles = getStyles($levelsDown);
 $pageTitle = $pageHeader = "very simple shop";
 $includeSearch = true;
 
-$page['start'] = preparePageStart($pageTitle, $pageHeader, 
-								  $styles, $includeSearch, $levelsDown);
+$basket = "<div id='basket'></div>";
 
-$page['content'] = "<div id='basket'></div>" . 
-				   "<div id='product_list'>";
+$page['start'] = preparePageStart($pageTitle, $pageHeader, 
+								  $styles, $includeSearch, $levelsDown, $basket);
+
+$page['content'] = "<div id='product_list'>";
 
 switch ($numberToDisplay) {
 	case 0:

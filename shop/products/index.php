@@ -18,10 +18,13 @@ $pageTitle = $productName . " - " . $pageHeader;
 $styles = getStyles($levelsDown);
 $includeSearch = false;
 
-$page['start'] = preparePageStart($pageTitle, $pageHeader, $styles, $includeSearch);
+$basket = "<div id='basket'></div>";
+
+$page['start'] = preparePageStart($pageTitle, $pageHeader, 
+									$styles, $includeSearch, $levelsDown, $basket);
 
 $buttonId = "buy";
-$buttonValue = "Add to basket";
+$buttonValue = "Add 1 to basket";
 
 // set the sections to be displayed
 $section['name'] = "description";
@@ -39,20 +42,20 @@ $section['showHeading'] = false;
 $sections[] = $section;
 
 // Open product_area tag, add header with product name/title
-$page['content'] = "<div id='basket'></div>" . 
-	"<div id='product_area'>
-	<h2 id='product_name'>$productName</h2>";
+$page['content'] = "<div id='product_area'>" 
+				 . "<h2 id='product_name'>$productName</h2>";
 
 // Add a line for each section of requested detail relating to this product 
 $page['content'] = $page['content'] . prepareProductDetails($sections, $product);
 
 // Add button, close product_area tag
-$page['content'] = $page['content'] .
-	"<button id='$buttonId'>$buttonValue</button>
-	</div>";
+$page['content'] = $page['content'] 
+				 . "<button id='$buttonId'>$buttonValue</button></div>"
+				 . "<p id='added'></p>"
+				 . "<script src='../js/basket.js'></script>"
+				 . "<script src='../js/shop.js'></script>";
 
-$page['end'] = "<script src='../js/basket.js'></script>"
-			 . preparePageEnd();
+$page['end'] = preparePageEnd();
 
 // Output each page section in turn
 echo($page['start']);

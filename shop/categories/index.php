@@ -23,11 +23,12 @@ $pageHeader = "very simple shop";
 $pageTitle = $category . ' - ' . $pageHeader;
 $includeSearch = true;
 
-$page['start'] = preparePageStart($pageTitle, $pageHeader, 
-								  $styles, $includeSearch, $levelsDown);
+$basket = "<div id='basket'></div>";
 
-$page['content'] = "<div id='basket'></div>" . 
-				   "<div id='product_list'>";
+$page['start'] = preparePageStart($pageTitle, $pageHeader, 
+								  $styles, $includeSearch, $levelsDown, $basket);
+
+$page['content'] = "<div id='product_list'>";
 
 switch ($numberToDisplay) {
 	case 0:
@@ -41,8 +42,8 @@ switch ($numberToDisplay) {
 		break;
 }
 
-$page['end'] = "</div>" 
-			 . "<script src='js/basket.js'></script>"
+$page['end'] = "</div>"
+			 . "<script src='../js/basket.js'></script>"
 			 . preparePageEnd();
 		
 // Output each page section in turn

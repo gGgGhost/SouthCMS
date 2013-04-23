@@ -69,7 +69,8 @@ function wrapWithLink ($href, $string) {
 
 function prepareProductList ($limit, 
 							 $db_link,
-							 $category = 'all', $levelsDown = 0) {
+							 $category = 'all', 
+							 $levelsDown = 0) {
 
 	$ids = retrieveProductIds($limit, $db_link, $category);
 	$list = "";
@@ -95,8 +96,10 @@ function prepareProductList ($limit,
 	switch ($levelsDown) {
 		case 0:
 			$dir = "";
+			break;
 		default:
 			$dir = "../";
+			break;
 	}
 
 	for ($i = 0; $i < $limit; $i++) {
@@ -127,7 +130,8 @@ function preparePageStart ($title,
 						   $header, 
 						   $styles, 
 						   $includeSearch, 
-						   $levelsDown = 1) {
+						   $levelsDown = 1,
+						   $extra = "") {
 
 	// Make sure main link points home,
 	// depending on place in structure
@@ -155,6 +159,7 @@ function preparePageStart ($title,
 		<body>
 		<header>
 			<h1><a href='$homeLink'>$header</a></h1>
+			$extra
 		</header>
 		<div id='main_section'>";
 
