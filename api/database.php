@@ -41,7 +41,18 @@ function createDatabase($db_link, $name, $user, $host, $pass) {
 		$query[] = "CREATE TABLE categories (catname VARCHAR(15), catnum INT UNSIGNED" .
 					" NOT NULL AUTO_INCREMENT, PRIMARY KEY(catnum))";
 		$query[] = "ALTER TABLE products ADD FOREIGN KEY(catnum) REFERENCES categories";
-		
+		$query[] = "CREATE TABLE customers (fullname VARCHAR(25), address VARCHAR(40)," .
+					" postcode CHAR(7), cust_id INT UNSIGNED" .
+					" NOT NULL AUTO_INCREMENT, PRIMARY KEY(cust_id))";
+		$query[] = "CREATE TABLE orders (order_id INT UNSIGNED NOT NULL AUTO_INCREMENT," .
+				   " cust_id INT UNSIGNED NOT NULL, order_date DATE, PRIMARY KEY(order_id)) ENGINE MyISAM";
+		$query[] = "ALTER TABLE orders ADD FOREIGN KEY(cust_id) REFERENCES customers";
+		$query[] = "CREATE TABLE in_order (record INT UNSIGNED NOT NULL AUTO_INCREMENT, " .
+				   "order_id INT UNSIGNED NOT NULL, prodnum INT UNSIGNED NOT NULL, " .
+				   "PRIMARY KEY(record)) ENGINE MyISAM";
+		$query[] = "ALTER TABLE in_order ADD FOREIGN KEY(prodnum) REFERENCES products, " .
+				   "ADD FOREIGN KEY(order_id) REFERENCES orders";
+
 		foreach ($query as $q) {
 			if($q == "USE $name;") {
 				mysqli_select_db($db_link, $name) 

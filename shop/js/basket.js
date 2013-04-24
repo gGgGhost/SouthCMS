@@ -20,7 +20,6 @@ window.onload = function(e){
 	if (!basket) {
 		basket = [];
 	}
-	console.log('loaded and complete');
 	printBasketString(basket);
 	setBasketToLocalStorage(basket);
 
@@ -43,4 +42,26 @@ function printBasketString(basket){
 	}
 	basketZone.innerHTML = numberOfProducts
 						 + message;
+}
+
+function clearBasketContents () {
+	var basket = [];
+	setBasketToLocalStorage(basket);
+	printBasketString(basket);
+	basketContents.innerHTML = "";
+	basketDisplay();
+}
+
+function getBasketContents (basket) {
+	var numberOfLines = basket.length;
+	var contents = "";
+
+	for (var i = 0; i < numberOfLines; i++) {
+		var thisProduct = basket[i];
+		var name = thisProduct.productName;
+		var quantity = thisProduct.quantity;
+		var line = "<p>" + name + " x" + quantity + "</p>";
+		contents = contents + line;
+	}
+	return contents;
 }

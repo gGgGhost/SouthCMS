@@ -65,3 +65,13 @@ footer{
 #product_area a:hover{
 	color: white;
 }
+#basket {
+	background-color: #232E33;
+	color: #5DC2F4;
+	font-weight: bold;
+	width: 10em;
+	text-align: center;
+}
+#basket:hover {
+	color: white;
+}

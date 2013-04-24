@@ -28,7 +28,8 @@ $basket = "<div id='basket'></div>";
 $page['start'] = preparePageStart($pageTitle, $pageHeader, 
 								  $styles, $includeSearch, $levelsDown, $basket);
 
-$page['content'] = "<div id='product_list'>";
+$page['content'] = "<h2>$category</h2>" .
+				"<div id='product_list'>";
 
 switch ($numberToDisplay) {
 	case 0:

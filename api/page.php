@@ -28,7 +28,7 @@ function prepareProductDetails ($sections,
 }
 
 function getProductSection ($sectionDetails, 
-							$product, $tag = "id") {
+							$product, $tag = "id", $dir = "../") {
 
 	$sectionName = $sectionDetails['name'];
 	$datum = $product[$sectionName];
@@ -36,7 +36,8 @@ function getProductSection ($sectionDetails,
 	$showHeading = $sectionDetails['showHeading'];
 
 	if ($sectionName == 'catname') {
-		$thisSegment = wrapWithLink("../categories/?name=$datum", $thisSegment);
+		$link = $dir . "categories/?name=$datum";
+		$thisSegment = wrapWithLink($link, $thisSegment);
 	}
 
 	if ($sectionName == 'stock') {
@@ -92,7 +93,6 @@ function prepareProductList ($limit,
 	$section['name'] = "price";
 	$section['showHeading'] = false;
 	$section['prefix'] = "&pound;";
-	$section['prefix'] = "";
 	$sections[] = $section;
 
 	$numberOfSections = count($sections);
@@ -120,7 +120,7 @@ function prepareProductList ($limit,
 		// Add a line for each section of requested detail relating to this product 
 		for ($c = 0; $c < $numberOfSections; $c++) {
 			$list = $list . 
-					getProductSection($sections[$c], $product, $tag);
+					getProductSection($sections[$c], $product, $tag, $dir);
 		}
 		
 		$list = 
@@ -134,8 +134,7 @@ function preparePageStart ($title,
 						   $header, 
 						   $styles, 
 						   $includeSearch, 
-						   $levelsDown = 1,
-						   $extra = "") {
+						   $levelsDown = 1, $extra = "") {
 
 	// Make sure main link points home,
 	// depending on place in structure
@@ -147,6 +146,15 @@ function preparePageStart ($title,
 			$homeLink = "..";
 			break;
 	}
+	if ($homeLink != "") {
+		$prefix = $homeLink . "/";
+	}
+	else {
+		$prefix = $homeLink;
+	}
+	$basketLink = $prefix . "basket";
+	$basket = "<div id='basket'></div>";
+	$basket = wrapWithLink($basketLink, $basket);
 	// Declare doctype
 	// Open html tag
 	// Open body tag
@@ -163,7 +171,7 @@ function preparePageStart ($title,
 		<body>
 		<header>
 			<h1><a href='$homeLink'>$header</a></h1>
-			$extra
+			$basket
 		</header>
 		<div id='main_section'>";
 

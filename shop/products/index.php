@@ -16,12 +16,10 @@ $levelsDown = 1;
 $pageHeader = "very simple shop";
 $pageTitle = $productName . " - " . $pageHeader;
 $styles = getStyles($levelsDown);
-$includeSearch = false;
-
-$basket = "<div id='basket'></div>";
+$includeSearch = true;
 
 $page['start'] = preparePageStart($pageTitle, $pageHeader, 
-									$styles, $includeSearch, $levelsDown, $basket);
+									$styles, $includeSearch, $levelsDown);
 
 $buttonId = "buy";
 $buttonValue = "Add 1 to basket";
