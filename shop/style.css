@@ -37,3 +37,6 @@ h2.product_name{
 #product_list {
 	margin-top: 1em;
 }
+#basket_contents p {
+	font-weight: bold;
+}

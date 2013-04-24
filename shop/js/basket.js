@@ -1,4 +1,4 @@
-var basketZone = document.getElementById('basket');
+var basketHeader = document.getElementById('basket');
 var product = document.getElementById('product_name');
 if (product) {
 	var productName = product.innerHTML;
@@ -40,7 +40,7 @@ function printBasketString(basket){
 		default:
 				var message = " products in basket";
 	}
-	basketZone.innerHTML = numberOfProducts
+	basketHeader.innerHTML = numberOfProducts
 						 + message;
 }
 
@@ -51,7 +51,7 @@ function clearBasketContents () {
 	var basket = []; // basket is empty array
 	setBasketToLocalStorage(basket); // Write to localStorage
 	printBasketString(basket); // Print the new empty basket to screem
-	basketContents.innerHTML = ""; // Clear the basket contents list
+	basketZone.innerHTML = ""; // Clear the basket contents list
 	basketDisplay(); // Reprint basket contents screen (telling basket is empty)
 }
 

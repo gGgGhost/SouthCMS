@@ -18,8 +18,7 @@ $basket = "<div id='basket'></div>";
 $page['start'] = preparePageStart($pageTitle, $pageHeader, 
 								  $styles, $includeSearch, $levelsDown, $basket);
 
-$page['content'] = "<div id='basket_contents'><h2>Products in basket</h3>"
-		. "<div id='basket_contents'></div>";
+$page['content'] = "<div id='basket_zone'><h2>Products in basket</h3>";
 
 $page['end'] = "</div>" 
 			 . "<script src='../js/basket.js'></script>"

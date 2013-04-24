@@ -1,4 +1,4 @@
-var basketContents = document.getElementById('basket_contents');
+var basketZone = document.getElementById('basket_zone');
 
 
 extraLoadEvent (basketDisplay);
@@ -9,22 +9,23 @@ function basketDisplay () {
 	if (basket.length == 0) {
 		var info = document.createElement('h3');
 		info.innerHTML = "There are currently no products in the basket.";
-		basketContents.appendChild(info);
+		basketZone.appendChild(info);
 	}
 	else {
 		var container = document.createElement('div');
+		container.id = "basket_contents";
 		container.innerHTML = getBasketContents(basket);
-		basketContents.appendChild(container);
+		basketZone.appendChild(container);
 
 		var orderButton = document.createElement('button');
 		orderButton.id = "place_order";
 		orderButton.innerHTML = "Place Order";
-		basketContents.appendChild(orderButton);
+		basketZone.appendChild(orderButton);
 
 		var clearButton = document.createElement('button');
 		clearButton.id = 'clear_basket';
 		clearButton.innerHTML = 'Clear Basket';
-		basketContents.appendChild(clearButton);
+		basketZone.appendChild(clearButton);
 
 		var button = document.getElementById('place_order');
 		button.addEventListener('click', showHideForm, false);
