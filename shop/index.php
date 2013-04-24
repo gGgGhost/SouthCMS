@@ -8,10 +8,10 @@ $db_link = getConnected();
 
 // Get the numbers
 $totalProducts = countProducts($db_link);
-$numberToDisplay = 6;
+$productsPerPage = 6;
 
 // Reduce number if not enough products in DB to meet the desired amount
-if ($numberToDisplay > $totalProducts) { $numberToDisplay = $totalProducts; }
+if ($productsPerPage > $totalProducts) { $productsPerPage = $totalProducts; }
 
 $levelsDown = 0;
 $styles = getStyles($levelsDown);
@@ -25,7 +25,7 @@ $page['start'] = preparePageStart($pageTitle, $pageHeader,
 
 $page['content'] = "<div id='product_list'>";
 
-switch ($numberToDisplay) {
+switch ($productsPerPage) {
 	case 0:
 		$page['content'] =
 			$page['content'] . 
@@ -33,7 +33,7 @@ switch ($numberToDisplay) {
 		break;
 	default: 
 		$page['content'] = 
-			$page['content'] . prepareProductList($numberToDisplay, $db_link);
+			$page['content'] . prepareProductList($productsPerPage, $db_link);
 		break;
 }
 

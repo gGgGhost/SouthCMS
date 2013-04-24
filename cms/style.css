@@ -76,16 +76,12 @@ img.icon-big{
 	margin: 0;
 	width: 850px;
 }
-
 .addition{
 	width: 55%;
 }
 .addition p.top{
-	background-color: #232E33;
-	color: #5DC2F4;
-}
-.addition p.top:hover{
-	color: white;
+	font-weight: bold;
+	color: #232E33;
 }
 .addition a{
 	text-decoration: none;

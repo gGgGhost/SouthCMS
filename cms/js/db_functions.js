@@ -110,6 +110,7 @@ function ajaxRequest(requestType, requestPath, requestString){
 
 function displayResponse(msg){
 	responseArea.innerHTML += msg;
+	addProductForm.reset();
 }
 
 
