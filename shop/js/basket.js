@@ -44,12 +44,15 @@ function printBasketString(basket){
 						 + message;
 }
 
+/*
+Delete all products from the basket
+*/
 function clearBasketContents () {
-	var basket = [];
-	setBasketToLocalStorage(basket);
-	printBasketString(basket);
-	basketContents.innerHTML = "";
-	basketDisplay();
+	var basket = []; // basket is empty array
+	setBasketToLocalStorage(basket); // Write to localStorage
+	printBasketString(basket); // Print the new empty basket to screem
+	basketContents.innerHTML = ""; // Clear the basket contents list
+	basketDisplay(); // Reprint basket contents screen (telling basket is empty)
 }
 
 function getBasketContents (basket) {

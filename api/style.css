@@ -85,3 +85,14 @@ footer a {
 footer a:hover {
 	color: white;
 }
+#page_links a {
+	text-decoration: none;
+	font-size: 1.5em;
+	font-weight: bold;
+	color: #5DC2F4;
+	background-color: #232E33;
+}
+#current_page_marker a {
+	background-color: #232E33;
+	color: orangered;
+}

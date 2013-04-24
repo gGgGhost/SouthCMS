@@ -13,6 +13,14 @@ $productsPerPage = 6;
 // Reduce number if not enough products in DB to meet the desired amount
 if ($productsPerPage > $totalProducts) { $productsPerPage = $totalProducts; }
 
+if (isset($_GET['page'])) {
+	$currentPage = $_GET['page'];
+} else {
+	$currentPage = 1;
+}
+$totalPages = ceil($totalProducts / $productsPerPage);
+$offset = ($currentPage * $productsPerPage) - $productsPerPage;
+
 $levelsDown = 0;
 $styles = getStyles($levelsDown);
 $pageTitle = $pageHeader = "very simple shop";
@@ -33,9 +41,13 @@ switch ($productsPerPage) {
 		break;
 	default: 
 		$page['content'] = 
-			$page['content'] . prepareProductList($productsPerPage, $db_link);
+			$page['content'] . prepareProductList($productsPerPage, $offset, $db_link);
 		break;
 }
+
+$page['content'] = $page['content'] . "<div id='page_links'>Page" . 
+					getPageLinks($currentPage, $totalPages) .
+					"</div>";
 
 $page['end'] = "</div>" 
 			 . "<script src='js/basket.js'></script>"

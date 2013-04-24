@@ -37,6 +37,25 @@ function getProduct($id, $db_link, $format = 'array') {
 	return $product;
 
 }
+function getManyProducts ($limit, $offset, $db_link, $category) {
+	$query = "SELECT name, description, prodnum, catname, cost, price,".  
+			 "stock, code FROM products, categories " .
+			 "WHERE products.catnum = categories.catnum";
+
+	if($category != 'all') {
+		$query = $query . " AND catname='$category'";
+	}
+ 	$query = $query . " ORDER BY prodnum DESC LIMIT $offset, $limit";
+
+ 	$result = queryDatabase($query, $db_link);
+
+ 	for ($i = 0; $i < mysqli_num_rows($result); $i++) {
+ 		$products[] = retrieveUsingResult($result, $db_link);
+ 	}
+
+ 	return $products;
+
+}
 
 
 function addProduct($db_link){

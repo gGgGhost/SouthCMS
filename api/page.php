@@ -70,12 +70,13 @@ function wrapWithLink ($href, $string) {
 	return $wrappedString;
 }
 
-function prepareProductList ($limit, 
+function prepareProductList ($limit,
+							 $offset, 
 							 $db_link,
 							 $category = 'all', 
 							 $levelsDown = 0) {
 
-	$ids = retrieveProductIds($limit, $db_link, $category);
+	$products = getManyProducts($limit, $offset, $db_link, $category);
 	$list = "";
 	$tag ="class";
 	if ($category == 'all') {
@@ -106,12 +107,10 @@ function prepareProductList ($limit,
 			break;
 	}
 
-	for ($i = 0; $i < $limit; $i++) {
-		$id = $ids[$i];
-		$product = getProduct($id, $db_link);
+	for ($i = 0; $i < count($products); $i++) {
+		$product = $products[$i];
 		$name = $product['name'];
-
-
+		$id = $product['prodnum'];
 		$list = $list .
 			"<div class='product'>
 			<h2 $tag='product_name'><a href='" . $dir . 
@@ -128,6 +127,20 @@ function prepareProductList ($limit,
 	}
 
 	return $list;
+}
+
+function getPageLinks ($currentPage, $totalPages) {
+	$links = " ";
+	for ($i = 1; $i <= $totalPages; $i ++) {
+		$thisLink = "<a href='?page=$i'>$i</a>";
+		if ($i == $currentPage) {
+			$thisLink = "<span id='current_page_marker'>" .
+						$thisLink . "</span>";
+		}
+		$thisLink = $thisLink . " ";
+		$links = $links . $thisLink;
+	}
+	return $links;
 }
 
 function preparePageStart ($title, 
