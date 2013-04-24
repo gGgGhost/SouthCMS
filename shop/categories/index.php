@@ -10,12 +10,16 @@ $db_link = getConnected();
 $category = retrieveVarFromGET('name', $db_link);
 
 // Get the numbers
-$totalProductsInCategory = countProductsInCategory($category, $db_link);
-$numberToDisplay = 6;
+$totalProducts = countProductsInCategory($category, $db_link);
+$productsPerPage = 6;
 
-// Reduce number if not enough products in DB to meet the desired amount
-if ($numberToDisplay > $totalProductsInCategory) { $numberToDisplay = 
-												   $totalProductsInCategory; }
+if (isset($_GET['page'])) {
+	$currentPage = $_GET['page'];
+} else {
+	$currentPage = 1;
+}
+$totalPages = ceil($totalProducts / $productsPerPage);
+$offset = ($currentPage * $productsPerPage) - $productsPerPage;
 
 $levelsDown = 1;
 $styles = getStyles($levelsDown);
@@ -31,7 +35,7 @@ $page['start'] = preparePageStart($pageTitle, $pageHeader,
 $page['content'] = "<h2>$category</h2>" .
 				"<div id='product_list'>";
 
-switch ($numberToDisplay) {
+switch ($productsPerPage) {
 	case 0:
 		$page['content'] =
 			$page['content'] . 
@@ -39,9 +43,14 @@ switch ($numberToDisplay) {
 		break;
 	default: 
 		$page['content'] = 
-			$page['content'] . prepareProductList($numberToDisplay, $db_link, $category, $levelsDown);
+			$page['content'] . prepareProductList($productsPerPage, $offset,
+											 $db_link, $category, $levelsDown);
 		break;
 }
+
+$page['content'] = $page['content'] . "<div id='page_links'>Page" . 
+					getPageLinks($currentPage, $totalPages, $category) .
+					"</div>";
 
 $page['end'] = "</div>"
 			 . "<script src='../js/basket.js'></script>"

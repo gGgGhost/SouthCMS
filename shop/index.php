@@ -10,9 +10,6 @@ $db_link = getConnected();
 $totalProducts = countProducts($db_link);
 $productsPerPage = 6;
 
-// Reduce number if not enough products in DB to meet the desired amount
-if ($productsPerPage > $totalProducts) { $productsPerPage = $totalProducts; }
-
 if (isset($_GET['page'])) {
 	$currentPage = $_GET['page'];
 } else {
