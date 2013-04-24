@@ -86,11 +86,13 @@ function prepareProductList ($limit,
 
 	$section['name'] = "stock";
 	$section['showHeading'] = false;
+	$section['prefix'] = "";
 	$sections[] = $section;
 
 	$section['name'] = "price";
 	$section['showHeading'] = false;
 	$section['prefix'] = "&pound;";
+	$section['prefix'] = "";
 	$sections[] = $section;
 
 	$numberOfSections = count($sections);
