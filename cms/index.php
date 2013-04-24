@@ -107,7 +107,7 @@ $page['content'] = "<div id='response_area'>
 				 . $productForm;
 
 $page['end'] = "<script src='js/db_functions.js'></script>"
-			 . preparePageEnd('cms');
+			 . preparePageEnd('cms', '');
 
 // Output each page section in turn
 echo($page['start']);
