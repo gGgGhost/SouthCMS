@@ -51,7 +51,7 @@ $page['content'] = $page['content'] .
 	"<button id='$buttonId'>$buttonValue</button>
 	</div>";
 
-$page['end'] = preparePageEnd();
+$page['end'] = preparePageEnd('cms');
 
 // Output each page section in turn
 echo($page['start']);

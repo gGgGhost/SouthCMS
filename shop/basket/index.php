@@ -24,7 +24,7 @@ $page['content'] = "<div id='basket_contents'><h2>Products in basket</h3>"
 $page['end'] = "</div>" 
 			 . "<script src='../js/basket.js'></script>"
  			 . "<script src='../js/order.js'></script>"
-			 . preparePageEnd();
+			 . preparePageEnd('shop');
 		
 // Output each page section in turn
 echo($page['start']);

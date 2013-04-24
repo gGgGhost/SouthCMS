@@ -54,16 +54,17 @@ footer{
 	background-color: #232E33;
 	border-top: 3px solid #5DC2F4;
 	color: #5DC2F4;
-	height: 70px;
+	height: 50px;
+	padding-left: 10%;
+	padding-top: 0.2em;
 }
 #product_area a{
 	text-decoration: none;
-	color: #5DC2F4;
-	background-color: #232E33;
 	font-weight: bold;
+	color: #232E33;
 }
 #product_area a:hover{
-	color: white;
+	color: #5DC2F4;
 }
 #basket {
 	background-color: #232E33;
@@ -73,5 +74,14 @@ footer{
 	text-align: center;
 }
 #basket:hover {
+	color: white;
+}
+footer a {
+	font-size: 1.2em;
+	color: #5DC2F4;
+	font-weight: bold;
+	text-decoration: none;
+}
+footer a:hover {
 	color: white;
 }

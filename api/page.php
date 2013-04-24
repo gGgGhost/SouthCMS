@@ -197,12 +197,25 @@ function prepareCategoryOptionList ($values,
 	return $list;
 }
 
-function preparePageEnd () {
+function preparePageEnd ($currentZone, $dir = "../") {
 	// Close 'main_section', 'body' and 'html' tags
 	// Open and close footer
+	
+
+	if ($currentZone == "shop") {
+		$link = $dir . "../cms"; 
+		$newZone = "southcms";
+	}
+	else {
+		$link = $dir . "../shop"; 
+		$newZone = "shop";
+	}
+	
+	$link = "<a href='$link'>$newZone</a>";
 	$bottom =
 		"</div>
 		<footer>
+		$link
 		</footer>
 		</body>
 		</html>";

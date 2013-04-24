@@ -39,7 +39,7 @@ switch ($numberToDisplay) {
 
 $page['end'] = "</div>" 
 			 . "<script src='js/basket.js'></script>"
-			 . preparePageEnd();
+			 . preparePageEnd('shop', '');
 		
 // Output each page section in turn
 echo($page['start']);

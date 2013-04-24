@@ -54,7 +54,7 @@ $page['content'] = $page['content']
 				 . "<script src='../js/basket.js'></script>"
 				 . "<script src='../js/shop.js'></script>";
 
-$page['end'] = preparePageEnd();
+$page['end'] = preparePageEnd('shop');
 
 // Output each page section in turn
 echo($page['start']);
