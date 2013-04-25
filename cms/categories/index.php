@@ -43,7 +43,7 @@ switch ($productsPerPage) {
 	default: 
 		$page['content'] = 
 			$page['content'] . prepareProductsTable($productsPerPage, $offset,
-											 $db_link, $category, $levelsDown, $format);
+											 $db_link, $category, $levelsDown);
 		break;
 }
 
