@@ -138,13 +138,13 @@ function prepareProductList ($limit,
 function getPageLinks ($currentPage, $totalPages, $category = "") {
 	$links = " ";
 	if ($category != "") {
-		$cat = "?name=$category&";
+		$cat = "name=$category&";
 	} else {
 			$cat = "";
 	}
 
 	for ($i = 1; $i <= $totalPages; $i ++) {
-		$thisLink = "<a href='$cat" . "page=$i'>$i</a>";
+		$thisLink = "<a href='?$cat" . "page=$i'>$i</a>";
 		if ($i == $currentPage) {
 			$thisLink = "<span id='current_page_marker'>" .
 						$thisLink . "</span>";

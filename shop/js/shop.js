@@ -24,9 +24,11 @@ function addToBasket (e) {
 		thisProduct.productName = productName;
 		thisProduct.quantity = 1;
 		thisProduct.productId = productId;
+		thisProduct.price = price.substring(1);
 	}
 	else{
 		thisProduct.quantity++;
+		thisProduct.price = price.substring(1) * thisProduct.quantity;
 	}
 	
 	basket[basketCounter] = thisProduct;

@@ -1,9 +1,11 @@
 var basketHeader = document.getElementById('basket');
-var product = document.getElementById('product_name');
-var prodnum = document.getElementById('product_prodnum');
-if (product && prodnum) {
-	var productName = product.innerHTML;
-	var productId = prodnum.innerHTML;
+var name_elem = document.getElementById('product_name');
+var num_elem = document.getElementById('product_prodnum');
+var price_elem = document.getElementById('product_price');
+if (name_elem && num_elem && price_elem) {
+	var productName = name_elem.innerHTML;
+	var productId = num_elem.innerHTML;
+	var price = price_elem.innerHTML;
 }
 
 function getBasketFromLocalStorage () {
@@ -60,16 +62,22 @@ function clearBasketContents () {
 
 function getBasketContents (basket) {
 	var numberOfLines = basket.length;
-	var contents = "";
+	var contents = "<table>";
+	var totalPrice = 0;
 
 	for (var i = 0; i < numberOfLines; i++) {
 		var thisProduct = basket[i];
 		var name = thisProduct.productName;
 		var quantity = thisProduct.quantity;
 		var id = thisProduct.productId;
-		var line = "<p><a href='../products/?id=" + id + "'>";
-		line += name + "</a> x" + quantity + "</p>";
-		contents = contents + line;
+		var price = thisProduct.price;
+		var price = Number(price).toFixed(2);
+		var line = "<tr><td><a href='../products/?id=" + id + "'>";
+		line += name + "</a></td><td>x" + quantity + "</td><td>&pound;" + price + "</td></tr>";
+		contents += line;
+		totalPrice += Number(price);
 	}
+	contents += "</table><p>Total price: &pound;<span id='total_price'>" + 
+				totalPrice + "</span></p>";
 	return contents;
 }
