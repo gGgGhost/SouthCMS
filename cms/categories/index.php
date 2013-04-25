@@ -11,7 +11,7 @@ $category = retrieveVarFromGET('name', $db_link);
 
 // Get the numbers
 $totalProducts = countProductsInCategory($category, $db_link);
-$productsPerPage = 6;
+$productsPerPage = 25;
 
 if (isset($_GET['page'])) {
 	$currentPage = $_GET['page'];
@@ -22,15 +22,14 @@ $totalPages = ceil($totalProducts / $productsPerPage);
 $offset = ($currentPage * $productsPerPage) - $productsPerPage;
 
 $levelsDown = 1;
-$styles = getStyles($levelsDown);
-$pageHeader = "very simple shop";
+$format = 'table';
+$pageHeader = "SouthCMS";#
 $pageTitle = $category . ' - ' . $pageHeader;
-$includeSearch = true;
-
-$basket = "<div id='basket'></div>";
+$styles = getStyles($levelsDown);
+$includeSearch = false;
 
 $page['start'] = preparePageStart($pageTitle, $pageHeader, 
-								  $styles, $includeSearch, $levelsDown, $basket);
+								  $styles, $includeSearch, $levelsDown);
 
 $page['content'] = "<h2>$category</h2>" .
 				"<div id='product_list'>";
@@ -43,8 +42,8 @@ switch ($productsPerPage) {
 		break;
 	default: 
 		$page['content'] = 
-			$page['content'] . prepareProductsList($productsPerPage, $offset,
-											 $db_link, $category, $levelsDown);
+			$page['content'] . prepareProductsTable($productsPerPage, $offset,
+											 $db_link, $category, $levelsDown, $format);
 		break;
 }
 
@@ -52,9 +51,7 @@ $page['content'] = $page['content'] . "<div id='page_links'>Page" .
 					getPageLinks($currentPage, $totalPages, $category) .
 					"</div>";
 
-$page['end'] = "</div>"
-			 . "<script src='../js/basket.js'></script>"
-			 . preparePageEnd('shop');
+$page['end'] = "</div>" . preparePageEnd('cms');
 		
 // Output each page section in turn
 echo($page['start']);

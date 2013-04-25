@@ -18,7 +18,8 @@ $pageTitle = $productName . " - " . $pageHeader;
 $styles = getStyles($levelsDown);
 $includeSearch = false;
 
-$page['start'] = preparePageStart($pageTitle, $pageHeader, $styles, $includeSearch);
+$page['start'] = preparePageStart($pageTitle, $pageHeader, 
+								$styles, $includeSearch, $levelsDown);
 
 $buttonId = "edit";
 $buttonValue = "Edit this product";

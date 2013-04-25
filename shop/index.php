@@ -38,7 +38,7 @@ switch ($productsPerPage) {
 		break;
 	default: 
 		$page['content'] = 
-			$page['content'] . prepareProductList($productsPerPage, $offset, $db_link);
+			$page['content'] . prepareProductsList($productsPerPage, $offset, $db_link);
 		break;
 }
 

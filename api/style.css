@@ -47,7 +47,8 @@ a {
 	font-weight: bold;
 }
 a:hover {
-	color: #5DC2F4;
+	background-color: #232E33;
+	color: white;
 }
 input[type='search'] {
 	width: 400px;
@@ -86,6 +87,9 @@ footer a:hover {
 	font-size: 1.5em;
 	background-color: #232E33;
 }
+#page_links {
+	margin-top: 1em;
+}
 #current_page_marker a {
 	background-color: #232E33;
 	color: orangered;
@@ -99,4 +103,8 @@ button {
 td {
 	padding-right: 3em;
 	font-weight: bold;
+}
+th {
+	text-align: left;
+	text-transform: uppercase;
 }

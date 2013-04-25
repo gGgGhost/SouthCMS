@@ -19,16 +19,16 @@ function buildBigButton ($button) {
 }
 
 function prepareProductDetails ($sections, 
-								$product) {
+								$product, $format = 'list') {
 	$lines = "";
 	for ($i = 0; $i < count($sections); $i++) {
-		$lines = $lines . getProductSection($sections[$i], $product);
+		$lines = $lines . getProductSection($sections[$i], $product, $format);
 	}
 	return $lines;
 }
 
 function getProductSection ($sectionDetails, 
-							$product, $tag = "id", $dir = "../") {
+							$product, $format, $tag = "id", $dir = "../") {
 
 	$sectionName = $sectionDetails['name'];
 	$datum = $product[$sectionName];
@@ -59,13 +59,18 @@ function getProductSection ($sectionDetails,
 
 	$section = "";
 
-	if ($showHeading == true) {
-		if ($sectionName =='catname') {$sectionName='category';}
-		$section = $section . "<h3>$sectionName</h3>";
+	switch ($format) {
+		case 'list':
+			if ($showHeading == true) {
+				if ($sectionName =='catname') {$sectionName='category';}
+				$section = $section . "<h3>$sectionName</h3>";
+			}
+			$section = $section . "<p$hide $tag='product_$sectionName'>$thisSegment</p>";
+			break;
+		case 'table':
+			$section = $section . "<td>$thisSegment</td>";
+			break;
 	}
-	$section = $section . "<p$hide $tag='product_$sectionName'>";
-	$section = $section . "$thisSegment</p>";
-
 	return $section;
 }
 
@@ -76,15 +81,17 @@ function wrapWithLink ($href, $string) {
 	return $wrappedString;
 }
 
-function prepareProductList ($limit,
+function prepareProductsList ($limit,
 							 $offset, 
 							 $db_link,
 							 $category = 'all', 
 							 $levelsDown = 0) {
 
 	$products = getManyProducts($limit, $offset, $db_link, $category);
-	$list = "";
 	$tag ="class";
+	$format = 'list';
+	$list = '';
+			
 	if ($category == 'all') {
 		$section['name'] = "catname";
 		$section['showHeading'] = false;
@@ -117,21 +124,85 @@ function prepareProductList ($limit,
 		$product = $products[$i];
 		$name = $product['name'];
 		$id = $product['prodnum'];
-		$list = $list .
+		$list .=
 			"<div class='product'>
 			<h2 $tag='product_name'><a href='" . $dir . 
 			"products/?id=$id'>$name</a></h2>";
 
 		// Add a line for each section of requested detail relating to this product 
 		for ($c = 0; $c < $numberOfSections; $c++) {
-			$list = $list . 
-					getProductSection($sections[$c], $product, $tag, $dir);
+			$list .= getProductSection($sections[$c], $product, $format, $tag, $dir);
 		}
 		
-		$list = 
-			$list . "</div>";
+		$list .= "</div>";
 	}
 
+	return $list;
+}
+
+function PrepareProductsTable ($limit,
+							 $offset, 
+							 $db_link,
+							 $category = 'all', 
+							 $levelsDown = 0) {
+
+	$products = getManyProducts($limit, $offset, $db_link, $category);
+	$tag ="class";
+	$format = 'table';
+	$headings = '<tr><th></th><th></th><th>cost</th>'
+			  . '<th>price</th><th>code</th><th>id</th></tr>';
+	$list = "<table>$headings";
+	
+
+	$section['name'] = "stock";
+	$section['showHeading'] = false;
+	$sections[] = $section;
+
+	$section['name'] = "cost";
+	$section['showHeading'] = false;
+	$section['prefix'] = "&pound;";
+	$sections[] = $section;
+
+	$section['name'] = "price";
+	$section['showHeading'] = false;
+	$sections[] = $section;
+	unset($section['prefix']);
+
+	$section['name'] = "code";
+	$section['showHeading'] = false;
+	$sections[] = $section;
+
+	$section['name'] = "prodnum";
+	$section['showHeading'] = false;
+	$sections[] = $section;
+
+
+	$numberOfSections = count($sections);
+	
+	switch ($levelsDown) {
+		case 0:
+			$dir = "";
+			break;
+		default:
+			$dir = "../";
+			break;
+	}
+
+	for ($i = 0; $i < count($products); $i++) {
+		$product = $products[$i];
+		$name = $product['name'];
+		$id = $product['prodnum'];
+		$list .=
+			"<tr class='product'>
+			<td $tag='product_name'><a href='" . $dir . 
+			"products/?id=$id'>$name</a></td>";
+
+		// Add a line for each section of requested detail relating to this product 
+		for ($c = 0; $c < $numberOfSections; $c++) {
+			$list .= getProductSection($sections[$c], $product, $format, $tag, $dir);
+		}
+	}
+	$list .= '</table>';
 	return $list;
 }
 
