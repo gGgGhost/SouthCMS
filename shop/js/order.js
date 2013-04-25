@@ -1,5 +1,8 @@
 var basketZone = document.getElementById('basket_zone');
+var orderButton = document.getElementById('confirm_order');
 
+
+orderButton.addEventListener('click', submitForm, false);
 
 extraLoadEvent (basketDisplay);
 
@@ -17,15 +20,18 @@ function basketDisplay () {
 		container.innerHTML = getBasketContents(basket);
 		basketZone.appendChild(container);
 
+		var buttons = document.createElement('p');
+		basketZone.appendChild(buttons);
+
 		var orderButton = document.createElement('button');
 		orderButton.id = "place_order";
 		orderButton.innerHTML = "Place Order";
-		basketZone.appendChild(orderButton);
+		buttons.appendChild(orderButton);
 
 		var clearButton = document.createElement('button');
 		clearButton.id = 'clear_basket';
 		clearButton.innerHTML = 'Clear Basket';
-		basketZone.appendChild(clearButton);
+		buttons.appendChild(clearButton);
 
 		var button = document.getElementById('place_order');
 		button.addEventListener('click', showHideForm, false);
@@ -62,3 +68,40 @@ function extraLoadEvent (func) {
 	}
 }
 
+function captureForm(){
+	// Get all relevant input areas on page
+	var inputs = document.getElementsByTagName('input');
+
+	// Empty string to add name/value pairs to
+	var formString = '';
+
+	// Loop through stored inputs and get the 
+	// name and value from each, add to string
+	looper:
+	for (var i = 0; i < inputs.length; i++) {
+		var input = inputs[i];
+		if (input.type != 'text'){ // Stop at reset button
+			continue looper;
+		}
+		if (formString !== '') {
+			formString += '&';
+		}
+		formString += input.name + '=' + input.value;
+	}
+	return formString;
+}
+
+function submitForm(e){
+	var basket = getBasketFromLocalStorage();
+	var order = JSON.stringify(basket);
+	// Stop form submitting by default form action
+	if(e.preventDefault()){
+		e.preventDefault();
+	}
+	// Submit the add product request using requeststring from captureForm
+	var requestString = captureForm();
+	requestString += "&basket=" + order;
+	console.log(requestString);
+	ajaxRequest('POST', '../../api/orders/', requestString, basketZone);
+	clearBasketContents("<h2>Order Submitted</h2>");
+}

@@ -40,7 +40,7 @@ function submitForm(e){
 	}
 	// Submit the add product request using requeststring from captureForm
 	var requestString = captureForm();
-	ajaxRequest('POST', '../api/products/', requestString);
+	ajaxRequest('POST', '../api/products/', requestString, responseArea);
 }
 
 function captureForm(){
@@ -91,12 +91,6 @@ function captureForm(){
 	}
 	
 	return formString;
-}
-/*
-Append response text to text between tags of response area div
-*/
-function displayResponse(msg){
-	responseArea.innerHTML += msg;
 }
 
 

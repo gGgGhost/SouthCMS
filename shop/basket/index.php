@@ -10,14 +10,14 @@ $orderForm = "<form id='order_form' class='empty'>
 		<p>
 			<label for='name'><h3>Full Name</h3></label>
 			<p>
-				<input type='text' name='name' placeholder='25 character max' maxlength='25' />
+				<input type='text' name='name'  maxlength='25' />
 			</p>
 		</p>
 
 		<p>
 			<label for='address'><h3>Address</h3></label>
 			<p>
-				<input type='text' name='address' placeholder='40 character max' maxlength='40' />
+				<input type='text' name='address' maxlength='40' />
 			</p>
 		</p>
 		<p>
@@ -26,7 +26,15 @@ $orderForm = "<form id='order_form' class='empty'>
 				<input type='text' name='postcode' maxlength='8' />
 			</p>
 		</p>
-		<input type='submit' id='confirm_order' value='Confirm Order' formaction='../api/products/' formmethod='POST' />
+		<p>
+			<label for='email'><h3>Email</h3></label>
+			<p>
+				<input type='text' name='email' maxlength='40' />
+			</p>
+		</p>
+		<p>
+			<input type='submit' id='confirm_order' value='Confirm Order' formaction='../api/products/' formmethod='POST' />
+		</p>
 		</form>";
 
 $levelsDown = 1;

@@ -1,4 +1,4 @@
-function ajaxRequest(requestType, requestPath, requestString){
+function ajaxRequest(requestType, requestPath, requestString, responseArea){
 
 	requestString = requestString || '';
 
@@ -9,10 +9,10 @@ function ajaxRequest(requestType, requestPath, requestString){
 		if (xhr.readyState === 4 && xhr.status === 200){
 			var type = xhr.getResponseHeader("Content-Type");
 			if (type.match(/^text/)){
-				displayResponse(xhr.responseText);
+				displayResponse(xhr.responseText, responseArea);
 			}
 			else{
-				displayResponse("Content type of response did not match requested type");
+				displayResponse("Content type of response did not match requested type", responseArea);
 			}
 			return "done";
 		}
@@ -24,4 +24,11 @@ function ajaxRequest(requestType, requestPath, requestString){
 	else{
 		xhr.send(null);
 	}
+}
+
+/*
+Append response text to text between tags of response area div
+*/
+function displayResponse(msg, area){
+	area.innerHTML += msg;
 }

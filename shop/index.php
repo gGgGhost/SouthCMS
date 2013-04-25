@@ -11,15 +11,18 @@ $optionList = "";
 $numberOfCategories = countCategories($db_link);
 if ($numberOfCategories > 0) {
 	$categoryNames = getListOfCategoryNames($db_link);
+	$cats = "";
+	for ($i = 0; $i < count($categoryNames); $i++) {
+		$name = $categoryNames[$i];
+		$href = "categories/?name=$name";
+		$line = "<div class='cat'>$name</div>";
+		$cats .= wrapWithLink($href, $line);
+	} 
+	$cats = '<div id="cat_box">View: ' . $cats . '</div>';
 }
-$cats = "";
-for ($i = 0; $i < count($categoryNames); $i++) {
-	$name = $categoryNames[$i];
-	$href = "categories/?name=$name";
-	$line = "<div class='cat'>$name</div>";
-	$cats .= wrapWithLink($href, $line);
-} 
-$cats = '<div id="cat_box">View: ' . $cats . '</div>';
+else {
+	$cats = "";
+}
 
 // Get the numbers
 $totalProducts = countProducts($db_link);
@@ -45,7 +48,7 @@ $page['start'] = preparePageStart($pageTitle, $pageHeader,
 
 $page['content'] = "$cats<div id='product_list'>";
 
-switch ($productsPerPage) {
+switch ($totalProducts) {
 	case 0:
 		$page['content'] =
 			$page['content'] . 
@@ -54,12 +57,13 @@ switch ($productsPerPage) {
 	default: 
 		$page['content'] = 
 			$page['content'] . prepareProductsList($productsPerPage, $offset, $db_link);
+		$page['content'] = $page['content'] . "<div id='page_links'>Page" . 
+					getPageLinks($currentPage, $totalPages) .
+					"</div>";
 		break;
 }
 
-$page['content'] = $page['content'] . "<div id='page_links'>Page" . 
-					getPageLinks($currentPage, $totalPages) .
-					"</div>";
+
 
 $page['end'] = "</div>" 
 			 . "<script src='js/basket.js'></script>"

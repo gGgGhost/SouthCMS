@@ -2,18 +2,17 @@ var basketHeader = document.getElementById('basket');
 var name_elem = document.getElementById('product_name');
 var num_elem = document.getElementById('product_prodnum');
 var price_elem = document.getElementById('product_price');
+var orderForm = document.getElementById('order_form');
 if (name_elem && num_elem && price_elem) {
 	var productName = name_elem.innerHTML;
 	var productId = num_elem.innerHTML;
 	var price = price_elem.innerHTML;
 }
-
 function getBasketFromLocalStorage () {
 	var JSONbasket = localStorage.getItem('basket');
 	var basket = JSON.parse(JSONbasket);
 	return basket;
 }
-
 function setBasketToLocalStorage (basket) {
 	var JSONbasket = JSON.stringify(basket);
 	localStorage.setItem('basket', JSONbasket); 
@@ -48,18 +47,23 @@ function printBasketString(basket){
 	basketHeader.innerHTML = numberOfProducts
 						 + message;
 }
-
 /*
 Delete all products from the basket
 */
-function clearBasketContents () {
+function clearBasketContents (msg) {
+	if (typeof msg == 'undefined') {
+		msg = "";
+	}
 	var basket = []; // basket is empty array
 	setBasketToLocalStorage(basket); // Write to localStorage
-	printBasketString(basket); // Print the new empty basket to screem
+	printBasketString(basket); // Print the new empty basket to screen
 	basketZone.innerHTML = ""; // Clear the basket contents list
 	basketDisplay(); // Reprint basket contents screen (telling basket is empty)
+	if (orderForm.class != 'empty') {
+		orderForm.classList.add('empty');
+		basketZone.innerHTML = msg + basketZone.innerHTML;
+	}
 }
-
 function getBasketContents (basket) {
 	var numberOfLines = basket.length;
 	var contents = "<table>";
@@ -77,7 +81,7 @@ function getBasketContents (basket) {
 		contents += line;
 		totalPrice += Number(price);
 	}
-	contents += "</table><p>Total price: &pound;<span id='total_price'>" + 
-				totalPrice + "</span></p>";
+	contents += "<tr><td>Total price:</td><td></td><td>&pound;<span id='total_price'>" + 
+				totalPrice.toFixed(2) + "</span></td></tr></table>";
 	return contents;
 }

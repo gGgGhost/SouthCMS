@@ -15,7 +15,6 @@ function getConnected() {
 		bugger($e->getMessage());
 		// Do something about the failed connection
 	}
-	
 	try {
 		if (!$result = mysqli_select_db($db_link, $db_name)) {
 			throw new Exception("<p>Could not select DB because it does not exist.</p>");
@@ -43,7 +42,7 @@ function createDatabase($db_link, $name, $user, $host, $pass) {
 					" NOT NULL AUTO_INCREMENT, PRIMARY KEY(catnum))";
 		$query[] = "ALTER TABLE products ADD FOREIGN KEY(catnum) REFERENCES categories";
 		$query[] = "CREATE TABLE customers (fullname VARCHAR(25) NOT NULL, address VARCHAR(40) NOT NULL," .
-					" postcode CHAR(7) NOT NULL, cust_id INT UNSIGNED" .
+					" postcode CHAR(7) NOT NULL, email VARCHAR(40) NOT NULL, cust_id INT UNSIGNED" .
 					" NOT NULL AUTO_INCREMENT, PRIMARY KEY(cust_id))";
 		$query[] = "CREATE TABLE orders (order_id INT UNSIGNED NOT NULL AUTO_INCREMENT," .
 				   " cust_id INT UNSIGNED NOT NULL, order_date TIMESTAMP NOT NULL " .
@@ -52,7 +51,7 @@ function createDatabase($db_link, $name, $user, $host, $pass) {
 		$query[] = "ALTER TABLE orders ADD FOREIGN KEY(cust_id) REFERENCES customers";
 		$query[] = "CREATE TABLE in_order (record INT UNSIGNED NOT NULL AUTO_INCREMENT, " .
 				   "order_id INT UNSIGNED NOT NULL, prodnum INT UNSIGNED NOT NULL, " .
-				   "PRIMARY KEY(record)) ENGINE MyISAM";
+				   "quantity MEDIUMINT NOT NULL DEFAULT 1, PRIMARY KEY(record)) ENGINE MyISAM";
 		$query[] = "ALTER TABLE in_order ADD FOREIGN KEY(prodnum) REFERENCES products, " .
 				   "ADD FOREIGN KEY(order_id) REFERENCES orders";
 
