@@ -1,10 +1,25 @@
 <?php
 // Link into the api
+require_once "../api/categories/index.php";
 require_once "../api/products/index.php";
 require_once "../api/page.php";
 
 // Hook up to database
 $db_link = getConnected();
+
+$optionList = "";
+$numberOfCategories = countCategories($db_link);
+if ($numberOfCategories > 0) {
+	$categoryNames = getListOfCategoryNames($db_link);
+}
+$cats = "";
+for ($i = 0; $i < count($categoryNames); $i++) {
+	$name = $categoryNames[$i];
+	$href = "categories/?name=$name";
+	$line = "<div class='cat'>$name</div>";
+	$cats .= wrapWithLink($href, $line);
+} 
+$cats = '<div id="cat_box">View: ' . $cats . '</div>';
 
 // Get the numbers
 $totalProducts = countProducts($db_link);
@@ -28,7 +43,7 @@ $basket = "<div id='basket'></div>";
 $page['start'] = preparePageStart($pageTitle, $pageHeader, 
 								  $styles, $includeSearch, $levelsDown, $basket);
 
-$page['content'] = "<div id='product_list'>";
+$page['content'] = "$cats<div id='product_list'>";
 
 switch ($productsPerPage) {
 	case 0:

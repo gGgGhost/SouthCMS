@@ -40,3 +40,19 @@ h2.product_name{
 	display: inline;
 	margin-left: 1em;
 }
+#cat_box {
+	margin-top: 2em;
+}
+.cat {
+	background-color: #232E33;
+	display: inline;
+	margin-right: 1em;
+	color: #5DC2F4;
+	padding: 0.1em;
+}
+#cat_box a:hover {
+	background-color: white;
+}
+.cat:hover {
+		color: orangered;
+}

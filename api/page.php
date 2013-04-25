@@ -216,7 +216,7 @@ function getPageLinks ($currentPage, $totalPages, $category = "") {
 
 	for ($i = 1; $i <= $totalPages; $i ++) {
 		$thisLink = "<a href='?$cat" . "page=$i'>$i</a>";
-		if ($i == $currentPage) {
+		if ($i == $currentPage && $totalPages > 1) {
 			$thisLink = "<span id='current_page_marker'>" .
 						$thisLink . "</span>";
 		}

@@ -20,6 +20,7 @@ header a{
 }
 header a:hover{
 	color: white;
+	background-color: #5DC2F4;
 }
 body{
 	margin: 0;
@@ -48,7 +49,7 @@ a {
 }
 a:hover {
 	background-color: #232E33;
-	color: white;
+	color: orangered;
 }
 input[type='search'] {
 	width: 400px;
@@ -81,7 +82,7 @@ footer a {
 	font-size: 1.2em;
 }
 footer a:hover {
-	color: white;
+	color: orangered;
 }
 #page_links a {
 	font-size: 1.5em;
