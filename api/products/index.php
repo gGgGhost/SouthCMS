@@ -27,7 +27,7 @@ mysqli_close($db_link)
 function getProduct($id, $db_link, $format = 'array') {
 
 	$query = "SELECT name, description, catname, cost, price,".  
-			 "stock, code FROM products, categories ".
+			 "stock, code, prodnum FROM products, categories ".
 			 "WHERE prodnum = '$id' AND products.catnum = categories.catnum";
 
 	$result = queryDatabase($query, $db_link);	
@@ -60,7 +60,6 @@ function getManyProducts ($limit, $offset, $db_link, $category) {
 
 function addProduct($db_link){
 
-
 if (isset($_POST['name']) &&
 	isset($_POST['description']) &&
 	isset($_POST['cost']) &&
@@ -68,7 +67,6 @@ if (isset($_POST['name']) &&
 	isset($_POST['quantity']) &&
 	isset($_POST['code']) &&
 	isset($_POST['catname'])) {
-	
 
 	$name = retrieveVarFromPOST('name', $db_link);
 	$description = retrieveVarFromPOST('description', $db_link);
@@ -78,7 +76,12 @@ if (isset($_POST['name']) &&
 	$code = retrieveVarFromPOST('code', $db_link);
 	$category = retrieveVarFromPOST('catname', $db_link);
 
-	if (isset($_POST['newcat'])) {
+	
+
+	if (isset($_POST['flag'])) {
+		$flag = retrieveVarFromPOST('flag', $db_link);
+	}
+	if (isset($flag) && $flag == 'newcat') {
 		addCategory($category, $db_link);
 	}
 
@@ -94,7 +97,7 @@ if (isset($_POST['name']) &&
 		$salesValue = $price * $quantity;
 		$difference = $salesValue - $initialValue;
 		$dpi = $price - $cost; // Difference Per Item
-		$id = retrieveProductIdFromName($name, $db_link);
+		$id = retrieveProductId($name, $catnum, $cost, $db_link);
 
 
 echo <<<END
@@ -122,8 +125,9 @@ function countProducts($db_link) {
 	return $row[0];
 }
 
-function retrieveProductIdFromName($name, $db_link) {
-	$query = "SELECT prodnum FROM products WHERE name='$name'";
+function retrieveProductId($name, $catnum, $cost, $db_link) {
+	$query = "SELECT prodnum FROM products WHERE name='$name'" .
+			" AND catnum='$catnum' AND cost='$cost'";
 	$result = queryDatabase($query, $db_link);
 	$row = retrieveUsingResult($result, $db_link);
 	$prodnum = $row['prodnum'];

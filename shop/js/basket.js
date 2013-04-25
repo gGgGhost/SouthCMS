@@ -1,7 +1,9 @@
 var basketHeader = document.getElementById('basket');
 var product = document.getElementById('product_name');
-if (product) {
+var prodnum = document.getElementById('product_prodnum');
+if (product && prodnum) {
 	var productName = product.innerHTML;
+	var productId = prodnum.innerHTML;
 }
 
 function getBasketFromLocalStorage () {
@@ -23,12 +25,13 @@ window.onload = function(e){
 	printBasketString(basket);
 	setBasketToLocalStorage(basket);
 
-	if (productName) {
-		var search = checkBasketForProduct(basket, productName);
+	if (productId) {
+		var search = checkBasketForProduct(basket, productId);
 		if (search != "not found") {
 			updateScreen(basket[search].quantity);
 		}
 	}
+
 }
 function printBasketString(basket){
 	var numberOfProducts = basket.length;
@@ -63,7 +66,9 @@ function getBasketContents (basket) {
 		var thisProduct = basket[i];
 		var name = thisProduct.productName;
 		var quantity = thisProduct.quantity;
-		var line = "<p>" + name + " x" + quantity + "</p>";
+		var id = thisProduct.productId;
+		var line = "<p><a href='../products/?id=" + id + "'>";
+		line += name + "</a> x" + quantity + "</p>";
 		contents = contents + line;
 	}
 	return contents;

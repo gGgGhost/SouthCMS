@@ -1,7 +1,13 @@
+/*
+Functions for submitting the new product form
+*/
+
+// Get form, button and div for displaying responses
 var addProductForm = document.getElementById("product_form");
 var addProductButton = document.getElementById("add_product");
 var responseArea = document.getElementById('response_area');
 
+// Add relevant event listeners
 addProductButton.addEventListener("click", myButtons, false);
 addProductForm.addEventListener("submit", submitForm, false);
 
@@ -38,19 +44,24 @@ function submitForm(e){
 }
 
 function captureForm(){
+	// Get all relevant input areas on page
 	var inputs = document.getElementsByTagName('input');
 	var textArea = document.getElementsByTagName('textarea')[0];
 
+	// Get category from the selector box
 	var categorySelector = document.getElementById('category');
 	var categoryOptions = categorySelector.options;
 	var selectedCategory = categoryOptions[categorySelector.selectedIndex].value;
 
+	// Empty string to add name/value pairs to
 	var formString = '';
 
+	// Loop through stored inputs and get the 
+	// name and value from each, add to string
 	looper:
 	for (var i = 0; inputs.length; i++) {
 		var input = inputs[i];
-		if (input.type == 'reset'){
+		if (input.type == 'reset'){ // Stop at reset button
 			break looper;
 		}
 		if (formString !== '') {
@@ -59,58 +70,33 @@ function captureForm(){
 		formString += input.name + '=' + input.value;
 	}
 
+	// Add the textarea
 	formString += '&' + textArea.name + '=' + textArea.value;
 
+	// If new category selected, get the value from 
+	// new_category textbox and add newcat flag to the string
+	// If not, add selected category to the string
 	if (selectedCategory == "NEW") {
 		var newCategory = document.getElementById('new_category').value;
 		formString += '&catname=' + newCategory;
+
 		var newOption = document.createElement('option');
 		newOption.value = newCategory;
 		newOption.innerHTML = newCategory;
 		categorySelector.add(newOption, null);
-		formString += '&newcat=' + 'true';
+
+		formString += '&flag=' + 'newcat';
 	} else {
 		formString += '&catname=' + selectedCategory;
 	}
 	
 	return formString;
 }
-
-
-
-function ajaxRequest(requestType, requestPath, requestString){
-
-	requestString = requestString || '';
-
-	var xhr = new XMLHttpRequest();
-	xhr.open(requestType, requestPath);
-	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	xhr.onreadystatechange = function(){
-		if (xhr.readyState === 4 && xhr.status === 200){
-			var type = xhr.getResponseHeader("Content-Type");
-			if (type.match(/^text/)){
-				displayResponse(xhr.responseText);
-			}
-			else{
-				displayResponse("Content type of response did not match requested type");
-			}
-			return "done";
-		}
-
-	}
-	if (requestString != ''){
-		xhr.send(requestString);
-	}
-	else{
-		xhr.send(null);
-	}
-
-	
-}
-
+/*
+Append response text to text between tags of response area div
+*/
 function displayResponse(msg){
 	responseArea.innerHTML += msg;
-	addProductForm.reset();
 }
 
 

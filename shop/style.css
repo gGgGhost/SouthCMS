@@ -1,7 +1,3 @@
-.product a {
-	text-decoration: none;
-	color: #5DC2F4;
-}
 .product a:hover {
 	color: white;
 }
@@ -39,4 +35,8 @@ h2.product_name{
 }
 #basket_contents p {
 	font-weight: bold;
+}
+#added {
+	display: inline;
+	margin-left: 1em;
 }

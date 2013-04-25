@@ -32,16 +32,21 @@ function basketDisplay () {
 
 		var button = document.getElementById('clear_basket');
 		button.addEventListener('click', clearBasketContents, false);
+
 	}
 }
 
 function showHideForm (e) {
 	var form = document.getElementById('order_form');
 	if (form.className == 'empty') {
-
+		form.classList.remove('empty');
+	}
+	else {
+		form.classList.add('empty');
 	}
 }
-
+// Add an extra event to window.onload
+// if it already has an assigned function
 function extraLoadEvent (func) {
 	existingOnload = window.onload;
 	if (typeof window.onload != 'function') {

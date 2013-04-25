@@ -12,7 +12,7 @@ function addToBasket (e) {
 		basketCounter = 0;
 	}
 
-	var search = checkBasketForProduct(basket, productName);
+	var search = checkBasketForProduct(basket, productId);
 
 	if (search != "not found") {
 		var thisProduct = basket[search];
@@ -23,6 +23,7 @@ function addToBasket (e) {
 		var thisProduct = {};
 		thisProduct.productName = productName;
 		thisProduct.quantity = 1;
+		thisProduct.productId = productId;
 	}
 	else{
 		thisProduct.quantity++;
@@ -42,7 +43,7 @@ function checkBasketForProduct(basket, product){
 	var basketCounter = basket.length;
 
 	for (var i = 0; i < basketCounter; i++) {
-		if (basket[i].productName == product) {
+		if (basket[i].productId == product) {
 			return i;
 		}
 	}

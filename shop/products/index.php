@@ -39,6 +39,10 @@ $section['name'] = "stock";
 $section['showHeading'] = false;
 $section['prefix'] = "";
 $sections[] = $section;
+$section['name'] = "prodnum";
+$section['showHeading'] = false;
+$section['hide'] = true;
+$sections[] = $section;
 
 // Open product_area tag, add header with product name/title
 $page['content'] = "<div id='product_area'>" 
@@ -49,8 +53,8 @@ $page['content'] = $page['content'] . prepareProductDetails($sections, $product)
 
 // Add button, close product_area tag
 $page['content'] = $page['content'] 
-				 . "<button id='$buttonId'>$buttonValue</button></div>"
-				 . "<p id='added'></p>"
+				 . "<button id='$buttonId'>$buttonValue</button>"
+				 . "<div id='added'></div></div>"
 				 . "<script src='../js/basket.js'></script>"
 				 . "<script src='../js/shop.js'></script>";
 

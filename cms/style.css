@@ -6,9 +6,6 @@ textarea{
 	width: 500px;
 	height: 80px;
 }
-input[type='text']{
-	width: 500px;
-}
 input[type='text']#new_category{
 	width: 250px;
 }
@@ -28,7 +25,6 @@ a.button{
 a.current{
 	color: #FFFFFF;
 }
-
 img{
 	margin: 0;
 }
@@ -83,9 +79,4 @@ img.icon-big{
 	font-weight: bold;
 	color: #232E33;
 }
-.addition a{
-	text-decoration: none;
-	color: #5DC2F4;
-}
-
 

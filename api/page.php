@@ -35,6 +35,7 @@ function getProductSection ($sectionDetails,
 	$thisSegment = $datum;
 	$showHeading = $sectionDetails['showHeading'];
 
+
 	if ($sectionName == 'catname') {
 		$link = $dir . "categories/?name=$datum";
 		$thisSegment = wrapWithLink($link, $thisSegment);
@@ -49,6 +50,11 @@ function getProductSection ($sectionDetails,
 		$thisSegment = $prefix . $thisSegment;
 	}
 	
+	if (isset($sectionDetails['hide'])) {
+		$hide = " class='empty'";
+	} else {
+			$hide = "";
+	}
 	
 
 	$section = "";
@@ -57,7 +63,7 @@ function getProductSection ($sectionDetails,
 		if ($sectionName =='catname') {$sectionName='category';}
 		$section = $section . "<h3>$sectionName</h3>";
 	}
-	$section = $section . "<p $tag='product_$sectionName'>";
+	$section = $section . "<p$hide $tag='product_$sectionName'>";
 	$section = $section . "$thisSegment</p>";
 
 	return $section;

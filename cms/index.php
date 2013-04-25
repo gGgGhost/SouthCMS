@@ -106,7 +106,8 @@ $page['content'] = "<div id='response_area'>
 					</div>"
 				 . $productForm;
 
-$page['end'] = "<script src='js/db_functions.js'></script>"
+$page['end'] = "<script src='../api/js/ajax.js'></script>"
+			 . "<script src='js/cms.js'></script>"
 			 . preparePageEnd('cms', '');
 
 // Output each page section in turn
