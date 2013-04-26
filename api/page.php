@@ -18,6 +18,67 @@ function buildBigButton ($button) {
 	return $buttonString;
 }
 
+function prepareOrderTable($completed, $db_link) {
+	$amount = howManyOrders($completed, $db_link);
+	if ($amount > 0){
+		$orderTable = "<table><tr><th>order id</th><th>product + qty</th>"
+						. "<th>fullname</th><th>address</th><th>postcode</th>"
+						. "<th>email</th></tr>";
+		$query = "SELECT order_id, fullname, address, postcode, email" .
+					" FROM orders, customers WHERE orders.cust_id=customers.cust_id"
+					." AND completed=$completed";
+		$result = queryDatabase($query, $db_link);
+		$stopHere = mysqli_num_rows($result);
+
+		for ($i = 0; $i < $stopHere; $i++) {
+				$orders[] = retrieveUsingResult($result, $db_link, "orders");
+				$ids[] = $orders[$i]['order_id'];
+		}
+
+
+		for ($i = 0; $i < count($ids); $i++) {
+			$tableLine = "";
+			$sections = [];
+			$order = $orders[$i];
+			$id = $ids[$i];
+
+			$query = "SELECT prodnum, quantity from in_order WHERE order_id='$id'";
+			$result = queryDatabase($query, $db_link);
+			$stopHere = mysqli_num_rows($result);
+			for ($c = 0; $c < $stopHere; $c++) {
+				$row = retrieveUsingResult($result, $db_link, "products");
+				$products[] = $row;
+			}
+			
+			$sections[] = $order['fullname'];
+			$sections[] = $order['address'];
+			$sections[] = $order['postcode'];
+			$sections[] = $order['email'];
+			$tableLine = "<tr><td>$id</td><td>";
+			for ($c = 0; $c < count($products); $c++) {
+				$product = $products[$c];
+				$num = $product['prodnum'];
+				$qty = $product['quantity'];
+				$prod = wrapWithLink("../products/?id=$num", $num);
+				$tableLine .= "<p>$prod x$qty</p>";
+			}
+			$tableLine .= "</td>";
+			for ($c = 0; $c < count($sections); $c++) {
+				$thisSection = $sections[$c];
+				$tableLine .= "<td>$thisSection</td>";
+			}
+			$tableLine .= "</tr>";
+			$orderTable .= $tableLine;
+		}
+		$orderTable .= "</table>";
+	} else {
+		$orderTable = "<h3>None</h3>";
+	}
+	return $orderTable;
+
+}
+	
+
 function prepareProductDetails ($sections, 
 								$product, $format = 'list') {
 	$lines = "";
@@ -74,12 +135,6 @@ function getProductSection ($sectionDetails,
 	return $section;
 }
 
-function wrapWithLink ($href, $string) {
-	$wrappedString = "<a href='$href'>"
-					. $string
-					. "</a>";
-	return $wrappedString;
-}
 
 function prepareProductsList ($limit,
 							 $offset, 
@@ -317,19 +372,6 @@ function preparePageEnd ($currentZone, $dir = "../") {
 		</html>";
 
 	return $bottom;
-}
-
-function isThereEnoughStock ($stock) {
-
-	switch ($stock) {
-			case 0:
-				$stockMessage = "Out of Stock";
-				break;
-			default:
-				$stockMessage = "$stock in stock";
-	}
-
-	return $stockMessage;
 }
 
 function getStyles ($levelsDown) {

@@ -33,12 +33,8 @@ if(isset($_GET['id'])) {
 	$offset = ($currentPage * $productsPerPage) - $productsPerPage;
 }
 
-
 $page['start'] = preparePageStart($pageTitle, $pageHeader, 
 								$styles, $includeSearch, $levelsDown);
-
-
-
 
 // Open product_area tag, add header with product name/title
 $page['content'] = "<div id='product_area'>";

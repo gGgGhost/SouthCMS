@@ -65,5 +65,12 @@ if (isset($_POST['name']) &&
 } else {
 	echo("Variables not set correctly");
 }
-
 }
+function howManyOrders($completed, $db_link) {
+	$query = "SELECT COUNT(*) FROM orders WHERE completed=$completed";
+	$result = queryDatabase($query, $db_link);
+	$amount = retrieveUsingResult($result, $db_link);
+	return $amount;
+}
+
+?>

@@ -5,11 +5,22 @@ Functions for submitting the new product form
 // Get form, button and div for displaying responses
 var addProductForm = document.getElementById("product_form");
 var addProductButton = document.getElementById("add_product");
+var viewProductsButton = document.getElementById("view_products");
+var viewOrdersButton = document.getElementById("view_orders");
 var responseArea = document.getElementById('response_area');
 
 // Add relevant event listeners
 addProductButton.addEventListener("click", myButtons, false);
 addProductForm.addEventListener("submit", submitForm, false);
+viewProductsButton.addEventListener("click", viewProducts, false);
+viewOrdersButton.addEventListener("click", viewOrders, false);
+
+function viewProducts (e) {
+	window.location = 'products';
+}
+function viewOrders (e) {
+	window.location = 'orders';
+}
 
 function myButtons(e) {
 

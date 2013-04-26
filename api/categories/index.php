@@ -18,6 +18,7 @@ switch ($method) {
 		}
 		break;
 	case 'POST': 
+
 		addCategoryFromPOST($db_link);
 		break;
 }
@@ -81,4 +82,5 @@ function countCategories($db_link) {
 	$number = retrieveUsingResult($result, $db_link);
 	
 	return $number['COUNT(*)'];
-} ?>
+}
+ ?>

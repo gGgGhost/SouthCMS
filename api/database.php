@@ -93,12 +93,12 @@ Use the passed result of a MySQL query to retrieve the row from the DB
 In the form of an associative array
 Return the result or echo error
 */
-function retrieveUsingResult ($result, $db_link, $format = "array") {
+function retrieveUsingResult ($result, $db_link, $msg = "", $format = "array") {
 	try {
 			if (!$row = mysqli_fetch_assoc($result)) {
 				$error = mysqli_error($db_link);
 				throw new Exception("<p>Could not retrieve row.</p>" .
-				"<p>$error</p>");
+				"<p>$error</p><p>$msg</p>");
 			} else {
 				return $row;
 			}			
