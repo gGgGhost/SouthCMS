@@ -42,7 +42,6 @@ function getListOfCategoryNames($db_link, $format = 'array') {
 
 function addCategoryFromPOST($db_link){
 
-
 if (isset($_POST['catname'])) {
 	$name = retrieveVarFromPOST('catname', $db_link);
 	

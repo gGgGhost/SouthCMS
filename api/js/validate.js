@@ -55,3 +55,61 @@ function validateStock (field) {
 		return "";
 	}
 }
+
+function validateOrderForm (name, address, postcode, email) {
+	var validation = "";
+	validation += validateFullName(name);
+	validation += validateAddress(address);
+	validation += validatePostcode(postcode);
+	validation += validateEmail(email);
+	return validation;
+}
+
+function validateFullName (field) {
+	var noSpaces = field.replace(/\s/, "");
+	if (noSpaces == "") {
+		return "<p>You haven't entered a name!</p>";
+	}
+	else if (!/^[a-zA-Z]+\s*[a-zA-Z]*$/.test(field)) {
+		return "<p>Invalid characters in name!</p>";
+	}
+	else {
+		return "";
+	}
+}
+function validateAddress (field) {
+	var noSpaces = field.replace(/\s/, "");
+	if (noSpaces == "") {
+		return "<p>You haven't entered an address!</p>";
+	}
+	else if (!/^([\w]|[\,]|[\s])+$/.test(field)) {
+		return "<p>Invalid characters in address!</p>";
+	}
+	else {
+		return "";
+	}
+}
+function validatePostcode (field) {
+	var noSpaces = field.replace(/\s/, "");
+	if (noSpaces == "") {
+		return "<p>You haven't entered a postcode!</p>";
+	}
+	else if (!/^[\w]+\s*[\w]*$/.test(field)) {
+		return "<p>Invalid characters in postcode!</p>";
+	}
+	else {
+		return "";
+	}
+}
+function validateEmail (field) {
+	var noSpaces = field.replace(/\s/, "");
+	if (noSpaces == "") {
+		return "<p>You haven't entered an email address!</p>";
+	}
+	else if (!/^[\w\.\@]*$/.test(field)) {
+		return "<p>Invalid characters in email!</p>";
+	}
+	else {
+		return "";
+	}
+}

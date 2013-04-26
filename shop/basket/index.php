@@ -50,9 +50,10 @@ $page['start'] = preparePageStart($pageTitle, $pageHeader,
 
 $page['content'] = "<div id='basket_zone'><h2>Products in basket</h3>";
 
-$page['end'] = "</div>" 
+$page['end'] = "</div><div id='response_area'></div>" 
 			 . $orderForm
 			 . "<script src='../../api/js/ajax.js'></script>"
+			 . "<script src='../../api/js/validate.js'></script>"
 			 . "<script src='../js/basket.js'></script>"
  			 . "<script src='../js/order.js'></script>"
 			 . preparePageEnd('shop');

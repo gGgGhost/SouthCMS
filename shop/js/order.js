@@ -1,5 +1,6 @@
 var basketZone = document.getElementById('basket_zone');
 var orderButton = document.getElementById('confirm_order');
+var responseArea = document.getElementById('response_area');
 
 
 orderButton.addEventListener('click', submitForm, false);
@@ -88,6 +89,11 @@ function captureForm(){
 		}
 		formString += input.name + '=' + input.value;
 	}
+	var valid = validateOrderForm (inputs[2].value, inputs[3].value, inputs[4].value, inputs[5].value);
+	if (valid != "") {
+		responseArea.innerHTML = valid;
+		formString = "";
+	}
 	return formString;
 }
 
@@ -100,8 +106,10 @@ function submitForm(e){
 	}
 	// Submit the add product request using requeststring from captureForm
 	var requestString = captureForm();
-	requestString += "&basket=" + order;
-	console.log(requestString);
-	ajaxRequest('POST', '../../api/orders/', requestString, basketZone);
-	clearBasketContents("<h2>Order Submitted</h2>");
+	if (requestString != '') {
+		requestString += "&basket=" + order;
+		ajaxRequest('POST', '../../api/orders/', requestString, basketZone);
+		clearBasketContents("<h2>Order Submitted</h2>");
+	}
+	
 }
