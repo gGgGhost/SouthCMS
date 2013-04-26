@@ -16,7 +16,9 @@ switch ($method) {
 		}
 		break;
 	case 'POST': 
-		addProduct($db_link);
+		if (!isset($_POST['id'])) {
+			addProduct($db_link);
+		}
 		break;
 }
 
@@ -113,7 +115,7 @@ END;
 
 	}
 } else {
-	echo("Variables not set correctly");
+	echo("Variables not set correctly in addProducts");
 }
 
 }

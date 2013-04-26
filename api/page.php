@@ -21,9 +21,15 @@ function buildBigButton ($button) {
 function prepareOrderTable($completed, $db_link) {
 	$amount = howManyOrders($completed, $db_link);
 	if ($amount > 0){
+		if ($completed == 'FALSE') {
+			$col = "<th>complete</th>";
+		}
+		else {
+			$col = "";
+		}
 		$orderTable = "<table><tr><th>order id</th><th>product + qty</th>"
 						. "<th>fullname</th><th>address</th><th>postcode</th>"
-						. "<th>email</th></tr>";
+						. "<th>email</th>$col</tr>";
 		$query = "SELECT order_id, fullname, address, postcode, email" .
 					" FROM orders, customers WHERE orders.cust_id=customers.cust_id"
 					." AND completed=$completed";
@@ -67,7 +73,10 @@ function prepareOrderTable($completed, $db_link) {
 				$thisSection = $sections[$c];
 				$tableLine .= "<td>$thisSection</td>";
 			}
-			$tableLine .= "</tr>";
+			if ($completed == 'FALSE') {
+				$tableLine .= "<td><button id='bt_$id' class='complete'>"
+						. "confirm</button></tr>";
+			}
 			$orderTable .= $tableLine;
 		}
 		$orderTable .= "</table>";

@@ -11,8 +11,11 @@ $db_link = getConnected();
 switch ($method) {
 	case 'GET': 
 		break;
-	case 'POST': 
-		submitOrder($db_link);
+	case 'POST':
+		if(!isset($_POST['id'])){
+			submitOrder($db_link);
+		}
+		
 		break;
 }
 
@@ -66,11 +69,6 @@ if (isset($_POST['name']) &&
 	echo("Variables not set correctly");
 }
 }
-function howManyOrders($completed, $db_link) {
-	$query = "SELECT COUNT(*) FROM orders WHERE completed=$completed";
-	$result = queryDatabase($query, $db_link);
-	$amount = retrieveUsingResult($result, $db_link)['COUNT(*)'];
-	return $amount;
-}
+
 
 ?>

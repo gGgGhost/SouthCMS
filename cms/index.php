@@ -113,7 +113,7 @@ $page['content'] = "<div id='response_area'>
 				 . $productForm;
 
 $page['end'] = "<script src='../api/js/ajax.js'></script>"
-			 . "<script src='js/cms.js'></script>"
+			 . "<script src='js/main.js'></script>"
 			 . "<script src='../api/js/validate.js'></script>"
 			 . preparePageEnd('cms', '');
 
