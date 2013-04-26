@@ -1,7 +1,5 @@
 function validateAddProductForm (name, catfield, catoption, cost, price, stock) {
-	if (typeof(catfield) == 'undefined') {
-		catfield = "";
-	}
+	console.log(name, catfield, catoption, cost, price, stock);
 	var validation = "";
 	validation += validateProductName(name);
 	validation += validateCategory(catfield, catoption);
@@ -10,17 +8,6 @@ function validateAddProductForm (name, catfield, catoption, cost, price, stock) 
 	validation += validateStock(stock);
 	return validation;
 }
-function validateCategory (field, category) {
-	if (category == 'NEW') {
-		var noSpaces = field.replace(/\s/, "");
-		if (noSpaces == "") {
-			return "<p>You haven't specified a category!</p>";
-		}
-	}
-	else {
-		return "";
-	}
-}
 function validateProductName (field) {
 	var noSpaces = field.replace(/\s/, "");
 	if (noSpaces == "") {
@@ -28,6 +15,17 @@ function validateProductName (field) {
 	}
 	else {
 		return "";
+	}
+}
+function validateCategory (field, category) {
+	if (category == 'NEW') {
+		var noSpaces = field.replace(/\s/, "");
+		if (noSpaces == "") {
+			return "<p>You haven't specified a category!</p>";
+		}
+		else {
+			return "";
+		}
 	}
 }
 function validateCurrency (field, name) {

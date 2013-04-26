@@ -45,7 +45,7 @@ function createDatabase($db_link, $name, $user, $host, $pass) {
 					" postcode CHAR(7) NOT NULL, email VARCHAR(40) NOT NULL, cust_id INT UNSIGNED" .
 					" NOT NULL AUTO_INCREMENT, PRIMARY KEY(cust_id))";
 		$query[] = "CREATE TABLE orders (order_id INT UNSIGNED NOT NULL AUTO_INCREMENT," .
-				   " cust_id INT UNSIGNED NOT NULL, order_date TIMESTAMP NOT NULL " .
+				   " cust_id INT UNSIGNED NOT NULL, price DEC(6,2) NOT NULL, order_date TIMESTAMP NOT NULL " .
 				   "DEFAULT CURRENT_TIMESTAMP, completed BOOLEAN NOT NULL DEFAULT FALSE,".
 				   " PRIMARY KEY(order_id)) ENGINE MyISAM";
 		$query[] = "ALTER TABLE orders ADD FOREIGN KEY(cust_id) REFERENCES customers";

@@ -103,6 +103,7 @@ function captureForm(){
 	} else {
 		formString += '&catname=' + selectedCategory;
 	}
+		console.log(newCategory + selectedCategory);
 	var valid = validateAddProductForm (inputs[0].value, newCategory, selectedCategory, 
 									inputs[2].value, inputs[3].value, inputs[4].value);
 	if (valid != "") {

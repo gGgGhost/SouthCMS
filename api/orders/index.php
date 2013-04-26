@@ -36,6 +36,11 @@ if (isset($_POST['name']) &&
 	$email = retrieveVarFromPOST('email', $db_link);
 	$basketString = stripslashes(retrieveVarFromPOST('basket', $db_link));
 	$basket = json_decode($basketString, true);
+	$price = 0;
+
+	for ($i = 0; $i < count($basket); $i++) {
+		$price += $basket[$i]['price'];
+	}
 
 	$query = "INSERT INTO customers (fullname, address, postcode, " .
 			"email) VALUES ('$name', '$address', '$postcode', " .
@@ -48,7 +53,7 @@ if (isset($_POST['name']) &&
 	$cust_id = retrieveUsingResult($result, $db_link)['cust_id'];
 
 
-	$query = "INSERT INTO orders (cust_id) VALUES ('$cust_id')";
+	$query = "INSERT INTO orders (cust_id, price) VALUES ('$cust_id', '$price')";
 	$result = queryDatabase($query, $db_link);
 
 	$query = "SELECT order_id FROM orders WHERE cust_id='$cust_id'" .
