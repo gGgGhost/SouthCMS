@@ -13,12 +13,19 @@ $category = retrieveVarFromGET('name', $db_link);
 $totalProducts = countProductsInCategory($category, $db_link);
 $productsPerPage = 25;
 
+if ($productsPerPage > $totalProducts) {
+	$productsPerPage = $totalProducts;
+}
+else {
+	$totalPages = ceil($totalProducts / $productsPerPage);
+}
+
 if (isset($_GET['page'])) {
 	$currentPage = $_GET['page'];
 } else {
 	$currentPage = 1;
 }
-$totalPages = ceil($totalProducts / $productsPerPage);
+
 $offset = ($currentPage * $productsPerPage) - $productsPerPage;
 
 $levelsDown = 1;
@@ -36,20 +43,18 @@ $page['content'] = "<h2>$category</h2>" .
 
 switch ($productsPerPage) {
 	case 0:
-		$page['content'] =
-			$page['content'] . 
-			("<h2>There are no products in this category.</h2>");
+		$page['content'] .= ("<h2>There are no products in this category.</h2>");
 		break;
 	default: 
-		$page['content'] = 
-			$page['content'] . prepareProductsTable($productsPerPage, $offset,
+		$page['content'] .= prepareProductsTable($productsPerPage, $offset,
 											 $db_link, $category, $levelsDown);
+		$page['content'] .= "<div id='page_links'>Page" . 
+					getPageLinks($currentPage, $totalPages, $category) .
+					"</div>";
 		break;
 }
 
-$page['content'] = $page['content'] . "<div id='page_links'>Page" . 
-					getPageLinks($currentPage, $totalPages, $category) .
-					"</div>";
+
 
 $page['end'] = "</div>" . preparePageEnd('cms');
 		

@@ -92,9 +92,9 @@ function countProductsInCategory($category, $db_link) {
 
 	$result = queryDatabase($query, $db_link);
 
-	$number = retrieveUsingResult($result, $db_link);
+	$row = retrieveUsingResult($result, $db_link);
 	
-	return $number['COUNT(*)'];
+	return $row['COUNT(*)'];
 }
 function countCategories($db_link) {
 	// How many categories total in the DB

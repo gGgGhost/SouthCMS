@@ -36,9 +36,6 @@ getStyles
 -String of scripts pointing to correct src location based on directory
 
 */
-
-
-
 require_once "config.php";
 require_once "database.php";
 
@@ -70,7 +67,7 @@ function prepareOrderTable($completed, $db_link) {
 			$col = "";
 		}
 		// Table & row of headings
-		$orderTable = "<table><tr><th>order id</th><th>prod + qty.</th>"
+		$orderTable = "<table><tr><th>order id</th><th>prod + qty.</th><th>price &pound;</th>"
 						. "<th>fullname</th><th>address</th><th>postcode</th>"
 						. "<th>email</th>$col</tr>";
 
@@ -266,9 +263,9 @@ function prepareProductsTable ($limit,
 							 $offset, 
 							 $db_link,
 							 $category = 'all', 
-							 $levelsDown = 0) {
+							 $levelsDown = 0, $extra = "") {
 
-	$products = getManyProducts($limit, $offset, $db_link, $category);
+	$products = getManyProducts($limit, $offset, $db_link, $category, $extra);
 	$tag ="class";
 	$format = 'table';
 	$headings = '<tr><th></th><th></th><th>cost</th>'

@@ -1,8 +1,10 @@
 <?php
+/*
+Functions needing to be shared across multiple files
+*/
 function retrieveVarFromPOST($var, $db_link) {
 	return mysqli_escape_string($db_link, $_POST[$var]);
 }
-
 function retrieveVarFromGET($var, $db_link) {
 	return mysqli_escape_string($db_link, $_GET[$var]);
 }
@@ -13,7 +15,6 @@ function wrapWithLink ($href, $string) {
 					. "</a>";
 	return $wrappedString;
 }
-
 function isThereEnoughStock ($stock) {
 
 	switch ($stock) {
@@ -40,7 +41,6 @@ echo <<<END
 END;
 	}
 }
-
 function getCategoryNumber($name, $db_link) {
 	$query = "SELECT catnum FROM categories WHERE catname = '$name'";
 	$result = queryDatabase($query, $db_link);

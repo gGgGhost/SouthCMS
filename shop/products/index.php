@@ -16,7 +16,7 @@ $levelsDown = 1;
 $pageHeader = "very simple shop";
 $pageTitle = $productName . " - " . $pageHeader;
 $styles = getStyles($levelsDown);
-$includeSearch = true;
+$includeSearch = false;
 
 $page['start'] = preparePageStart($pageTitle, $pageHeader, 
 									$styles, $includeSearch, $levelsDown);

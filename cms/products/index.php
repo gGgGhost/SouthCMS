@@ -60,18 +60,17 @@ if (isset($id)) {
 // Add a line for each section of requested detail relating to this product 
 if (isset($id)) {
 	$page['content'] .= prepareProductDetails($sections, $product);
-	// Add button, close product_area tag
-	$page['content'] .= "<button id='$buttonId'>$buttonValue</button>";
+	// Add button
+	//$page['content'] .= "<button id='$buttonId'>$buttonValue</button>";
 } else {
 	switch ($totalProducts) {
 	case 0:
-		$page['content'] =
-			$page['content'] . 
-			("<h2>There are no products in the store yet to display.</h2>");
+		$page['content'] .= ("<h2>There are no products in the store yet to display.</h2>");
 		break;
 	default: 
+		$page['content'] .= ("<h2>These products have low stock levels.</h2>");
 		$page['content'] .= prepareProductsTable($productsPerPage, 
-								$offset, $db_link, 'all', $levelsDown);
+								$offset, $db_link, 'all', $levelsDown, ' AND stock < 4');
 		$page['content'] .= "<div id='page_links'>Page" . 
 					getPageLinks($currentPage, $totalPages) .
 					"</div>";

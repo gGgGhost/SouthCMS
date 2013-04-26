@@ -39,7 +39,7 @@ $offset = ($currentPage * $productsPerPage) - $productsPerPage;
 $levelsDown = 0;
 $styles = getStyles($levelsDown);
 $pageTitle = $pageHeader = "very simple shop";
-$includeSearch = true;
+$includeSearch = false;
 
 $basket = "<div id='basket'></div>";
 

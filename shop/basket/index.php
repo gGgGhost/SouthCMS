@@ -41,7 +41,7 @@ $levelsDown = 1;
 $styles = getStyles($levelsDown);
 $pageHeader = "very simple shop";
 $pageTitle = "Basket - " . $pageHeader;
-$includeSearch = true;
+$includeSearch = false;
 
 $basket = "<div id='basket'></div>";
 

@@ -1,4 +1,7 @@
 <?php
+/*
+
+*/
 $directory = __DIR__;
 require_once "$directory/../config.php";
 require_once "$directory/../database.php";
@@ -39,10 +42,10 @@ function getProduct($id, $db_link, $format = 'array') {
 	return $product;
 
 }
-function getManyProducts ($limit, $offset, $db_link, $category) {
+function getManyProducts ($limit, $offset, $db_link, $category, $extra="") {
 	$query = "SELECT name, description, prodnum, catname, cost, price,".  
 			 "stock, code FROM products, categories " .
-			 "WHERE products.catnum = categories.catnum";
+			 "WHERE products.catnum = categories.catnum$extra";
 
 	if($category != 'all') {
 		$query = $query . " AND catname='$category'";

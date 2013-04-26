@@ -7,6 +7,7 @@ var addProductForm = document.getElementById("product_form");
 var addProductButton = document.getElementById("add_product");
 var viewProductsButton = document.getElementById("view_products");
 var viewOrdersButton = document.getElementById("view_orders");
+var viewSalesButton = document.getElementById("view_sales");
 var responseArea = document.getElementById('response_area');
 
 // Add relevant event listeners
@@ -14,12 +15,16 @@ addProductButton.addEventListener("click", myButtons, false);
 addProductForm.addEventListener("submit", submitForm, false);
 viewProductsButton.addEventListener("click", viewProducts, false);
 viewOrdersButton.addEventListener("click", viewOrders, false);
+viewSalesButton.addEventListener("click", viewSales, false);
 
 function viewProducts (e) {
 	window.location = 'products';
 }
 function viewOrders (e) {
 	window.location = 'orders';
+}
+function viewSales (e) {
+	window.location = 'sales';
 }
 
 function myButtons(e) {

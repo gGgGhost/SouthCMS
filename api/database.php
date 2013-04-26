@@ -1,5 +1,8 @@
 <?php
-
+/*
+The daddy functions
+Used by everything to connect to the database
+*/
 function getConnected() {
 	global $DB_LOGIN;
 	$db_host = $DB_LOGIN['host'];
