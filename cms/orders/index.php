@@ -20,9 +20,9 @@ $page['start'] = preparePageStart($pageTitle, $pageHeader,
 								$styles, $includeSearch, $levelsDown);
 $page['content'] = "<div id='order_area'>";
 
-$page['content'] .= "<h2>Outstanding orders:</h2>" . prepareOrderTable('TRUE', $db_link);
+$page['content'] .= "<h2>Outstanding orders:</h2>" . prepareOrderTable('FALSE', $db_link);
 
-$page['content'] .= "<h2>Completed orders:</h2>" . prepareOrderTable('FALSE', $db_link);
+$page['content'] .= "<h2>Completed orders:</h2>" . prepareOrderTable('TRUE', $db_link);
 
 $page['content'] .= "</div>";
 
