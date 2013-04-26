@@ -1,13 +1,28 @@
 <?php
-$directory = __DIR__;
+/*
+This page provides functions for manipulating orders.
+
+GET: no function
+POST: submitOrder
+
+*/
+
+/*
+>>>>>>Script body
+*/
+$directory = __DIR__; // Where the file is
+// Include the necessary files
 require_once "$directory/../config.php";
 require_once "$directory/../database.php";
 require_once "$directory/../shared.php";
 
+// Find out how page was accessed
 $method  	= 	$_SERVER['REQUEST_METHOD'];
 
+// Establish a link to the database for the duration of the script
 $db_link = getConnected();
 
+// Take appropriate action
 switch ($method) {
 	case 'GET': 
 		break;
@@ -18,18 +33,22 @@ switch ($method) {
 		
 		break;
 }
-
+// Close the connection when finished
 mysqli_close($db_link)
 			or die('Something went wrong closing the MySQL connection.');
-
+/*
+>>>>>>Functions
+*/
 function submitOrder($db_link){
 
+// Make sure the right variables are there
 if (isset($_POST['name']) &&
 	isset($_POST['address']) &&
 	isset($_POST['postcode']) &&
 	isset($_POST['email']) &&
 	isset($_POST['basket'])) {
 
+	// Retrieve them all
 	$name = retrieveVarFromPOST('name', $db_link);
 	$address = retrieveVarFromPOST('address', $db_link);
 	$postcode = retrieveVarFromPOST('postcode', $db_link);

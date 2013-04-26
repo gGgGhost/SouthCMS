@@ -1,4 +1,44 @@
 <?php
+/*
+This page provides functions for building strings of components for different pages
+
+buildBigButton
+-Put together big buttons for the CMS front page
+
+prepareOrderTable
+-Prepare a string of orders in a table
+
+prepareProductsList
+-Prepare a string of products in a div list
+
+prepareProductDetails
+-Prepare a string of a product in table or list format
+
+getProductSection
+-Prepare a string for display of a single product
+
+PrepareProductsTable
+-Prepare a string of products in a div list
+
+getPageLinks
+-Get pagination links for bottom of a page
+
+preparePageStart
+-Consistent header string across site
+
+prepareCategoryOptionList
+-list of category options for box on add product form
+
+preparePageEnd
+-Consistent footer string across site
+
+getStyles
+-String of scripts pointing to correct src location based on directory
+
+*/
+
+
+
 require_once "config.php";
 require_once "database.php";
 
@@ -18,35 +58,43 @@ function buildBigButton ($button) {
 	return $buttonString;
 }
 function prepareOrderTable($completed, $db_link) {
+
 	$amount = howManyOrders($completed, $db_link);
+
 	if ($amount > 0){
+		// Include column of buttons to complete order if not yet complete
 		if ($completed == 'FALSE') {
 			$col = "<th>complete</th>";
 		}
 		else {
 			$col = "";
 		}
+		// Table & row of headings
 		$orderTable = "<table><tr><th>order id</th><th>prod + qty.</th>"
 						. "<th>fullname</th><th>address</th><th>postcode</th>"
 						. "<th>email</th>$col</tr>";
-		$query = "SELECT order_id, fullname, address, postcode, email" .
+
+		$query = "SELECT order_id, price, fullname, address, postcode, email" .
 					" FROM orders, customers WHERE orders.cust_id=customers.cust_id"
 					." AND completed=$completed";
 		$result = queryDatabase($query, $db_link);
 		$stopHere = mysqli_num_rows($result);
 
+		// Store all orders in associative array and their ids in a standard array
 		for ($i = 0; $i < $stopHere; $i++) {
 				$orders[] = retrieveUsingResult($result, $db_link, "orders");
 				$ids[] = $orders[$i]['order_id'];
 		}
 
 		for ($i = 0; $i < count($ids); $i++) {
+			// Iterate through every order by id
 			$tableLine = "";
 			$sections = [];
 			$products = [];
-			$order = $orders[$i];
-			$id = $ids[$i];
+			$order = $orders[$i]; // This order
+			$id = $ids[$i]; // This id
 
+			// Get all the products in this order and add them to an array
 			$query = "SELECT prodnum, quantity FROM in_order WHERE order_id='$id'";
 			$result = queryDatabase($query, $db_link);
 			$stopHere = mysqli_num_rows($result);
@@ -54,24 +102,33 @@ function prepareOrderTable($completed, $db_link) {
 				$row = retrieveUsingResult($result, $db_link, "products");
 				$products[] = $row;
 			}
-			
+			// Put all segments from this row into an array
+			$sections[] = $order['price'];
 			$sections[] = $order['fullname'];
 			$sections[] = $order['address'];
 			$sections[] = $order['postcode'];
 			$sections[] = $order['email'];
+
+			// Start row with id, open product cell
 			$tableLine = "<tr><td>$id</td><td>";
+
+			// Iterate through products in order, adding them all to products column
 			for ($c = 0; $c < count($products); $c++) {
 				$product = $products[$c];
 				$num = $product['prodnum'];
 				$qty = $product['quantity'];
-				$prod = wrapWithLink("../products/?id=$num", $num);
+				$prod = wrapWithLink("../products/?id=$num", $num); // Hyperlink to product page
 				$tableLine .= "<p>$prod x $qty</p>";
 			}
-			$tableLine .= "</td>";
+			$tableLine .= "</td>"; // End product cell
+
+			// Iterate through the remaining sections, adding their cells to table
 			for ($c = 0; $c < count($sections); $c++) {
 				$thisSection = $sections[$c];
 				$tableLine .= "<td>$thisSection</td>";
 			}
+
+			// Button for completing order
 			if ($completed == 'FALSE') {
 				$tableLine .= "<td><button id='bt_$id' class='complete'>"
 						. "confirm</button></tr>";
@@ -80,8 +137,10 @@ function prepareOrderTable($completed, $db_link) {
 		}
 		$orderTable .= "</table>";
 	} else {
+		// If there are no orders to display
 		$orderTable = "<h3>None</h3>";
 	}
+	// Return table as string
 	return $orderTable;
 
 }
@@ -203,7 +262,7 @@ function prepareProductsList ($limit,
 	return $list;
 }
 
-function PrepareProductsTable ($limit,
+function prepareProductsTable ($limit,
 							 $offset, 
 							 $db_link,
 							 $category = 'all', 

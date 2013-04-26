@@ -88,7 +88,6 @@ function orderTables ($db_link) {
 	$tables .= prepareOrderTable('TRUE', $db_link);
 	return $tables;
 }
-
 function markOrderComplete($id, $db_link) {
 	$query = "UPDATE orders SET completed=TRUE WHERE order_id='$id'";
 	$result = queryDatabase($query, $db_link);
