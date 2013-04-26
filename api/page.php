@@ -26,7 +26,7 @@ function prepareOrderTable($completed, $db_link) {
 		else {
 			$col = "";
 		}
-		$orderTable = "<table><tr><th>order id</th><th>product + qty</th>"
+		$orderTable = "<table><tr><th>order id</th><th>prod + qty.</th>"
 						. "<th>fullname</th><th>address</th><th>postcode</th>"
 						. "<th>email</th>$col</tr>";
 		$query = "SELECT order_id, fullname, address, postcode, email" .
@@ -65,7 +65,7 @@ function prepareOrderTable($completed, $db_link) {
 				$num = $product['prodnum'];
 				$qty = $product['quantity'];
 				$prod = wrapWithLink("../products/?id=$num", $num);
-				$tableLine .= "<p>$prod x$qty</p>";
+				$tableLine .= "<p>$prod x $qty</p>";
 			}
 			$tableLine .= "</td>";
 			for ($c = 0; $c < count($sections); $c++) {
@@ -301,6 +301,9 @@ function preparePageStart ($title,
 		case 0:
 			$homeLink = "";
 			break;
+		case -1:
+			$homeLink = "cms/";
+			break;
 		default:
 			$homeLink = "..";
 			break;
@@ -364,13 +367,18 @@ function preparePageEnd ($currentZone, $dir = "../") {
 	if ($currentZone == "shop") {
 		$link = $dir . "../cms"; 
 		$newZone = "southcms";
+		$link = "<a href='$link'>$newZone</a>";
 	}
-	else {
+	else if ($currentZone == "cms") {
 		$link = $dir . "../shop"; 
 		$newZone = "shop";
+		$link = "<a href='$link'>$newZone</a>";
+	}
+	else {
+		$link = "";
 	}
 	
-	$link = "<a href='$link'>$newZone</a>";
+	
 	$bottom =
 		"</div>
 		<footer>

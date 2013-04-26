@@ -67,8 +67,6 @@ function createDatabase($db_link, $name, $user, $host, $pass) {
 			}
 			
 		}
-		// Alert new user?
-
 }
 /*
 Submit the passed query string to MySQL
