@@ -17,7 +17,6 @@ function buildBigButton ($button) {
 	</figure>";
 	return $buttonString;
 }
-
 function prepareOrderTable($completed, $db_link) {
 	$amount = howManyOrders($completed, $db_link);
 	if ($amount > 0){
@@ -41,14 +40,14 @@ function prepareOrderTable($completed, $db_link) {
 				$ids[] = $orders[$i]['order_id'];
 		}
 
-
 		for ($i = 0; $i < count($ids); $i++) {
 			$tableLine = "";
 			$sections = [];
+			$products = [];
 			$order = $orders[$i];
 			$id = $ids[$i];
 
-			$query = "SELECT prodnum, quantity from in_order WHERE order_id='$id'";
+			$query = "SELECT prodnum, quantity FROM in_order WHERE order_id='$id'";
 			$result = queryDatabase($query, $db_link);
 			$stopHere = mysqli_num_rows($result);
 			for ($c = 0; $c < $stopHere; $c++) {

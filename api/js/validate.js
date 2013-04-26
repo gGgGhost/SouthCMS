@@ -1,5 +1,5 @@
 function validateAddProductForm (name, catfield, catoption, cost, price, stock) {
-	console.log(name, catfield, catoption, cost, price, stock);
+	
 	var validation = "";
 	validation += validateProductName(name);
 	validation += validateCategory(catfield, catoption);
@@ -27,6 +27,7 @@ function validateCategory (field, category) {
 			return "";
 		}
 	}
+	return "";
 }
 function validateCurrency (field, name) {
 	var noSpaces = field.replace(/\s/, "");

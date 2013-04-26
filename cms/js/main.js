@@ -52,7 +52,8 @@ function submitForm(e){
 	// Submit the add product request using requeststring from captureForm
 	var requestString = captureForm();
 	if (requestString != "") {
-		ajaxRequest('POST', '../api/products/', requestString, responseArea);
+		ajaxRequest('POST', '../api/products/', requestString, responseArea, 'TRUE');
+		addProductForm.reset();
 	}
 }
 
@@ -103,7 +104,6 @@ function captureForm(){
 	} else {
 		formString += '&catname=' + selectedCategory;
 	}
-		console.log(newCategory + selectedCategory);
 	var valid = validateAddProductForm (inputs[0].value, newCategory, selectedCategory, 
 									inputs[2].value, inputs[3].value, inputs[4].value);
 	if (valid != "") {

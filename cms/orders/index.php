@@ -22,9 +22,42 @@ $styles = getStyles($levelsDown);
 $includeSearch = false;
 
 if (isset($id)) {
-	markOrderComplete($id, $db_link);
-	echo("<h3>Order ID $id Marked Complete.</h3>");
-	echo(orderTables($db_link) . "</div>");
+	$query = "SELECT prodnum, quantity FROM in_order WHERE order_id='$id'";
+	$result = queryDatabase($query, $db_link);
+	$num = mysqli_num_rows($result);
+	for ($i = 0; $i < $num; $i++) {
+		$row = retrieveUsingResult($result, $db_link);
+		$products[] = $row;
+		$prodnum = $row['prodnum'];
+		$queries[] = "SELECT prodnum, stock FROM products WHERE prodnum='$prodnum'";
+	}
+	for ($i = 0; $i < count($query); $i++) {
+		$result = queryDatabase($queries[$i], $db_link);
+		$row = retrieveUsingResult($result, $db_link);
+		$stock[] = $row['stock'];
+	}
+	$checkStock = "";
+	for ($i = 0; $i < count($stock); $i++) {
+		$qty = $products[$i]['quantity'];
+		$stk = $stock[$i];
+		if($qty > $stk) {
+			$checkStock .= "imbalance";
+		}
+	} 
+	if ($checkStock == "") {
+		for ($i = 0; $i < count($products); $i++) {
+		$prodnum = $products[$i]['prodnum'];
+		$quantity = $products[$i]['quantity'];
+		$query = "UPDATE products SET stock=stock-$quantity WHERE prodnum='$prodnum'";
+		$result = queryDatabase($query, $db_link);
+		}
+		markOrderComplete($id, $db_link);
+		echo("<h3>Order ID $id Marked Complete.</h3>");
+		echo(orderTables($db_link) . "</div>");
+	} else {
+		echo("<h3>Cannot submit order. Not enough stock.</h3><a href=''>back</a>");
+	}
+	
 }
 
 else {

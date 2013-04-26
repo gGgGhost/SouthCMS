@@ -102,10 +102,12 @@ button {
 	margin: 0;
 }
 td {
-	padding-right: 3em;
 	font-weight: bold;
+	border: 0.3em solid #232E33;
+	text-align: center;
+	min-width: 5em;
 }
 th {
-	text-align: left;
+	text-align: center;
 	text-transform: uppercase;
 }
