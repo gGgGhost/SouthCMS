@@ -50,10 +50,8 @@ function printBasketString(basket){
 /*
 Delete all products from the basket
 */
-function clearBasketContents (msg) {
-	if (typeof msg == 'undefined') {
-		msg = "";
-	}
+function clearBasketContents () {
+
 	var basket = []; // basket is empty array
 	setBasketToLocalStorage(basket); // Write to localStorage
 	printBasketString(basket); // Print the new empty basket to screen
@@ -61,7 +59,7 @@ function clearBasketContents (msg) {
 	basketDisplay(); // Reprint basket contents screen (telling basket is empty)
 	if (orderForm.class != 'empty') {
 		orderForm.classList.add('empty');
-		basketZone.innerHTML = msg + basketZone.innerHTML;
+		basketZone.innerHTML = basketZone.innerHTML;
 	}
 }
 function getBasketContents (basket) {
