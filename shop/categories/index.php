@@ -16,9 +16,8 @@ $productsPerPage = 6;
 if ($productsPerPage > $totalProducts) {
 	$productsPerPage = $totalProducts;
 }
-else {
-	$totalPages = ceil($totalProducts / $productsPerPage);
-}
+$totalPages = ceil($totalProducts / $productsPerPage);
+
 
 if (isset($_GET['page'])) {
 	$currentPage = $_GET['page'];
