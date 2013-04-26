@@ -51,7 +51,9 @@ function submitForm(e){
 	}
 	// Submit the add product request using requeststring from captureForm
 	var requestString = captureForm();
-	ajaxRequest('POST', '../api/products/', requestString, responseArea);
+	if (requestString != "") {
+		ajaxRequest('POST', '../api/products/', requestString, responseArea);
+	}
 }
 
 function captureForm(){
@@ -66,6 +68,7 @@ function captureForm(){
 
 	// Empty string to add name/value pairs to
 	var formString = '';
+	var values = [];
 
 	// Loop through stored inputs and get the 
 	// name and value from each, add to string
@@ -78,6 +81,7 @@ function captureForm(){
 		if (formString !== '') {
 			formString += '&';
 		}
+		values[input.name] = input.value.toString();
 		formString += input.name + '=' + input.value;
 	}
 
@@ -94,13 +98,20 @@ function captureForm(){
 		var newOption = document.createElement('option');
 		newOption.value = newCategory;
 		newOption.innerHTML = newCategory;
-		categorySelector.add(newOption, null);
 
 		formString += '&flag=' + 'newcat';
 	} else {
 		formString += '&catname=' + selectedCategory;
 	}
-	
+	var valid = validateAddProductForm (inputs[0].value, newCategory, selectedCategory, 
+									inputs[2].value, inputs[3].value, inputs[4].value);
+	if (valid != "") {
+		responseArea.innerHTML = valid;
+		formString = "";
+	}
+	else {
+		if(selectedCategory == "NEW"){categorySelector.add(newOption, null);}
+	}
 	return formString;
 }
 

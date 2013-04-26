@@ -40,7 +40,8 @@ $productForm =
 					<option value='NEW'>NEW</option>
 					$optionList
 				</select>
-				<input type='text' id='new_category' placeholder='new category name' maxlength='15' />
+				<input type='text' id='new_category'
+				name='new_category' placeholder='new category name' maxlength='15' />
 			</p>
 		</p>
 		<p>
@@ -113,6 +114,7 @@ $page['content'] = "<div id='response_area'>
 
 $page['end'] = "<script src='../api/js/ajax.js'></script>"
 			 . "<script src='js/cms.js'></script>"
+			 . "<script src='../api/js/validate.js'></script>"
 			 . preparePageEnd('cms', '');
 
 // Output each page section in turn
